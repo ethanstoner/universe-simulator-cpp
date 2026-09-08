@@ -1,0 +1,286 @@
+{
+  "bodies": [
+    {
+      "color": [
+        1,
+        0.87000000476837158,
+        0.41999998688697815
+      ],
+      "emissive": true,
+      "fixed": false,
+      "massKg": 1.9889199999999999e+30,
+      "name": "Sun",
+      "positionMetres": [
+        0,
+        0,
+        0
+      ],
+      "radiusMetres": 696340000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        8.9454130834879582,
+        0,
+        -3.6741997033628366
+      ]
+    },
+    {
+      "color": [
+        0.72000002861022949,
+        0.68000000715255737,
+        0.62000000476837158
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 3.3011000000000001e+23,
+      "name": "Mercury",
+      "positionMetres": [
+        53337721101.713074,
+        0,
+        22550826784.751644
+      ],
+      "radiusMetres": 2439700,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -18635.734261527708,
+        0,
+        44095.140181134557
+      ]
+    },
+    {
+      "color": [
+        0.93999999761581421,
+        0.80000001192092896,
+        0.51999998092651367
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 4.8675000000000003e+24,
+      "name": "Venus",
+      "positionMetres": [
+        -54628387286.541389,
+        0,
+        93406159146.341324
+      ],
+      "radiusMetres": 6051800,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -30225.256554841482,
+        0,
+        -17686.080900696714
+      ]
+    },
+    {
+      "color": [
+        0.31999999284744263,
+        0.55000001192092896,
+        0.92000001668930054
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 5.9721900000000004e+24,
+      "name": "Earth",
+      "positionMetres": [
+        149597900000,
+        0,
+        0
+      ],
+      "radiusMetres": 6371000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        8.9454130834879582,
+        0,
+        29784.879843123355
+      ]
+    },
+    {
+      "color": [
+        0.77999997138977051,
+        0.77999997138977051,
+        0.75999999046325684
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 7.3419999999999997e+22,
+      "name": "Moon",
+      "positionMetres": [
+        149982300000,
+        0,
+        0
+      ],
+      "radiusMetres": 1737400,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        8.9454130834879582,
+        0,
+        30809.42531000595
+      ]
+    },
+    {
+      "color": [
+        0.85000002384185791,
+        0.41999998688697815,
+        0.2800000011920929
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 6.4171000000000003e+23,
+      "name": "Mars",
+      "positionMetres": [
+        -204406216660.78912,
+        0,
+        -100867667324.18538
+      ],
+      "radiusMetres": 3389500,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        10688.068908588413,
+        0,
+        -21644.694448082872
+      ]
+    },
+    {
+      "color": [
+        0.85000002384185791,
+        0.72000002861022949,
+        0.55000001192092896
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1.8982000000000001e+27,
+      "name": "Jupiter",
+      "positionMetres": [
+        282087902347.2464,
+        0,
+        725572855604.6803
+      ],
+      "radiusMetres": 69911000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -12167.747048303227,
+        0,
+        4730.3750517636317
+      ]
+    },
+    {
+      "color": [
+        0.89999997615814209,
+        0.82999998331069946,
+        0.62000000476837158
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 5.6834000000000003e+26,
+      "name": "Saturn",
+      "positionMetres": [
+        -440570889100.16351,
+        0,
+        -1364150120982.8379
+      ],
+      "radiusMetres": 58232000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        9167.4706770195098,
+        0,
+        -2961.5448594746613
+      ]
+    },
+    {
+      "color": [
+        0.60000002384185791,
+        0.85000002384185791,
+        0.87999999523162842
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 8.6810000000000007e+25,
+      "name": "Uranus",
+      "positionMetres": [
+        2226618614567.7861,
+        0,
+        -1812341266665.9204
+      ],
+      "radiusMetres": 25362000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        4301.5438561374094,
+        0,
+        5270.1557207243304
+      ]
+    },
+    {
+      "color": [
+        0.30000001192092896,
+        0.44999998807907104,
+        0.85000002384185791
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1.0241300000000001e+26,
+      "name": "Neptune",
+      "positionMetres": [
+        -4367767919690.5698,
+        0,
+        1076241575029.4707
+      ],
+      "radiusMetres": 24622000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -1290.756957716316,
+        0,
+        -5278.3248469520659
+      ]
+    }
+  ],
+  "defaultTimeScale": 10000000,
+  "description": "Sun through Neptune. Body radii are exaggerated by a large factor; at true scale the Earth would be far under one pixel across.",
+  "fixedTimeStepSeconds": 7200,
+  "key": "solar-system",
+  "physics": {
+    "bounds": {
+      "enabled": false,
+      "friction": 0,
+      "max": [
+        10,
+        20,
+        10
+      ],
+      "min": [
+        -10,
+        0,
+        -10
+      ],
+      "restitution": 0.80000000000000004
+    },
+    "collisionMode": "ignore",
+    "collisionRadiusScale": 1,
+    "collisionRestitution": 0.5,
+    "gravitationalConstant": 6.6742999999999994e-11,
+    "integrator": "velocity-verlet",
+    "minimumDistanceMetres": 1000000,
+    "pairwiseGravity": true,
+    "softeningLengthMetres": 1000000,
+    "stabilization": "softening",
+    "trailLength": 2400,
+    "trailSampleIntervalSeconds": 150000,
+    "uniformGravity": [
+      0,
+      0,
+      0
+    ]
+  },
+  "title": "Solar system with Jupiter",
+  "view": {
+    "bodyVisualExponent": 0.41999999999999998,
+    "cameraDistance": 110,
+    "cameraPitchDegrees": 28,
+    "focusBody": "Sun",
+    "gridEnabled": true,
+    "gridExtent": 140,
+    "largestBodyDrawnRadius": 3.3999999999999999,
+    "metresPerUnit": 67999032136.363632,
+    "minVisualRadius": 0.089999999999999997,
+    "scaleReferenceBody": "",
+    "trailReferenceBody": "",
+    "trueScale": false
+  }
+}

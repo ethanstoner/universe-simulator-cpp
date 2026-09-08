@@ -1,0 +1,125 @@
+{
+  "bodies": [
+    {
+      "color": [
+        1,
+        0.75,
+        0.44999998807907104
+      ],
+      "emissive": true,
+      "fixed": false,
+      "massKg": 1.9889199999999999e+30,
+      "name": "Star A",
+      "positionMetres": [
+        224396806050,
+        0,
+        0
+      ],
+      "radiusMetres": 696340000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -371.71162948158911,
+        0,
+        22104.604362237453
+      ]
+    },
+    {
+      "color": [
+        0.64999997615814209,
+        0.80000001192092896,
+        1
+      ],
+      "emissive": true,
+      "fixed": false,
+      "massKg": 1.9889199999999999e+30,
+      "name": "Star B",
+      "positionMetres": [
+        -112198403024.99995,
+        0,
+        194333334567.38962
+      ],
+      "radiusMetres": 696340000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -19329.004733042748,
+        0,
+        -10730.390467105552
+      ]
+    },
+    {
+      "color": [
+        1,
+        0.55000001192092896,
+        0.55000001192092896
+      ],
+      "emissive": true,
+      "fixed": false,
+      "massKg": 2.1082552e+30,
+      "name": "Star C",
+      "positionMetres": [
+        -112198403025.00011,
+        0,
+        -194333334567.38956
+      ],
+      "radiusMetres": 696340000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        18585.581474079561,
+        0,
+        -10730.390467105566
+      ]
+    }
+  ],
+  "defaultTimeScale": 4000000,
+  "description": "Three stars started near a Lagrange-style triangle. The three-body problem has no general closed-form solution and this configuration is chaotic: it usually ends with one star ejected. Identical initial conditions still reproduce exactly, since the integrator is deterministic.",
+  "fixedTimeStepSeconds": 3600,
+  "key": "three-body",
+  "physics": {
+    "bounds": {
+      "enabled": false,
+      "friction": 0,
+      "max": [
+        10,
+        20,
+        10
+      ],
+      "min": [
+        -10,
+        0,
+        -10
+      ],
+      "restitution": 0.80000000000000004
+    },
+    "collisionMode": "ignore",
+    "collisionRadiusScale": 1,
+    "collisionRestitution": 0.5,
+    "gravitationalConstant": 6.6742999999999994e-11,
+    "integrator": "velocity-verlet",
+    "minimumDistanceMetres": 1000000,
+    "pairwiseGravity": true,
+    "softeningLengthMetres": 100000000,
+    "stabilization": "softening",
+    "trailLength": 3000,
+    "trailSampleIntervalSeconds": 100000,
+    "uniformGravity": [
+      0,
+      0,
+      0
+    ]
+  },
+  "title": "Three-body chaos",
+  "view": {
+    "bodyVisualExponent": 0.34999999999999998,
+    "cameraDistance": 80,
+    "cameraPitchDegrees": 28,
+    "focusBody": "",
+    "gridEnabled": true,
+    "gridExtent": 70,
+    "largestBodyDrawnRadius": 1.3,
+    "metresPerUnit": 37399467675,
+    "minVisualRadius": 0.12,
+    "scaleReferenceBody": "",
+    "trailReferenceBody": "",
+    "trueScale": false
+  }
+}

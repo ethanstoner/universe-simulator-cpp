@@ -1,0 +1,125 @@
+{
+  "bodies": [
+    {
+      "color": [
+        0.94999998807907104,
+        0.44999998807907104,
+        0.30000001192092896
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1,
+      "name": "ball-a",
+      "positionMetres": [
+        -9,
+        16,
+        0
+      ],
+      "radiusMetres": 0.69999999999999996,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        2.3999999999999999,
+        0,
+        0
+      ]
+    },
+    {
+      "color": [
+        0.40000000596046448,
+        0.75,
+        0.98000001907348633
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1,
+      "name": "ball-b",
+      "positionMetres": [
+        0,
+        12,
+        0
+      ],
+      "radiusMetres": 0.5,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -1.2,
+        0,
+        0
+      ]
+    },
+    {
+      "color": [
+        0.85000002384185791,
+        0.80000001192092896,
+        0.34999999403953552
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1,
+      "name": "ball-c",
+      "positionMetres": [
+        8,
+        17,
+        0
+      ],
+      "radiusMetres": 0.90000000000000002,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -3,
+        0,
+        0
+      ]
+    }
+  ],
+  "defaultTimeScale": 1,
+  "description": "Uniform 9.81 m/s^2 field, no mutual gravity. Balls fall, bounce with a restitution coefficient and lose tangential speed to friction. This is the M2 demonstration and the only scene that is not astronomical.",
+  "fixedTimeStepSeconds": 0.0041666666666666666,
+  "key": "bounce",
+  "physics": {
+    "bounds": {
+      "enabled": true,
+      "friction": 0.02,
+      "max": [
+        16,
+        18,
+        4
+      ],
+      "min": [
+        -16,
+        0,
+        -4
+      ],
+      "restitution": 0.81999999999999995
+    },
+    "collisionMode": "elastic",
+    "collisionRadiusScale": 1,
+    "collisionRestitution": 0.90000000000000002,
+    "gravitationalConstant": 6.6742999999999994e-11,
+    "integrator": "velocity-verlet",
+    "minimumDistanceMetres": 1000000,
+    "pairwiseGravity": false,
+    "softeningLengthMetres": 1000000,
+    "stabilization": "softening",
+    "trailLength": 240,
+    "trailSampleIntervalSeconds": 0,
+    "uniformGravity": [
+      0,
+      -9.8100000000000005,
+      0
+    ]
+  },
+  "title": "Kinematics lab (2D)",
+  "view": {
+    "bodyVisualExponent": 0.34999999999999998,
+    "cameraDistance": 30,
+    "cameraPitchDegrees": 28,
+    "focusBody": "",
+    "gridEnabled": false,
+    "gridExtent": 60,
+    "largestBodyDrawnRadius": 1.2,
+    "metresPerUnit": 1,
+    "minVisualRadius": 0,
+    "scaleReferenceBody": "",
+    "trailReferenceBody": "",
+    "trueScale": true
+  }
+}

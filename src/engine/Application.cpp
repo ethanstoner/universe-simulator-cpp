@@ -8,12 +8,67 @@
 #include <cstdlib>
 #include <cstring>
 
+#include <filesystem>
+
+#include "engine/AssetPaths.h"
 #include "engine/Screenshot.h"
 #include "sim/Constants.h"
 #include "sim/OrbitMath.h"
+#include "sim/SceneConfig.h"
 #include "ui/DebugUI.h"
 
 namespace engine {
+
+int loadSceneConfigs(const std::string& directory) {
+    std::error_code code;
+    const std::filesystem::path root(resolveAsset(directory));
+    if (!std::filesystem::is_directory(root, code)) return 0;
+
+    // Every *.json in configs/ is registered, replacing the compiled-in preset
+    // of the same key. Editing a mass or an orbital radius therefore needs no
+    // rebuild. A malformed file is reported and skipped rather than being
+    // allowed to take the application down.
+    int loaded = 0;
+    std::vector<std::filesystem::path> files;
+    for (const auto& entry : std::filesystem::directory_iterator(root, code)) {
+        if (entry.is_regular_file() && entry.path().extension() == ".json") {
+            files.push_back(entry.path());
+        }
+    }
+    std::sort(files.begin(), files.end());
+
+    for (const std::filesystem::path& file : files) {
+        sim::Scene scene;
+        std::string error;
+        if (sim::loadSceneFile(file.string(), scene, error)) {
+            sim::registerScene(std::move(scene));
+            ++loaded;
+        } else {
+            std::fprintf(stderr, "[config] skipped: %s\n", error.c_str());
+        }
+    }
+    if (loaded > 0) std::printf("[config] loaded %d scene(s) from %s\n", loaded,
+                                root.string().c_str());
+    return loaded;
+}
+
+int exportSceneConfigs(const std::string& directory) {
+    std::error_code code;
+    std::filesystem::create_directories(directory, code);
+    int written = 0;
+    for (const sim::Scene& scene : sim::builtinScenes()) {
+        const std::string path = (std::filesystem::path(directory) /
+                                  (scene.key + ".json")).string();
+        std::string error;
+        if (sim::saveSceneFile(scene, path, error)) {
+            std::printf("[config] wrote %s\n", path.c_str());
+            ++written;
+        } else {
+            std::fprintf(stderr, "[config] %s\n", error.c_str());
+        }
+    }
+    return written;
+}
 
 void AppOptions::printUsage() {
     std::printf(
@@ -58,6 +113,8 @@ AppOptions AppOptions::parse(int argc, char** argv) {
         else if (!std::strcmp(arg, "--pitch")) options.cameraPitch = std::atof(valueFor(i));
         else if (!std::strcmp(arg, "--yaw")) options.cameraYaw = std::atof(valueFor(i));
         else if (!std::strcmp(arg, "--no-ui")) options.noUi = true;
+        else if (!std::strcmp(arg, "--export-configs")) options.exportConfigs = valueFor(i);
+        else if (!std::strcmp(arg, "--no-configs")) options.noConfigs = true;
         else if (!std::strcmp(arg, "--hidden")) options.hidden = true;
         else if (!std::strcmp(arg, "--no-vsync")) options.vsync = false;
         else if (!std::strcmp(arg, "--help") || !std::strcmp(arg, "-h")) {
@@ -78,6 +135,10 @@ AppOptions AppOptions::parse(int argc, char** argv) {
 }
 
 Application::Application(const AppOptions& options) : options_(options) {
+    // Configs are registered before any scene is resolved, so a JSON file can
+    // replace a built-in preset that the --scene argument then names.
+    if (!options_.noConfigs) loadSceneConfigs("configs");
+
     WindowConfig config;
     config.width = options.width;
     config.height = options.height;

@@ -1,0 +1,217 @@
+{
+  "bodies": [
+    {
+      "color": [
+        1,
+        0.87000000476837158,
+        0.41999998688697815
+      ],
+      "emissive": true,
+      "fixed": false,
+      "massKg": 1.9889199999999999e+30,
+      "name": "Sun",
+      "positionMetres": [
+        0,
+        0,
+        0
+      ],
+      "radiusMetres": 696340000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -4888.8317472419303,
+        0,
+        2666.6313434719787
+      ]
+    },
+    {
+      "color": [
+        0.72000002861022949,
+        0.68000000715255737,
+        0.62000000476837158
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 3.3011000000000001e+23,
+      "name": "Mercury",
+      "positionMetres": [
+        53337721101.713074,
+        0,
+        22550826784.751644
+      ],
+      "radiusMetres": 2439700,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -23533.511421853127,
+        0,
+        46765.445724309895
+      ]
+    },
+    {
+      "color": [
+        0.93999999761581421,
+        0.80000001192092896,
+        0.51999998092651367
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 4.8675000000000003e+24,
+      "name": "Venus",
+      "positionMetres": [
+        -54628387286.541389,
+        0,
+        93406159146.341324
+      ],
+      "radiusMetres": 6051800,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -35123.033715166901,
+        0,
+        -15015.775357521372
+      ]
+    },
+    {
+      "color": [
+        0.31999999284744263,
+        0.55000001192092896,
+        0.92000001668930054
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 5.9721900000000004e+24,
+      "name": "Earth",
+      "positionMetres": [
+        149597900000,
+        0,
+        0
+      ],
+      "radiusMetres": 6371000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -4888.8317472419303,
+        0,
+        32455.185386298697
+      ]
+    },
+    {
+      "color": [
+        0.77999997138977051,
+        0.77999997138977051,
+        0.75999999046325684
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 7.3419999999999997e+22,
+      "name": "Moon",
+      "positionMetres": [
+        149982300000,
+        0,
+        0
+      ],
+      "radiusMetres": 1737400,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -4888.8317472419303,
+        0,
+        33479.730853181296
+      ]
+    },
+    {
+      "color": [
+        0.85000002384185791,
+        0.41999998688697815,
+        0.2800000011920929
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 6.4171000000000003e+23,
+      "name": "Mars",
+      "positionMetres": [
+        -204406216660.78912,
+        0,
+        -100867667324.18538
+      ],
+      "radiusMetres": 3389500,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        5790.2917482629955,
+        0,
+        -18974.38890490753
+      ]
+    },
+    {
+      "color": [
+        1,
+        0.55000001192092896,
+        0.34999999403953552
+      ],
+      "emissive": true,
+      "fixed": false,
+      "massKg": 1.591136e+30,
+      "name": "Intruder",
+      "positionMetres": [
+        -1795174448400,
+        0,
+        897587224200
+      ],
+      "radiusMetres": 557072000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        6111.1682527580697,
+        0,
+        -3333.3686565280213
+      ]
+    }
+  ],
+  "defaultTimeScale": 4000000,
+  "description": "The inner solar system with a 0.8 solar-mass star falling in from 12 AU on a grazing trajectory. The planets' orbits are disrupted by nothing but the extra term in the same pairwise sum.",
+  "fixedTimeStepSeconds": 1800,
+  "key": "intruder",
+  "physics": {
+    "bounds": {
+      "enabled": false,
+      "friction": 0,
+      "max": [
+        10,
+        20,
+        10
+      ],
+      "min": [
+        -10,
+        0,
+        -10
+      ],
+      "restitution": 0.80000000000000004
+    },
+    "collisionMode": "ignore",
+    "collisionRadiusScale": 1,
+    "collisionRestitution": 0.5,
+    "gravitationalConstant": 6.6742999999999994e-11,
+    "integrator": "velocity-verlet",
+    "minimumDistanceMetres": 1000000,
+    "pairwiseGravity": true,
+    "softeningLengthMetres": 1000000,
+    "stabilization": "softening",
+    "trailLength": 1200,
+    "trailSampleIntervalSeconds": 50000,
+    "uniformGravity": [
+      0,
+      0,
+      0
+    ]
+  },
+  "title": "Intruder star",
+  "view": {
+    "bodyVisualExponent": 0.40000000000000002,
+    "cameraDistance": 52,
+    "cameraPitchDegrees": 28,
+    "focusBody": "Sun",
+    "gridEnabled": true,
+    "gridExtent": 62,
+    "largestBodyDrawnRadius": 1.5,
+    "metresPerUnit": 37399467675,
+    "minVisualRadius": 0.089999999999999997,
+    "scaleReferenceBody": "",
+    "trailReferenceBody": "",
+    "trueScale": false
+  }
+}

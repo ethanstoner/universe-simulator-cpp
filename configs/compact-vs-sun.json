@@ -1,0 +1,217 @@
+{
+  "bodies": [
+    {
+      "color": [
+        1,
+        0.87000000476837158,
+        0.41999998688697815
+      ],
+      "emissive": true,
+      "fixed": false,
+      "massKg": 1.9889199999999999e+30,
+      "name": "Sun",
+      "positionMetres": [
+        0,
+        0,
+        0
+      ],
+      "radiusMetres": 696340000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -15483.014075403595,
+        0,
+        5806.1245032819015
+      ]
+    },
+    {
+      "color": [
+        0.72000002861022949,
+        0.68000000715255737,
+        0.62000000476837158
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 3.3011000000000001e+23,
+      "name": "Mercury",
+      "positionMetres": [
+        53337721101.713074,
+        0,
+        22550826784.751644
+      ],
+      "radiusMetres": 2439700,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -34127.693750014791,
+        0,
+        49904.938884119816
+      ]
+    },
+    {
+      "color": [
+        0.93999999761581421,
+        0.80000001192092896,
+        0.51999998092651367
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 4.8675000000000003e+24,
+      "name": "Venus",
+      "positionMetres": [
+        -54628387286.541389,
+        0,
+        93406159146.341324
+      ],
+      "radiusMetres": 6051800,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -45717.216043328568,
+        0,
+        -11876.282197711447
+      ]
+    },
+    {
+      "color": [
+        0.31999999284744263,
+        0.55000001192092896,
+        0.92000001668930054
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 5.9721900000000004e+24,
+      "name": "Earth",
+      "positionMetres": [
+        149597900000,
+        0,
+        0
+      ],
+      "radiusMetres": 6371000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -15483.014075403595,
+        0,
+        35594.678546108618
+      ]
+    },
+    {
+      "color": [
+        0.85000002384185791,
+        0.41999998688697815,
+        0.2800000011920929
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 6.4171000000000003e+23,
+      "name": "Mars",
+      "positionMetres": [
+        -204406216660.78912,
+        0,
+        -100867667324.18538
+      ],
+      "radiusMetres": 3389500,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -4803.8905798986689,
+        0,
+        -15834.895745097605
+      ]
+    },
+    {
+      "color": [
+        0.85000002384185791,
+        0.72000002861022949,
+        0.55000001192092896
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1.8982000000000001e+27,
+      "name": "Jupiter",
+      "positionMetres": [
+        282087902347.2464,
+        0,
+        725572855604.6803
+      ],
+      "radiusMetres": 69911000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -27659.706536790309,
+        0,
+        10540.173754748896
+      ]
+    },
+    {
+      "color": [
+        0.11999999731779099,
+        0.059999998658895493,
+        0.20000000298023224
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 5.96676e+31,
+      "name": "Compact object",
+      "positionMetres": [
+        -1346380836300,
+        0,
+        523592547450
+      ],
+      "radiusMetres": 354480.92837893189,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        516.98592459640531,
+        0,
+        -193.87549671809847
+      ]
+    }
+  ],
+  "defaultTimeScale": 4000000,
+  "description": "A 30 solar-mass compact object passes through the inner solar system. Still Newtonian; see docs/PHYSICS.md for what this is and is not.",
+  "fixedTimeStepSeconds": 1800,
+  "key": "compact-vs-sun",
+  "physics": {
+    "bounds": {
+      "enabled": false,
+      "friction": 0,
+      "max": [
+        10,
+        20,
+        10
+      ],
+      "min": [
+        -10,
+        0,
+        -10
+      ],
+      "restitution": 0.80000000000000004
+    },
+    "collisionMode": "ignore",
+    "collisionRadiusScale": 1,
+    "collisionRestitution": 0.5,
+    "gravitationalConstant": 6.6742999999999994e-11,
+    "integrator": "velocity-verlet",
+    "minimumDistanceMetres": 1000000,
+    "pairwiseGravity": true,
+    "softeningLengthMetres": 1000000,
+    "stabilization": "softening",
+    "trailLength": 2400,
+    "trailSampleIntervalSeconds": 50000,
+    "uniformGravity": [
+      0,
+      0,
+      0
+    ]
+  },
+  "title": "Compact mass meets the solar system",
+  "view": {
+    "bodyVisualExponent": 0.41999999999999998,
+    "cameraDistance": 50,
+    "cameraPitchDegrees": 28,
+    "focusBody": "",
+    "gridEnabled": true,
+    "gridExtent": 60,
+    "largestBodyDrawnRadius": 2,
+    "metresPerUnit": 49865956900,
+    "minVisualRadius": 0.10000000000000001,
+    "scaleReferenceBody": "",
+    "trailReferenceBody": "",
+    "trueScale": false
+  }
+}

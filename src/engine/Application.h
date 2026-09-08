@@ -20,6 +20,13 @@ class DebugUI;
 
 namespace engine {
 
+// Registers every configs/*.json as a scene, replacing the compiled-in preset
+// of the same key. Returns how many were loaded.
+int loadSceneConfigs(const std::string& directory);
+// Writes every registered scene to `directory` as JSON. Used by
+// --export-configs to regenerate configs/ after changing a preset in code.
+int exportSceneConfigs(const std::string& directory);
+
 // Command line surface. The headless screenshot options exist so that every
 // rendering milestone can be verified from a build script rather than by
 // eyeballing a live window.
@@ -38,6 +45,8 @@ struct AppOptions {
     double cameraPitch = 1e9;          // sentinel: use the scene's default
     double cameraYaw = 1e9;
     std::string focus;                 // body to frame at startup
+    std::string exportConfigs;         // write every scene as JSON and exit
+    bool noConfigs = false;            // ignore configs/, use the built-ins
 
     static AppOptions parse(int argc, char** argv);
     static void printUsage();

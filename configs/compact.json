@@ -1,0 +1,217 @@
+{
+  "bodies": [
+    {
+      "color": [
+        0.10000000149011612,
+        0.05000000074505806,
+        0.18000000715255737
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 2.3867039999999999e+31,
+      "name": "Compact object",
+      "positionMetres": [
+        0,
+        0,
+        0
+      ],
+      "radiusMetres": 106344.27851367956,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        0.0001116204038784175,
+        0,
+        -0.0001738928476540547
+      ]
+    },
+    {
+      "color": [
+        0.44999998807907104,
+        0.75,
+        1
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+22,
+      "name": "Probe 1",
+      "positionMetres": [
+        2991957414,
+        0,
+        0
+      ],
+      "radiusMetres": 4000000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        0.0001116204038784175,
+        0,
+        729666.55174214591
+      ]
+    },
+    {
+      "color": [
+        0.53999996185302734,
+        0.69999998807907104,
+        1
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+22,
+      "name": "Probe 2",
+      "positionMetres": [
+        3126293910.035943,
+        0,
+        5450116036.8728085
+      ],
+      "radiusMetres": 4000000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -436762.99705323199,
+        0,
+        250535.85794867983
+      ]
+    },
+    {
+      "color": [
+        0.62999999523162842,
+        0.64999997615814209,
+        1
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+22,
+      "name": "Probe 3",
+      "positionMetres": [
+        -4833529745.8770037,
+        0,
+        8264594126.013895
+      ],
+      "radiusMetres": 4000000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -352099.65007911855,
+        0,
+        -205924.70824309136
+      ]
+    },
+    {
+      "color": [
+        0.72000002861022949,
+        0.60000002384185791,
+        1
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+22,
+      "name": "Probe 4",
+      "positionMetres": [
+        -12864962196.700632,
+        0,
+        -108162742.19333656
+      ],
+      "radiusMetres": 4000000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        2958.3125303076185,
+        0,
+        -351864.02156133921
+      ]
+    },
+    {
+      "color": [
+        0.81000000238418579,
+        0.55000001192092896,
+        1
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+22,
+      "name": "Probe 5",
+      "positionMetres": [
+        -7920933295.7017899,
+        0,
+        -14081675008.332304
+      ],
+      "radiusMetres": 4000000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        273673.47597501765,
+        0,
+        -153941.15744631525
+      ]
+    },
+    {
+      "color": [
+        0.89999997615814209,
+        0.5,
+        1
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+22,
+      "name": "Probe 6",
+      "positionMetres": [
+        9958896611.530447,
+        0,
+        -16704320267.362167
+      ],
+      "radiusMetres": 4000000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        245825.99409717036,
+        0,
+        146558.23262724307
+      ]
+    }
+  ],
+  "defaultTimeScale": 30000,
+  "description": "A 12 solar-mass compact object with a tight ring of test bodies. This is a NEWTONIAN point mass, not a black hole: the simulation still uses F = G m1 m2 / r^2 with no relativistic terms. Its Schwarzschild radius is reported for reference and drawn as a marker sphere, but nothing special happens at that radius.",
+  "fixedTimeStepSeconds": 20,
+  "key": "compact",
+  "physics": {
+    "bounds": {
+      "enabled": false,
+      "friction": 0,
+      "max": [
+        10,
+        20,
+        10
+      ],
+      "min": [
+        -10,
+        0,
+        -10
+      ],
+      "restitution": 0.80000000000000004
+    },
+    "collisionMode": "ignore",
+    "collisionRadiusScale": 1,
+    "collisionRestitution": 0.5,
+    "gravitationalConstant": 6.6742999999999994e-11,
+    "integrator": "velocity-verlet",
+    "minimumDistanceMetres": 1000000,
+    "pairwiseGravity": true,
+    "softeningLengthMetres": 100000,
+    "stabilization": "softening",
+    "trailLength": 2000,
+    "trailSampleIntervalSeconds": 15,
+    "uniformGravity": [
+      0,
+      0,
+      0
+    ]
+  },
+  "title": "Compact massive object",
+  "view": {
+    "bodyVisualExponent": 0.34999999999999998,
+    "cameraDistance": 45,
+    "cameraPitchDegrees": 28,
+    "focusBody": "Compact object",
+    "gridEnabled": true,
+    "gridExtent": 34,
+    "largestBodyDrawnRadius": 1,
+    "metresPerUnit": 1246648922.5,
+    "minVisualRadius": 0.10000000000000001,
+    "scaleReferenceBody": "",
+    "trailReferenceBody": "",
+    "trueScale": false
+  }
+}

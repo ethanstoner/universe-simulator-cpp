@@ -1,0 +1,125 @@
+{
+  "bodies": [
+    {
+      "color": [
+        0.94999998807907104,
+        0.44999998807907104,
+        0.34999999403953552
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 3.9999999999999998e+28,
+      "name": "mass-A",
+      "positionMetres": [
+        1.2246467991473532e-05,
+        0,
+        200000000000
+      ],
+      "radiusMetres": 300000000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "color": [
+        0.40000000596046448,
+        0.77999997138977051,
+        0.98000001907348633
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 3.9999999999999998e+28,
+      "name": "mass-B",
+      "positionMetres": [
+        -173205080756.88776,
+        0,
+        -99999999999.999939
+      ],
+      "radiusMetres": 300000000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "color": [
+        0.89999997615814209,
+        0.85000002384185791,
+        0.40000000596046448
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 3.9999999999999998e+28,
+      "name": "mass-C",
+      "positionMetres": [
+        173205080756.88766,
+        0,
+        -100000000000.00009
+      ],
+      "radiusMetres": 300000000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "defaultTimeScale": 200000,
+  "description": "Three equal masses released from rest. Nothing is scripted: they fall towards their common centre of mass purely under F = G m1 m2 / r^2.",
+  "fixedTimeStepSeconds": 60,
+  "key": "attract",
+  "physics": {
+    "bounds": {
+      "enabled": false,
+      "friction": 0,
+      "max": [
+        10,
+        20,
+        10
+      ],
+      "min": [
+        -10,
+        0,
+        -10
+      ],
+      "restitution": 0.80000000000000004
+    },
+    "collisionMode": "ignore",
+    "collisionRadiusScale": 1,
+    "collisionRestitution": 0.5,
+    "gravitationalConstant": 6.6742999999999994e-11,
+    "integrator": "velocity-verlet",
+    "minimumDistanceMetres": 1000000,
+    "pairwiseGravity": true,
+    "softeningLengthMetres": 10000000,
+    "stabilization": "softening",
+    "trailLength": 2000,
+    "trailSampleIntervalSeconds": 2000,
+    "uniformGravity": [
+      0,
+      0,
+      0
+    ]
+  },
+  "title": "Mutual attraction (M3)",
+  "view": {
+    "bodyVisualExponent": 0.34999999999999998,
+    "cameraDistance": 40,
+    "cameraPitchDegrees": 28,
+    "focusBody": "",
+    "gridEnabled": true,
+    "gridExtent": 40,
+    "largestBodyDrawnRadius": 1,
+    "metresPerUnit": 20000000000,
+    "minVisualRadius": 0.14999999999999999,
+    "scaleReferenceBody": "",
+    "trailReferenceBody": "",
+    "trueScale": false
+  }
+}

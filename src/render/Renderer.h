@@ -13,12 +13,15 @@
 #include "render/Shader.h"
 #include "render/TrailRenderer.h"
 #include "sim/CelestialBody.h"
+#include "sim/ViewMath.h"
 
 namespace sim {
 class GravitySystem;
 }
 
 namespace render {
+
+using ViewScale = sim::ViewScale;
 
 // Everything drawn goes through here. The one invariant worth stating: every
 // position handed to the GPU has already had the camera position subtracted in
@@ -64,6 +67,9 @@ public:
     // The world-unit point the spacetime sheet is laid out around: what the
     // camera is looking at, not where it is.
     static glm::dvec3 gridCentreFor(const engine::Camera& camera);
+
+    // Bundles the display-scale settings for sim/ViewMath.
+    static ViewScale toViewScale(const RenderSettings& settings);
 
     LineRenderer& lines() { return lines_; }
     const glm::mat4& lastViewProjection() const { return viewProjection_; }

@@ -10,6 +10,7 @@
 #include "render/MeshFactory.h"
 #include "sim/GravitySystem.h"
 #include "sim/OrbitMath.h"
+#include "sim/ViewMath.h"
 
 namespace render {
 namespace {
@@ -55,92 +56,42 @@ std::vector<Light> gatherLights(const sim::GravitySystem& system,
 
 }  // namespace
 
+render::ViewScale Renderer::toViewScale(const RenderSettings& settings) {
+    sim::ViewScale scale;
+    scale.metresPerUnit = settings.metresPerUnit;
+    scale.gain = settings.bodyVisualGain;
+    scale.exponent = settings.bodyVisualExponent;
+    scale.minRadius = settings.minVisualRadius;
+    scale.maxRadius = settings.maxVisualRadius;
+    scale.trueScale = settings.trueScale;
+    return scale;
+}
+
 glm::dvec3 Renderer::relativePosition(const sim::CelestialBody& body,
                                       const glm::dvec3& cameraPosition,
                                       double metresPerUnit) {
-    if (metresPerUnit <= 0.0) return glm::dvec3(0.0);
-    // The subtraction happens in double, before any narrowing. This is the
-    // floating-origin step; doing it after a cast to float would quantise a
-    // 1.5e11 m coordinate to steps of about 16 000 m.
-    return glm::dvec3(body.position) / metresPerUnit - cameraPosition;
+    return sim::relativePosition(body, cameraPosition, metresPerUnit);
 }
 
 double Renderer::visualRadius(const sim::CelestialBody& body,
                               const RenderSettings& settings) {
-    if (settings.metresPerUnit <= 0.0) return settings.minVisualRadius;
-
-    // The body's real radius, expressed in world units. This is the only place
-    // the physical radius is used for anything visual, and the result is used
-    // for nothing physical.
-    const double trueRadius = body.radius / settings.metresPerUnit;
-    if (settings.trueScale) {
-        return std::min(trueRadius, settings.maxVisualRadius);
-    }
-    if (trueRadius <= 0.0) return settings.minVisualRadius;
-
-    const double scaled =
-        settings.bodyVisualGain * std::pow(trueRadius, settings.bodyVisualExponent);
-    return std::clamp(scaled, settings.minVisualRadius, settings.maxVisualRadius);
+    return sim::visualRadius(body, toViewScale(settings));
 }
 
 double Renderer::gainForLargestRadius(const sim::GravitySystem& system,
                                       double metresPerUnit, double exponent,
                                       double targetRadius,
                                       const std::string& referenceBody) {
-    if (metresPerUnit <= 0.0 || exponent <= 0.0) return 1.0;
-
-    double largest = 0.0;
-    if (!referenceBody.empty()) {
-        for (const sim::CelestialBody& body : system.bodies()) {
-            if (body.name == referenceBody) {
-                largest = body.radius / metresPerUnit;
-                break;
-            }
-        }
-    }
-    if (largest <= 0.0) {
-        for (const sim::CelestialBody& body : system.bodies()) {
-            largest = std::max(largest, body.radius / metresPerUnit);
-        }
-    }
-    if (largest <= 0.0) return 1.0;
-    // Solve gain * largest^exponent = targetRadius, so that whatever the scene
-    // is, its biggest body draws at a sensible fraction of the view and
-    // everything else falls into place beneath it.
-    return targetRadius / std::pow(largest, exponent);
+    return sim::solveVisualGain(system, metresPerUnit, exponent, targetRadius,
+                                referenceBody);
 }
 
 sim::BodyId Renderer::pick(const sim::GravitySystem& system,
                            const glm::dvec3& cameraPosition,
                            const glm::vec3& rayDirection,
                            const RenderSettings& settings) {
-    sim::BodyId best = sim::kInvalidBodyId;
-    double bestDistance = 1e30;
-
-    for (const sim::CelestialBody& body : system.bodies()) {
-        const glm::dvec3 centre =
-            relativePosition(body, cameraPosition, settings.metresPerUnit);
-        // Picking uses the *drawn* radius, with a floor in case a body is
-        // rendered smaller than a comfortable click target.
-        const double radius = std::max(visualRadius(body, settings), 0.05);
-
-        // Ray-sphere intersection with the ray origin at the camera (the
-        // origin of this space), so b = -2 * dot(dir, centre).
-        const glm::dvec3 direction(rayDirection);
-        const double projection = glm::dot(direction, centre);
-        if (projection <= 0.0) continue;  // behind the camera
-
-        const double perpendicularSq = glm::dot(centre, centre) - projection * projection;
-        if (perpendicularSq > radius * radius) continue;
-
-        const double halfChord = std::sqrt(radius * radius - perpendicularSq);
-        const double hit = projection - halfChord;
-        if (hit > 0.0 && hit < bestDistance) {
-            bestDistance = hit;
-            best = body.id;
-        }
-    }
-    return best;
+    return sim::pickBody(system, cameraPosition, glm::dvec3(rayDirection),
+                         toViewScale(settings));
 }
 
 glm::dvec3 Renderer::gridCentreFor(const engine::Camera& camera) {

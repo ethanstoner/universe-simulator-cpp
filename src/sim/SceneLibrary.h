@@ -60,8 +60,14 @@ struct Scene {
     double defaultTimeScale = 1.0;
 };
 
-// All built-in presets, in menu order.
+// All available presets, in menu order: the built-in ones plus anything
+// registered from configs/*.json at startup.
 const std::vector<Scene>& builtinScenes();
+
+// Adds a scene, or replaces the existing one with the same key. This is how a
+// JSON file in configs/ takes precedence over the compiled-in definition, so
+// masses and orbital radii can be edited without a rebuild.
+void registerScene(Scene scene);
 const Scene* findScene(const std::string& key);
 std::vector<std::string> sceneKeys();
 

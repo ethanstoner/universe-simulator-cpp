@@ -601,9 +601,24 @@ void recentreOnBarycentre(std::vector<CelestialBody>& bodies) {
     for (CelestialBody& body : bodies) body.position -= centre;
 }
 
-const std::vector<Scene>& builtinScenes() {
-    static const std::vector<Scene> scenes = buildScenes();
+namespace {
+std::vector<Scene>& registry() {
+    static std::vector<Scene> scenes = buildScenes();
     return scenes;
+}
+}  // namespace
+
+const std::vector<Scene>& builtinScenes() { return registry(); }
+
+void registerScene(Scene scene) {
+    std::vector<Scene>& scenes = registry();
+    for (Scene& existing : scenes) {
+        if (existing.key == scene.key) {
+            existing = std::move(scene);
+            return;
+        }
+    }
+    scenes.push_back(std::move(scene));
 }
 
 const Scene* findScene(const std::string& key) {

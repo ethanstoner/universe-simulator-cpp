@@ -1,0 +1,125 @@
+{
+  "bodies": [
+    {
+      "color": [
+        1,
+        0.87000000476837158,
+        0.41999998688697815
+      ],
+      "emissive": true,
+      "fixed": false,
+      "massKg": 1.9889199999999999e+30,
+      "name": "Sun",
+      "positionMetres": [
+        0,
+        0,
+        0
+      ],
+      "radiusMetres": 696340000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        0,
+        0,
+        -0.090584163615684291
+      ]
+    },
+    {
+      "color": [
+        0.31999999284744263,
+        0.55000001192092896,
+        0.92000001668930054
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 5.9721900000000004e+24,
+      "name": "Earth",
+      "positionMetres": [
+        149597900000,
+        0,
+        0
+      ],
+      "radiusMetres": 6371000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        0,
+        0,
+        29788.463458663104
+      ]
+    },
+    {
+      "color": [
+        0.77999997138977051,
+        0.77999997138977051,
+        0.75999999046325684
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 7.3419999999999997e+22,
+      "name": "Moon",
+      "positionMetres": [
+        149982300000,
+        0,
+        0
+      ],
+      "radiusMetres": 1737400,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        0,
+        0,
+        30813.008925545699
+      ]
+    }
+  ],
+  "defaultTimeScale": 300000,
+  "description": "Viewed at Earth-Moon scale: one world unit is 50 000 km, so the lunar orbit is about 7.7 units across. The Sun is still present and still the dominant mass, 2 992 units away off screen -- the Moon's orbit is being computed in its field, not in isolation. Both bodies swing about their common barycentre, which sits inside the Earth.",
+  "fixedTimeStepSeconds": 600,
+  "key": "earth-moon",
+  "physics": {
+    "bounds": {
+      "enabled": false,
+      "friction": 0,
+      "max": [
+        10,
+        20,
+        10
+      ],
+      "min": [
+        -10,
+        0,
+        -10
+      ],
+      "restitution": 0.80000000000000004
+    },
+    "collisionMode": "ignore",
+    "collisionRadiusScale": 1,
+    "collisionRestitution": 0.5,
+    "gravitationalConstant": 6.6742999999999994e-11,
+    "integrator": "velocity-verlet",
+    "minimumDistanceMetres": 1000000,
+    "pairwiseGravity": true,
+    "softeningLengthMetres": 1000000,
+    "stabilization": "softening",
+    "trailLength": 3000,
+    "trailSampleIntervalSeconds": 800,
+    "uniformGravity": [
+      0,
+      0,
+      0
+    ]
+  },
+  "title": "Sun, Earth and Moon",
+  "view": {
+    "bodyVisualExponent": 0.34999999999999998,
+    "cameraDistance": 26,
+    "cameraPitchDegrees": 28,
+    "focusBody": "Earth",
+    "gridEnabled": true,
+    "gridExtent": 26,
+    "largestBodyDrawnRadius": 0.55000000000000004,
+    "metresPerUnit": 50000000,
+    "minVisualRadius": 0.050000000000000003,
+    "scaleReferenceBody": "Earth",
+    "trailReferenceBody": "Earth",
+    "trueScale": false
+  }
+}

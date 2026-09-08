@@ -1,0 +1,194 @@
+{
+  "bodies": [
+    {
+      "color": [
+        1,
+        0.87000000476837158,
+        0.41999998688697815
+      ],
+      "emissive": true,
+      "fixed": false,
+      "massKg": 1.9889199999999999e+30,
+      "name": "Sun",
+      "positionMetres": [
+        0,
+        0,
+        0
+      ],
+      "radiusMetres": 696340000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        0.073640969837996798,
+        0,
+        -0.047646824382300612
+      ]
+    },
+    {
+      "color": [
+        0.72000002861022949,
+        0.68000000715255737,
+        0.62000000476837158
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 3.3011000000000001e+23,
+      "name": "Mercury",
+      "positionMetres": [
+        53337721101.713074,
+        0,
+        22550826784.751644
+      ],
+      "radiusMetres": 2439700,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -18644.606033641361,
+        0,
+        44098.766734013538
+      ]
+    },
+    {
+      "color": [
+        0.93999999761581421,
+        0.80000001192092896,
+        0.51999998092651367
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 4.8675000000000003e+24,
+      "name": "Venus",
+      "positionMetres": [
+        -54628387286.541389,
+        0,
+        93406159146.341324
+      ],
+      "radiusMetres": 6051800,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -30234.128326955135,
+        0,
+        -17682.454347817733
+      ]
+    },
+    {
+      "color": [
+        0.31999999284744263,
+        0.55000001192092896,
+        0.92000001668930054
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 5.9721900000000004e+24,
+      "name": "Earth",
+      "positionMetres": [
+        149597900000,
+        0,
+        0
+      ],
+      "radiusMetres": 6371000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        0.073640969837996798,
+        0,
+        29788.506396002336
+      ]
+    },
+    {
+      "color": [
+        0.77999997138977051,
+        0.77999997138977051,
+        0.75999999046325684
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 7.3419999999999997e+22,
+      "name": "Moon",
+      "positionMetres": [
+        149982300000,
+        0,
+        0
+      ],
+      "radiusMetres": 1737400,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        0.073640969837996798,
+        0,
+        30813.051862884931
+      ]
+    },
+    {
+      "color": [
+        0.85000002384185791,
+        0.41999998688697815,
+        0.2800000011920929
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 6.4171000000000003e+23,
+      "name": "Mars",
+      "positionMetres": [
+        -204406216660.78912,
+        0,
+        -100867667324.18538
+      ],
+      "radiusMetres": 3389500,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        10679.197136474764,
+        0,
+        -21641.067895203891
+      ]
+    }
+  ],
+  "defaultTimeScale": 2000000,
+  "description": "Sun, Mercury, Venus, Earth, Moon and Mars, from real masses and semi-major axes, each started on a circular orbit.",
+  "fixedTimeStepSeconds": 1800,
+  "key": "inner",
+  "physics": {
+    "bounds": {
+      "enabled": false,
+      "friction": 0,
+      "max": [
+        10,
+        20,
+        10
+      ],
+      "min": [
+        -10,
+        0,
+        -10
+      ],
+      "restitution": 0.80000000000000004
+    },
+    "collisionMode": "ignore",
+    "collisionRadiusScale": 1,
+    "collisionRestitution": 0.5,
+    "gravitationalConstant": 6.6742999999999994e-11,
+    "integrator": "velocity-verlet",
+    "minimumDistanceMetres": 1000000,
+    "pairwiseGravity": true,
+    "softeningLengthMetres": 1000000,
+    "stabilization": "softening",
+    "trailLength": 1200,
+    "trailSampleIntervalSeconds": 50000,
+    "uniformGravity": [
+      0,
+      0,
+      0
+    ]
+  },
+  "title": "Inner solar system",
+  "view": {
+    "bodyVisualExponent": 0.34999999999999998,
+    "cameraDistance": 46,
+    "cameraPitchDegrees": 28,
+    "focusBody": "Sun",
+    "gridEnabled": true,
+    "gridExtent": 46,
+    "largestBodyDrawnRadius": 2.3999999999999999,
+    "metresPerUnit": 14959787070,
+    "minVisualRadius": 0.089999999999999997,
+    "scaleReferenceBody": "",
+    "trailReferenceBody": "",
+    "trueScale": false
+  }
+}
