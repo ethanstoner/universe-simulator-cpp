@@ -81,6 +81,21 @@ void applyScene(const Scene& scene, GravitySystem& system);
 void zeroNetMomentum(std::vector<CelestialBody>& bodies);
 void recentreOnBarycentre(std::vector<CelestialBody>& bodies);
 
+// A body template offered by the spawn panel and by the --spawn command line
+// option. Shared so that the scripted spawn used for verification goes through
+// exactly the same definitions the UI offers.
+struct BodyPreset {
+    std::string name;
+    double mass;    // kg
+    double radius;  // m
+    glm::vec3 color;
+    bool emissive = false;
+    std::string note;  // shown as a tooltip; carries the honesty caveats
+};
+
+const std::vector<BodyPreset>& bodyPresets();
+const BodyPreset* findBodyPreset(const std::string& name);
+
 // Helpers used by the presets and by the interactive spawn UI.
 CelestialBody makeBody(const std::string& name, double mass, double radius,
                        const Vec3& position, const Vec3& velocity,

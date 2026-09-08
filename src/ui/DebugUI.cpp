@@ -106,32 +106,6 @@ void endPanelBody() { ImGui::PopItemWidth(); }
 constexpr double kTimeScales[] = {0.0,    0.1,    1.0,     10.0,    100.0,
                                   1000.0, 1.0e4,  1.0e5,   1.0e6,   1.0e7};
 
-struct SpawnPreset {
-    const char* name;
-    double mass;
-    double radius;
-    glm::vec3 color;
-    bool emissive;
-    const char* note;
-};
-
-const SpawnPreset kSpawnPresets[] = {
-    {"Moon", 7.342e22, 1.7374e6, {0.78f, 0.78f, 0.76f}, false, ""},
-    {"Earth", 5.97219e24, 6.371e6, {0.32f, 0.55f, 0.92f}, false, ""},
-    {"Jupiter", 1.8982e27, 6.9911e7, {0.85f, 0.72f, 0.55f}, false, ""},
-    {"Sun", 1.98892e30, 6.9634e8, {1.00f, 0.87f, 0.42f}, true, ""},
-    {"Red dwarf", 0.25 * 1.98892e30, 0.3 * 6.9634e8, {1.00f, 0.45f, 0.32f}, true, ""},
-    {"White dwarf", 0.9 * 1.98892e30, 6.4e6, {0.85f, 0.92f, 1.00f}, true,
-     "Sun-like mass compressed to roughly Earth's radius."},
-    {"Neutron-star-like", 1.4 * 1.98892e30, 1.2e4, {0.80f, 0.88f, 1.00f}, true,
-     "1.4 solar masses in a 12 km ball. Newtonian only: no relativistic "
-     "structure is modelled."},
-    {"Compact massive object", 10.0 * 1.98892e30, 3.0e4, {0.10f, 0.05f, 0.18f}, false,
-     "A 10 solar-mass point mass. NOT a black hole: the simulation has no event "
-     "horizon and no relativistic terms. Its Schwarzschild radius is shown for "
-     "reference only."},
-};
-
 }  // namespace
 
 void DebugUI::initialize(GLFWwindow* window) {
@@ -726,19 +700,21 @@ void DebugUI::spawnPanel(engine::Application& app) {
     beginPanelBody();
 
     ImGui::TextUnformatted("Presets");
-    const int presetCount = static_cast<int>(sizeof(kSpawnPresets) / sizeof(kSpawnPresets[0]));
-    for (int i = 0; i < presetCount; ++i) {
+    // Shared with the --spawn command line option, so the scripted spawns used
+    // to verify runtime insertion use exactly these definitions.
+    const std::vector<sim::BodyPreset>& presets = sim::bodyPresets();
+    for (std::size_t i = 0; i < presets.size(); ++i) {
         if (i % 2 != 0) ImGui::SameLine();
-        if (ImGui::Button(kSpawnPresets[i].name, ImVec2(160, 0))) {
-            state.spawnPresetIndex = i;
-            state.spawnTemplate.name = kSpawnPresets[i].name;
-            state.spawnTemplate.mass = kSpawnPresets[i].mass;
-            state.spawnTemplate.radius = kSpawnPresets[i].radius;
-            state.spawnTemplate.color = kSpawnPresets[i].color;
-            state.spawnTemplate.emissive = kSpawnPresets[i].emissive;
+        if (ImGui::Button(presets[i].name.c_str(), ImVec2(160, 0))) {
+            state.spawnPresetIndex = static_cast<int>(i);
+            state.spawnTemplate.name = presets[i].name;
+            state.spawnTemplate.mass = presets[i].mass;
+            state.spawnTemplate.radius = presets[i].radius;
+            state.spawnTemplate.color = presets[i].color;
+            state.spawnTemplate.emissive = presets[i].emissive;
         }
-        if (ImGui::IsItemHovered() && kSpawnPresets[i].note[0] != '\0') {
-            ImGui::SetTooltip("%s", kSpawnPresets[i].note);
+        if (ImGui::IsItemHovered() && !presets[i].note.empty()) {
+            ImGui::SetTooltip("%s", presets[i].note.c_str());
         }
     }
 

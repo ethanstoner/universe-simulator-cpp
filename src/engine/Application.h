@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "engine/Camera.h"
 #include "engine/Clock.h"
@@ -46,6 +47,13 @@ struct AppOptions {
     double cameraYaw = 1e9;
     std::string focus;                 // body to frame at startup
     std::string exportConfigs;         // write every scene as JSON and exit
+    // Body presets to insert after the warm-up, through exactly the same
+    // spawn path the UI uses. Exists so that runtime insertion can be
+    // verified from a script rather than merely asserted.
+    std::vector<std::string> spawnPresets;
+    double spawnDistance = 0.0;        // world units ahead of camera; 0 = scene default
+    bool spawnAtRest = false;          // skip the automatic circular-orbit velocity
+    double settleSimSeconds = 0.0;     // simulated seconds to advance AFTER spawning
     bool noConfigs = false;            // ignore configs/, use the built-ins
 
     static AppOptions parse(int argc, char** argv);

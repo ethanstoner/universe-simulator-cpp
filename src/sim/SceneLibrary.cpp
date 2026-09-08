@@ -608,6 +608,34 @@ std::vector<Scene>& registry() {
 }
 }  // namespace
 
+const std::vector<BodyPreset>& bodyPresets() {
+    static const std::vector<BodyPreset> presets = {
+        {"Moon", kMoonMass, kMoonRadius, {0.78f, 0.78f, 0.76f}, false, ""},
+        {"Earth", kEarth.mass, kEarth.radius, kEarth.color, false, ""},
+        {"Jupiter", kJupiter.mass, kJupiter.radius, kJupiter.color, false, ""},
+        {"Sun", kSolarMass, kSunRadius, {1.00f, 0.87f, 0.42f}, true, ""},
+        {"Red dwarf", 0.25 * kSolarMass, 0.3 * kSunRadius, {1.00f, 0.45f, 0.32f}, true,
+         "A 0.25 solar-mass star."},
+        {"White dwarf", 0.9 * kSolarMass, 6.4e6, {0.85f, 0.92f, 1.00f}, true,
+         "A Sun-like mass compressed to roughly Earth's radius."},
+        {"Neutron-star-like", 1.4 * kSolarMass, 1.2e4, {0.80f, 0.88f, 1.00f}, true,
+         "1.4 solar masses in a 12 km ball. Newtonian only: no relativistic "
+         "structure, degeneracy pressure or frame dragging is modelled."},
+        {"Compact massive object", 10.0 * kSolarMass, 3.0e4, {0.10f, 0.05f, 0.18f}, false,
+         "A 10 solar-mass point mass. NOT a black hole: this simulator has no "
+         "event horizon and no relativistic terms. Its Schwarzschild radius is "
+         "reported for reference only."},
+    };
+    return presets;
+}
+
+const BodyPreset* findBodyPreset(const std::string& name) {
+    for (const BodyPreset& preset : bodyPresets()) {
+        if (preset.name == name) return &preset;
+    }
+    return nullptr;
+}
+
 const std::vector<Scene>& builtinScenes() { return registry(); }
 
 void registerScene(Scene scene) {

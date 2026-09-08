@@ -84,6 +84,13 @@ void AppOptions::printUsage() {
         "  --distance UNITS         camera distance override\n"
         "  --pitch DEG --yaw DEG    camera angle override\n"
         "  --no-ui                  hide the ImGui panels\n"
+        "  --export-configs DIR     write every scene to DIR as JSON and exit\n"
+        "  --no-configs             ignore configs/ and use the built-in presets\n"
+        "  --spawn PRESET           spawn a body preset after the warm-up (repeatable)\n"
+        "  --spawn-distance UNITS   how far ahead of the camera to spawn it\n"
+        "  --spawn-at-rest          spawn with no automatic circular-orbit velocity\n"
+        "  --settle SECONDS         simulated seconds to advance AFTER spawning\n"
+        "  --list-spawn-presets     print the body presets and exit\n"
         "  --hidden                 do not show the window (implied by screenshot)\n"
         "  --no-vsync               uncap the frame rate\n"
         "  --help                   this message\n");
@@ -115,6 +122,20 @@ AppOptions AppOptions::parse(int argc, char** argv) {
         else if (!std::strcmp(arg, "--no-ui")) options.noUi = true;
         else if (!std::strcmp(arg, "--export-configs")) options.exportConfigs = valueFor(i);
         else if (!std::strcmp(arg, "--no-configs")) options.noConfigs = true;
+        else if (!std::strcmp(arg, "--spawn")) options.spawnPresets.emplace_back(valueFor(i));
+        else if (!std::strcmp(arg, "--spawn-distance")) {
+            options.spawnDistance = std::atof(valueFor(i));
+        } else if (!std::strcmp(arg, "--spawn-at-rest")) options.spawnAtRest = true;
+        else if (!std::strcmp(arg, "--settle")) {
+            options.settleSimSeconds = std::atof(valueFor(i));
+        }
+        else if (!std::strcmp(arg, "--list-spawn-presets")) {
+            for (const sim::BodyPreset& preset : sim::bodyPresets()) {
+                std::printf("%-24s %.4g kg  r = %.4g m\n", preset.name.c_str(),
+                            preset.mass, preset.radius);
+            }
+            std::exit(0);
+        }
         else if (!std::strcmp(arg, "--hidden")) options.hidden = true;
         else if (!std::strcmp(arg, "--no-vsync")) options.vsync = false;
         else if (!std::strcmp(arg, "--help") || !std::strcmp(arg, "-h")) {
@@ -351,6 +372,70 @@ int Application::run() {
         diagnostics_ = sim::computeDiagnostics(system_);
         std::printf("[app] warmed up %.4g simulated seconds in %lld steps\n",
                     options_.warmupSimSeconds, steps);
+    }
+
+    // Scripted spawns go through spawnFromCamera(), the same path the N key and
+    // the Spawn button use, so a screenshot taken afterwards is evidence about
+    // the real feature rather than about a test-only shortcut.
+    if (!options_.spawnPresets.empty()) {
+        if (options_.spawnDistance > 0.0) state_.spawnDistance = options_.spawnDistance;
+        if (options_.spawnAtRest) state_.spawnOrbitAuto = false;
+        for (const std::string& name : options_.spawnPresets) {
+            const sim::BodyPreset* preset = sim::findBodyPreset(name);
+            if (!preset) {
+                std::fprintf(stderr, "unknown spawn preset '%s'\n", name.c_str());
+                continue;
+            }
+            state_.spawnTemplate.name = preset->name;
+            state_.spawnTemplate.mass = preset->mass;
+            state_.spawnTemplate.radius = preset->radius;
+            state_.spawnTemplate.color = preset->color;
+            state_.spawnTemplate.emissive = preset->emissive;
+
+            const sim::BodyId id = spawnFromCamera();
+            if (const sim::CelestialBody* body = system_.find(id)) {
+                std::printf("[app] spawned %s: m = %.4g kg, r = %.4g m, "
+                            "pos = (%.4g, %.4g, %.4g) m, |v| = %.4g m/s, "
+                            "%zu bodies now\n",
+                            body->name.c_str(), body->mass, body->radius,
+                            body->position.x, body->position.y, body->position.z,
+                            glm::length(body->velocity), system_.size());
+            }
+        }
+    }
+
+    // Settling time runs after the spawns, so a captured frame shows what the
+    // new body actually did to the existing orbits rather than the instant it
+    // appeared. Radii are reported before and after so the disruption is a
+    // measured number, not an impression from a picture.
+    if (options_.settleSimSeconds > 0.0) {
+        // Keyed by id, not name: a spawned "Sun" shares its name with the
+        // original, and matching on the name reported both twice.
+        std::vector<std::pair<sim::BodyId, double>> before;
+        for (const sim::CelestialBody& body : system_.bodies()) {
+            before.emplace_back(body.id, glm::length(body.position));
+        }
+
+        const long long steps =
+            static_cast<long long>(options_.settleSimSeconds / time_.fixedDt);
+        for (long long i = 0; i < steps; ++i) system_.step(time_.fixedDt);
+        diagnostics_ = sim::computeDiagnostics(system_);
+        energyTracker_.update(diagnostics_);
+
+        std::printf("[app] settled %.4g simulated seconds in %lld steps\n",
+                    options_.settleSimSeconds, steps);
+        for (const auto& [id, initialRadius] : before) {
+            const sim::CelestialBody* body = system_.find(id);
+            if (!body) {
+                std::printf("[app]   body %u no longer exists (merged)\n", id);
+                continue;
+            }
+            const double now = glm::length(body->position);
+            const double change =
+                initialRadius > 0.0 ? (now - initialRadius) / initialRadius * 100.0 : 0.0;
+            std::printf("[app]   #%-3u %-14s r %.4g -> %.4g m (%+.2f%%)\n", id,
+                        body->name.c_str(), initialRadius, now, change);
+        }
     }
 
     while (!window_->shouldClose()) {

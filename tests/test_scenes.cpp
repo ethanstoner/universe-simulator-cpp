@@ -285,3 +285,140 @@ TEST(scenes_three_body_is_deterministic_but_chaotic) {
     const Vec3 c = run(1.0);
     CHECK(glm::length(c - a) > 1.0e9);
 }
+
+// --------------------------------------------------- M12: extreme compact mass
+
+TEST(compact_mass_dropped_on_a_star_stays_numerically_finite) {
+    // The worst case the UI allows: a 1.4 solar-mass, 12 km object released at
+    // rest and allowed to fall straight through the Sun. Without stabilisation
+    // this is a division by a vanishing r; with it, everything must stay finite
+    // and the energy must stay bounded.
+    GravitySystem system;
+    applyScene(*findScene("inner"), system);
+
+    CelestialBody compact = makeBody("Compact", 1.4 * constants::kSolarMass, 1.2e4,
+                                     Vec3(0.0, 0.0, 3.0 * constants::kAu), Vec3(0.0),
+                                     glm::vec3(0.2f));
+    // Aimed almost exactly at the Sun, so the closest approach is tiny.
+    compact.position.x = 1.0e6;
+    system.add(compact);
+
+    const double reference = std::abs(computeDiagnostics(system).totalEnergy);
+    double closestApproach = 1e30;
+
+    const double dt = 600.0;
+    for (int i = 0; i < 200000; ++i) {
+        system.step(dt);
+        const CelestialBody* sun = byName(system, "Sun");
+        const CelestialBody* body = byName(system, "Compact");
+        if (!sun || !body) break;
+        closestApproach =
+            std::min(closestApproach, glm::length(body->position - sun->position));
+
+        for (const CelestialBody& each : system.bodies()) {
+            CHECK(std::isfinite(each.position.x));
+            CHECK(std::isfinite(each.position.y));
+            CHECK(std::isfinite(each.position.z));
+            CHECK(std::isfinite(each.velocity.x));
+            CHECK(std::isfinite(each.speed()));
+        }
+    }
+
+    // It really did come close, so the guard was actually exercised.
+    CHECK_LESS(closestApproach, 5.0e9);
+    // And nothing acquired a superluminal speed, which is the usual symptom of
+    // a singularity being hit.
+    for (const CelestialBody& body : system.bodies()) {
+        CHECK_LESS(body.speed(), constants::kC);
+    }
+    const double energy = std::abs(computeDiagnostics(system).totalEnergy);
+    CHECK(std::isfinite(energy));
+    (void)reference;
+}
+
+TEST(compact_mass_encounter_error_is_timestep_resolution_not_a_broken_force) {
+    // The close pass above does NOT conserve energy well: at a 600 s step the
+    // total moves by a factor of thousands. That is worth being precise about,
+    // because "the softening is hiding an explosion" and "the step is too
+    // coarse to resolve the encounter" look identical from a single run.
+    //
+    // They are distinguishable by refining the step. Truncation error at an
+    // unresolved encounter shrinks as the step shrinks; a broken force law or a
+    // singularity being papered over does not. So this measures the drift at
+    // three step sizes and requires it to fall.
+    auto driftAtStep = [](double dt) {
+        GravitySystem system;
+        system.settings().stabilization = Stabilization::Softening;
+        system.settings().softeningLength = 1.0e6;
+        system.settings().trailLength = 0;
+
+        // A two-body close pass, which keeps the measurement clean. The impact
+        // parameter is chosen so that periapsis lands near 3.6e9 m, where the
+        // characteristic time is about 8500 s: coarse at a 600 s step and
+        // comfortably resolved at 37.5 s. A tighter pass is not a useful test,
+        // because if NO tested step resolves the encounter the error is
+        // chaotic rather than convergent and the comparison means nothing.
+        system.add(makeBody("star", constants::kSolarMass, 6.96e8, Vec3(0.0), Vec3(0.0),
+                            glm::vec3(1.0f)));
+        CelestialBody compact =
+            makeBody("compact", 1.4 * constants::kSolarMass, 1.2e4,
+                     Vec3(5.0e10, 0.0, 2.0e11), Vec3(0.0, 0.0, -3.0e4), glm::vec3(0.2f));
+        system.add(compact);
+        zeroNetMomentum(system.bodies());
+        system.invalidate();
+
+        const double reference = computeDiagnostics(system).totalEnergy;
+        const double totalTime = 4.0e7;
+        const long long steps = static_cast<long long>(totalTime / dt);
+        for (long long i = 0; i < steps; ++i) system.step(dt);
+
+        for (const CelestialBody& body : system.bodies()) {
+            CHECK(std::isfinite(body.position.x));
+            CHECK_LESS(body.speed(), constants::kC);
+        }
+        const double energy = computeDiagnostics(system).totalEnergy;
+        return std::abs((energy - reference) / reference);
+    };
+
+    const double coarse = driftAtStep(600.0);
+    const double medium = driftAtStep(150.0);
+    const double fine = driftAtStep(37.5);
+
+    // Every refinement must improve matters, and the finest must be far better
+    // than the coarsest. If softening were masking a singularity these would
+    // all be equally bad.
+    CHECK_LESS(medium, coarse);
+    CHECK_LESS(fine, medium);
+    CHECK_LESS(fine, coarse / 10.0);
+}
+
+TEST(unstabilised_gravity_really_does_blow_up) {
+    // The counterpart: with stabilisation off, a direct hit produces exactly
+    // the infinity the softening exists to prevent. Documented rather than
+    // hidden -- if this ever stops failing, the stabilisation tests above are
+    // no longer proving anything.
+    GravitySystem system;
+    system.settings().stabilization = Stabilization::None;
+    system.settings().trailLength = 0;
+
+    CelestialBody a = makeBody("a", constants::kSolarMass, 1.0, Vec3(0.0), Vec3(0.0),
+                               glm::vec3(1.0f));
+    CelestialBody b = makeBody("b", 1.0e20, 1.0, Vec3(1.0e-4, 0.0, 0.0), Vec3(0.0),
+                               glm::vec3(1.0f));
+    system.add(a);
+    system.add(b);
+
+    for (int i = 0; i < 200; ++i) system.step(1.0);
+    const double speed = system.bodies()[1].speed();
+    CHECK(speed > constants::kC);  // nonsense, as expected without softening
+
+    // The same setup with softening stays sane.
+    GravitySystem guarded;
+    guarded.settings().stabilization = Stabilization::Softening;
+    guarded.settings().softeningLength = 1.0e6;
+    guarded.settings().trailLength = 0;
+    guarded.add(a);
+    guarded.add(b);
+    for (int i = 0; i < 200; ++i) guarded.step(1.0);
+    CHECK_LESS(guarded.bodies()[1].speed(), constants::kC);
+}
