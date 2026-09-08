@@ -1,0 +1,9 @@
+build/
+out/
+*.png
+!docs/images/*.png
+.vscode/
+.cache/
+compile_commands.json
+
+# screenshots captured for milestone verification are kept
