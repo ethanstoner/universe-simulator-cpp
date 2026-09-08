@@ -5,7 +5,11 @@
 
 #include "engine/Clock.h"
 #include "engine/Input.h"
+#include "engine/TimeControl.h"
 #include "engine/Window.h"
+#include "render/Mesh.h"
+#include "render/Shader.h"
+#include "sim/GravitySystem.h"
 
 namespace engine {
 
@@ -19,7 +23,7 @@ struct AppOptions {
     std::string screenshotPath;      // if set: render, capture, exit
     int screenshotFrame = 60;        // which frame to capture on
     double warmupSimSeconds = 0.0;   // advance the simulation before capturing
-    std::string scene;               // preset to load at startup
+    std::string scene = "bounce";    // preset to load at startup
     bool listScenes = false;
     bool vsync = true;
 
@@ -35,15 +39,24 @@ public:
     int run();
 
 private:
+    void loadScene(const std::string& name);
     void processInput();
-    void update(double dt);
+    void advanceSimulation(double realDelta);
     void render();
+    void renderKinematicsLab();
 
     AppOptions options_;
     std::unique_ptr<Window> window_;
     Input input_;
     Clock clock_;
-    bool captured_ = false;
+    TimeControl time_;
+
+    sim::GravitySystem system_;
+
+    render::Shader flatShader_;
+    render::Mesh circleMesh_;
+    render::Mesh outlineMesh_;
+    bool renderReady_ = false;
 };
 
 }  // namespace engine

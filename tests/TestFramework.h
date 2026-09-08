@@ -53,11 +53,39 @@ inline void expectNear(double actual, double expected, double tolerance,
     }
 }
 
-// Relative comparison, which is what most physics quantities want.
+// Relative comparison, which is what most physics quantities want. Note the
+// division is by the signed expected value: dividing by |expected| would report
+// a perfect match as -1 whenever the expected value is negative, which silently
+// inverted every test involving potential energy or an inward acceleration.
 inline void expectRelative(double actual, double expected, double relativeTolerance,
                            const char* expression, const char* file, int line) {
-    const double scale = std::max(std::abs(expected), 1e-300);
-    expectNear(actual / scale, 1.0, relativeTolerance, expression, file, line);
+    if (expected == 0.0) {
+        expectNear(actual, 0.0, relativeTolerance, expression, file, line);
+        return;
+    }
+    const double ratio = actual / expected;
+    if (!(std::abs(ratio - 1.0) <= relativeTolerance) || std::isnan(ratio)) {
+        char buffer[512];
+        std::snprintf(buffer, sizeof(buffer),
+                      "%s:%d  %s\n      actual   %.17g\n      expected %.17g\n"
+                      "      rel err  %.6g > tol %.6g",
+                      file, line, expression, actual, expected,
+                      std::abs(ratio - 1.0), relativeTolerance);
+        fail(buffer);
+    }
+}
+
+// Reports both operands on failure, which matters for "is this drift small
+// enough" assertions where the interesting information is the actual number.
+inline void expectLess(double actual, double limit, const char* expression,
+                       const char* file, int line) {
+    if (!(actual < limit) || std::isnan(actual)) {
+        char buffer[512];
+        std::snprintf(buffer, sizeof(buffer),
+                      "%s:%d  %s\n      actual %.17g\n      limit  %.17g",
+                      file, line, expression, actual, limit);
+        fail(buffer);
+    }
 }
 
 inline int runAll(int argc, char** argv) {
@@ -97,3 +125,5 @@ inline int runAll(int argc, char** argv) {
     ::testing::expectNear((actual), (expected), (tol), #actual " ~= " #expected, __FILE__, __LINE__)
 #define CHECK_REL(actual, expected, tol) \
     ::testing::expectRelative((actual), (expected), (tol), #actual " ~= " #expected, __FILE__, __LINE__)
+#define CHECK_LESS(actual, limit) \
+    ::testing::expectLess((actual), (limit), #actual " < " #limit, __FILE__, __LINE__)
