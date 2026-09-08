@@ -64,6 +64,14 @@ struct SimulationSettings {
 
     std::size_t trailLength = 900;      // samples retained per body
     double trailSampleInterval = 0.0;   // simulated seconds between samples; 0 = every step
+
+    // Reference frame trails are recorded in. kInvalidBodyId means the
+    // inertial (barycentric) frame, which is what you want for planets round
+    // the Sun. Setting it to a body records positions relative to that body,
+    // which is the only way to see the Moon actually loop around the Earth:
+    // in the inertial frame the Moon's path is a gentle scallop about the
+    // Sun and its motion around the Earth is invisible at that scale.
+    BodyId trailReference = kInvalidBodyId;
 };
 
 // Records what a step did, so the UI can report merges rather than having

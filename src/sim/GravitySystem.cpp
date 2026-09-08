@@ -240,12 +240,21 @@ void GravitySystem::recordTrails() {
     }
     lastTrailSample_ = elapsed_;
 
+    // Samples are stored already expressed in the chosen frame, so switching
+    // frames does not retroactively rewrite history -- it starts a new one.
+    Vec3 origin(0.0);
+    if (settings_.trailReference != kInvalidBodyId) {
+        if (const CelestialBody* reference = find(settings_.trailReference)) {
+            origin = reference->position;
+        }
+    }
+
     for (CelestialBody& body : bodies_) {
         if (!body.showTrail) {
             if (!body.trail.empty()) body.trail.clear();
             continue;
         }
-        body.trail.push_back(body.position);
+        body.trail.push_back(body.position - origin);
         while (body.trail.size() > settings_.trailLength) body.trail.pop_front();
     }
 }

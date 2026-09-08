@@ -145,6 +145,10 @@ void Shader::setVec4(const char* name, const glm::vec4& value) {
     const int location = uniformLocation(name);
     if (location >= 0) glUniform4fv(location, 1, &value.x);
 }
+void Shader::setMat3(const char* name, const glm::mat3& value) {
+    const int location = uniformLocation(name);
+    if (location >= 0) glUniformMatrix3fv(location, 1, GL_FALSE, &value[0][0]);
+}
 void Shader::setMat4(const char* name, const glm::mat4& value) {
     const int location = uniformLocation(name);
     if (location >= 0) glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);

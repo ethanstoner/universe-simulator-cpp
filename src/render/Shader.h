@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 
+#include <glm/mat3x3.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -38,6 +39,7 @@ public:
     void setVec2(const char* name, const glm::vec2& value);
     void setVec3(const char* name, const glm::vec3& value);
     void setVec4(const char* name, const glm::vec4& value);
+    void setMat3(const char* name, const glm::mat3& value);
     void setMat4(const char* name, const glm::mat4& value);
 
 private:
