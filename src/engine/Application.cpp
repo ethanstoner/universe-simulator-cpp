@@ -90,6 +90,7 @@ void AppOptions::printUsage() {
         "  --no-post                disable HDR post-processing and bloom\n"
         "  --no-stars               hide the background starfield\n"
         "  --selftest               exercise every UI-reachable path and exit\n"
+        "  --benchmark [N]          time direct vs Barnes-Hut up to N bodies\n"
         "  --sequence DIR           write a deterministic PNG frame sequence and exit\n"
         "  --sequence-frames N      how many frames to write\n"
         "  --sequence-step SECONDS  simulated seconds advanced per frame\n"
@@ -132,6 +133,13 @@ AppOptions AppOptions::parse(int argc, char** argv) {
         else if (!std::strcmp(arg, "--no-configs")) options.noConfigs = true;
         else if (!std::strcmp(arg, "--no-post")) options.noPost = true;
         else if (!std::strcmp(arg, "--no-stars")) options.noStars = true;
+        else if (!std::strcmp(arg, "--benchmark")) {
+            // Optional body count; defaults to 8192.
+            options.benchmarkBodies = 8192;
+            if (i + 1 < argc && argv[i + 1][0] != '-') {
+                options.benchmarkBodies = std::atoi(argv[++i]);
+            }
+        }
         else if (!std::strcmp(arg, "--selftest")) {
             options.selfTest = true;
             options.hidden = true;

@@ -58,6 +58,7 @@ struct AppOptions {
     bool noPost = false;               // draw straight to the window, no HDR/bloom
     bool noStars = false;              // hide the decorative background starfield
     bool selfTest = false;             // exercise every UI-reachable path and exit
+    int benchmarkBodies = 0;           // >0: run the solver benchmark and exit
     // Deterministic frame sequence for the demo video. Simulated time is
     // advanced by a fixed amount per frame rather than by the wall clock, so
     // the same command always produces the same footage.
