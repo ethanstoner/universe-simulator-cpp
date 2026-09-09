@@ -62,6 +62,28 @@ jobs:
           xvfb-run -a --server-args="-screen 0 1280x720x24" \
             ./build/bin/gravitysim --selftest
 
+  macos:
+    name: macOS (AppleClang)
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Ninja
+        run: brew install ninja
+
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Unit tests
+        # Build and headless physics tests only. macOS runners have no usable
+        # OpenGL context, and Apple deprecated OpenGL besides, so the GL
+        # self-test is covered on Linux instead.
+        run: ctest --test-dir build --output-on-failure -E selftest
+
   windows:
     name: Windows (MSVC)
     runs-on: windows-latest

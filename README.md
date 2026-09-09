@@ -11,10 +11,11 @@ real astronomical data, four selectable integrators, live conserved-quantity
 diagnostics, runtime body spawning, and a GPU-deformed "spacetime" grid that is
 clearly labelled as the visual analogy it is.
 
-Built and tested on **three toolchains**: MinGW g++ 16.2, MSVC 19.44 and Linux
-gcc 13.3 and clang 18.1, all warning-free. CI builds every push on Linux (gcc and
-clang) and Windows, and runs the OpenGL self-test headlessly through Mesa's
-software rasteriser.
+Built warning-free on **four toolchains** -- MinGW g++ 16.2, MSVC 19.44,
+gcc 13.3 and clang 18.1. CI builds every push on Linux, Windows and macOS, and
+runs the OpenGL self-test headlessly on Linux through Mesa's software
+rasteriser, so continuous integration exercises the real GL path rather than
+only compiling.
 
 <p align="center">
   <img src="docs/media/demo.gif" width="720" alt="The inner solar system orbiting inside its gravitational well">
