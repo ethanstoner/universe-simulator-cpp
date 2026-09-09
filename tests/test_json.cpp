@@ -238,3 +238,28 @@ TEST(config_tolerates_line_comments) {
     if (!ok) ::testing::fail(error);
     CHECK(scene.key == "commented");
 }
+
+TEST(config_round_trips_the_gravity_solver) {
+    // Without this the asteroid belt would silently fall back to direct
+    // summation whenever it was loaded from configs/ rather than from code.
+    const Scene* belt = findScene("belt");
+    CHECK(belt != nullptr);
+    CHECK(belt->settings.solver == GravitySolver::BarnesHut);
+
+    Scene restored;
+    std::string error;
+    const bool ok = sceneFromJson(sceneToJson(*belt), restored, error);
+    if (!ok) ::testing::fail(error);
+
+    CHECK(restored.settings.solver == GravitySolver::BarnesHut);
+    CHECK(restored.settings.barnesHutTheta == belt->settings.barnesHutTheta);
+
+    // And a scene that does not name a solver defaults to exact summation.
+    Scene minimal;
+    const char* text = R"({
+      "key": "x", "view": {"metresPerUnit": 1},
+      "bodies": [{"name": "a", "massKg": 1, "radiusMetres": 1}]
+    })";
+    CHECK(sceneFromJson(text, minimal, error));
+    CHECK(minimal.settings.solver == GravitySolver::Direct);
+}

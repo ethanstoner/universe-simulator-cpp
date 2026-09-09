@@ -75,6 +75,7 @@
   "fixedTimeStepSeconds": 1800,
   "key": "binary",
   "physics": {
+    "barnesHutTheta": 0.5,
     "bounds": {
       "enabled": false,
       "friction": 0,
@@ -98,6 +99,7 @@
     "minimumDistanceMetres": 1000000,
     "pairwiseGravity": true,
     "softeningLengthMetres": 1000000,
+    "solver": "direct",
     "stabilization": "softening",
     "trailLength": 2400,
     "trailSampleIntervalSeconds": 15000,

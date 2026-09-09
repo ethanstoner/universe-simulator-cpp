@@ -52,6 +52,7 @@
   "fixedTimeStepSeconds": 3600,
   "key": "two-body",
   "physics": {
+    "barnesHutTheta": 0.5,
     "bounds": {
       "enabled": false,
       "friction": 0,
@@ -75,6 +76,7 @@
     "minimumDistanceMetres": 1000000,
     "pairwiseGravity": true,
     "softeningLengthMetres": 1000000,
+    "solver": "direct",
     "stabilization": "softening",
     "trailLength": 1200,
     "trailSampleIntervalSeconds": 26000,

@@ -75,6 +75,7 @@
   "fixedTimeStepSeconds": 0.0041666666666666666,
   "key": "bounce",
   "physics": {
+    "barnesHutTheta": 0.5,
     "bounds": {
       "enabled": true,
       "friction": 0.02,
@@ -98,6 +99,7 @@
     "minimumDistanceMetres": 1000000,
     "pairwiseGravity": false,
     "softeningLengthMetres": 1000000,
+    "solver": "direct",
     "stabilization": "softening",
     "trailLength": 240,
     "trailSampleIntervalSeconds": 0,

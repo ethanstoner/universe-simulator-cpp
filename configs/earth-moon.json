@@ -75,6 +75,7 @@
   "fixedTimeStepSeconds": 600,
   "key": "earth-moon",
   "physics": {
+    "barnesHutTheta": 0.5,
     "bounds": {
       "enabled": false,
       "friction": 0,
@@ -98,6 +99,7 @@
     "minimumDistanceMetres": 1000000,
     "pairwiseGravity": true,
     "softeningLengthMetres": 1000000,
+    "solver": "direct",
     "stabilization": "softening",
     "trailLength": 3000,
     "trailSampleIntervalSeconds": 800,

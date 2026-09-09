@@ -373,6 +373,32 @@ void DebugUI::simulationPanel(engine::Application& app) {
             "reachable in a demonstration.");
     }
 
+    int solver = static_cast<int>(settings.solver);
+    const char* solverNames[] = {"Direct O(N^2)", "Barnes-Hut O(N log N)"};
+    if (ImGui::Combo("Solver", &solver, solverNames, 2)) {
+        settings.solver = static_cast<sim::GravitySolver>(solver);
+        app.system().invalidate();
+    }
+    ImGui::SetItemTooltip(
+        "Direct summation visits every pair once and applies equal-and-opposite "
+        "accelerations, so momentum is conserved to rounding. Barnes-Hut groups "
+        "distant bodies into their centre of mass, which is much faster above a "
+        "few thousand bodies but breaks that exact pairing.");
+
+    if (settings.solver == sim::GravitySolver::BarnesHut) {
+        float theta = static_cast<float>(settings.barnesHutTheta);
+        if (ImGui::SliderFloat("Opening angle", &theta, 0.0f, 1.5f, "%.2f")) {
+            settings.barnesHutTheta = theta;
+        }
+        ImGui::SetItemTooltip(
+            "A cell of width s at distance d is treated as one mass when "
+            "s/d < theta. 0 is exact and as slow as direct summation, 0.5 is "
+            "about 1% force error, larger is faster and progressively wronger.");
+        ImGui::TextColored(ImVec4(0.75f, 0.8f, 0.95f, 1.0f),
+                           "Approximate: momentum is conserved only to the\n"
+                           "opening-angle error. Use Direct for long runs.");
+    }
+
     ImGui::Checkbox("Pairwise gravity", &settings.pairwiseGravityEnabled);
 
     ImGui::Separator();

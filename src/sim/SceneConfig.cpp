@@ -98,6 +98,10 @@ std::string sceneToJson(const Scene& scene) {
     physics.set("gravitationalConstant", Json(scene.settings.gravitationalConstant));
     physics.set("integrator", Json(integratorKey(scene.settings.integrator)));
     physics.set("pairwiseGravity", Json(scene.settings.pairwiseGravityEnabled));
+    physics.set("solver", Json(scene.settings.solver == GravitySolver::BarnesHut
+                                   ? "barnes-hut"
+                                   : "direct"));
+    physics.set("barnesHutTheta", Json(scene.settings.barnesHutTheta));
     physics.set("stabilization", Json(stabilizationKey(scene.settings.stabilization)));
     physics.set("softeningLengthMetres", Json(scene.settings.softeningLength));
     physics.set("minimumDistanceMetres", Json(scene.settings.minimumDistance));
@@ -180,6 +184,10 @@ bool sceneFromJson(const std::string& text, Scene& out, std::string& error) {
         physics["gravitationalConstant"].asNumber(settings.gravitationalConstant);
     settings.integrator = integratorFromKey(physics["integrator"].asString("velocity-verlet"));
     settings.pairwiseGravityEnabled = physics["pairwiseGravity"].asBool(true);
+    settings.solver = physics["solver"].asString("direct") == "barnes-hut"
+                          ? GravitySolver::BarnesHut
+                          : GravitySolver::Direct;
+    settings.barnesHutTheta = physics["barnesHutTheta"].asNumber(0.5);
     settings.stabilization = stabilizationFromKey(physics["stabilization"].asString("softening"));
     settings.softeningLength = physics["softeningLengthMetres"].asNumber(settings.softeningLength);
     settings.minimumDistance = physics["minimumDistanceMetres"].asNumber(settings.minimumDistance);

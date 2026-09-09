@@ -18,9 +18,9 @@
       "radiusMetres": 696340000,
       "showTrail": true,
       "velocityMetresPerSecond": [
-        -371.71162948158911,
+        -105.9928462357793,
         0,
-        22104.604362237453
+        18542.084486839991
       ]
     },
     {
@@ -41,9 +41,9 @@
       "radiusMetres": 696340000,
       "showTrail": true,
       "velocityMetresPerSecond": [
-        -19329.004733042748,
+        -16110.912627838667,
         0,
-        -10730.390467105552
+        -9179.2497459603856
       ]
     },
     {
@@ -54,7 +54,7 @@
       ],
       "emissive": true,
       "fixed": false,
-      "massKg": 2.1082552e+30,
+      "massKg": 2.0286984e+30,
       "name": "Star C",
       "positionMetres": [
         -112198403025.00011,
@@ -64,17 +64,18 @@
       "radiusMetres": 696340000,
       "showTrail": true,
       "velocityMetresPerSecond": [
-        18585.581474079561,
+        15898.926935367104,
         0,
-        -10730.390467105566
+        -9179.2497459603983
       ]
     }
   ],
   "defaultTimeScale": 4000000,
-  "description": "Three stars started near a Lagrange-style triangle. The three-body problem has no general closed-form solution and this configuration is chaotic: it usually ends with one star ejected. Identical initial conditions still reproduce exactly, since the integrator is deterministic.",
+  "description": "Three equal-mass stars on a rotating equilateral triangle, the Lagrange solution to the three-body problem, with one mass nudged 2% heavier. That solution is linearly unstable for equal masses, so it holds for several orbits and then breaks up, usually ejecting a star. The three-body problem has no general closed-form solution, but the integrator is deterministic: identical initial conditions reproduce exactly, while a one-metre nudge diverges macroscopically.",
   "fixedTimeStepSeconds": 3600,
   "key": "three-body",
   "physics": {
+    "barnesHutTheta": 0.5,
     "bounds": {
       "enabled": false,
       "friction": 0,
@@ -98,6 +99,7 @@
     "minimumDistanceMetres": 1000000,
     "pairwiseGravity": true,
     "softeningLengthMetres": 100000000,
+    "solver": "direct",
     "stabilization": "softening",
     "trailLength": 3000,
     "trailSampleIntervalSeconds": 100000,

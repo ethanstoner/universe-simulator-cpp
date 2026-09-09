@@ -1,6 +1,7 @@
 #include "sim/SceneLibrary.h"
 
 #include <cmath>
+#include <cstdint>
 
 #include "sim/Constants.h"
 #include "sim/OrbitMath.h"
@@ -543,6 +544,80 @@ Scene sceneCompactNearSun() {
     return scene;
 }
 
+Scene sceneAsteroidBelt() {
+    Scene scene;
+    scene.key = "belt";
+    scene.title = "Asteroid belt (2000 bodies)";
+    scene.description =
+        "The Sun, Jupiter and two thousand massless-ish asteroids between 2.1 "
+        "and 3.3 AU. Every asteroid attracts every other one: this is the "
+        "scene the Barnes-Hut solver exists for, and it is selected here by "
+        "default. Switch to Direct in the Simulation panel to feel the "
+        "difference, and watch the energy drift figure to see what the "
+        "approximation costs.";
+
+    scene.settings = astronomicalSettings();
+    // Barnes-Hut is the default *for this scene only*; everything else keeps
+    // exact direct summation.
+    scene.settings.solver = GravitySolver::BarnesHut;
+    scene.settings.barnesHutTheta = 0.6;
+    scene.settings.softeningLength = 1.0e8;
+    // Trails for two thousand bodies would be unreadable and slow; the belt
+    // reads as a structure rather than as individual orbits.
+    scene.settings.trailLength = 0;
+    scene.settings.trailSampleInterval = 0.0;
+
+    scene.bodies.push_back(makeSun());
+    const CelestialBody sun = scene.bodies.front();
+    scene.bodies.push_back(makePlanet(kJupiter, sun, 0.0));
+
+    // Deterministic layout: a fixed-seed generator, so the belt is identical
+    // on every run and screenshots stay comparable.
+    std::uint64_t seed = 0xBE17ull;
+    auto nextRandom = [&seed]() {
+        seed = seed * 6364136223846793005ull + 1442695040888963407ull;
+        return static_cast<double>(seed >> 11) / 9007199254740992.0;
+    };
+
+    for (int i = 0; i < 2000; ++i) {
+        // 2.1 to 3.3 AU is the real main belt. Radius is sampled so the belt
+        // has roughly uniform surface density rather than bunching inwards.
+        const double inner = 2.1 * kAu;
+        const double outer = 3.3 * kAu;
+        const double u = nextRandom();
+        const double radius = std::sqrt(inner * inner + u * (outer * outer - inner * inner));
+        const double angle = nextRandom() * 2.0 * kPi;
+        const double height = (nextRandom() - 0.5) * 0.06 * radius;
+
+        CelestialBody rock = makeBody(
+            "Asteroid " + std::to_string(i + 1),
+            // Ceres is 9.4e20 kg and is a third of the belt's entire mass; the
+            // rest are far smaller. These are deliberately larger than reality
+            // so mutual perturbation is visible at all.
+            1.0e18 * (0.2 + 1.8 * nextRandom()), 4.0e5,
+            Vec3(radius * std::cos(angle), height, radius * std::sin(angle)), Vec3(0.0),
+            glm::vec3(0.62f + 0.2f * static_cast<float>(nextRandom()),
+                      0.58f + 0.15f * static_cast<float>(nextRandom()), 0.52f));
+        // Circular about the Sun, with a small spread so the belt is not a
+        // single infinitely thin ring.
+        const double speed = std::sqrt(kG * kSolarMass / radius) * (0.98 + 0.04 * nextRandom());
+        rock.velocity = Vec3(-speed * std::sin(angle), 0.0, speed * std::cos(angle));
+        rock.showTrail = false;
+        scene.bodies.push_back(rock);
+    }
+
+    scene.view.metresPerUnit = kAu / 6.0;
+    scene.view.largestBodyDrawnRadius = 1.4;
+    scene.view.bodyVisualExponent = 0.42;
+    scene.view.minVisualRadius = 0.045;
+    scene.view.cameraDistance = 46.0;
+    scene.view.gridExtent = 46.0;
+    scene.view.focusBody = "Sun";
+    scene.fixedTimeStep = 7200.0;
+    scene.defaultTimeScale = 3.0e6;
+    return scene;
+}
+
 std::vector<Scene> buildScenes() {
     std::vector<Scene> scenes;
     scenes.push_back(sceneKinematicsLab());
@@ -556,6 +631,7 @@ std::vector<Scene> buildScenes() {
     scenes.push_back(sceneIntruderStar());
     scenes.push_back(sceneCompactObject());
     scenes.push_back(sceneCompactNearSun());
+    scenes.push_back(sceneAsteroidBelt());
 
     // Every astronomical preset is built from heliocentric velocities, which
     // give the whole system a net drift. Remove it so scenes stay put.
