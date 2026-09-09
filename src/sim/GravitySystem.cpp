@@ -176,8 +176,57 @@ void GravitySystem::accelerations(const std::vector<Vec3>& positions,
         }
     }
 
+    if (settings_.relativisticCorrection) {
+        applyRelativisticCorrection(positions, out);
+    }
+
     for (std::size_t i = 0; i < n && i < bodies_.size(); ++i) {
         if (bodies_[i].fixed) out[i] = Vec3(0.0);
+    }
+}
+
+// Leading post-Newtonian correction, applied pairwise:
+//
+//   a_1PN = (G m / (c^2 r^3)) [ (4 G m / r - v^2) r_vec + 4 (r_vec . v) v ]
+//
+// where r_vec points from the attracting body to the accelerated one and v is
+// their relative velocity. For a test particle around a dominant mass this is
+// the Schwarzschild two-body term, and it produces a prograde perihelion
+// advance of 6 pi G M / (c^2 a (1 - e^2)) per orbit.
+//
+// This is NOT the full Einstein-Infeld-Hoffmann N-body Lagrangian: the genuine
+// three-body cross terms are omitted, so it is exact only in the limit of one
+// dominant mass. That is the case the presets use it for, and the limitation is
+// documented in docs/PHYSICS.md rather than glossed over.
+void GravitySystem::applyRelativisticCorrection(const std::vector<Vec3>& positions,
+                                                std::vector<Vec3>& out) const {
+    const std::size_t n = positions.size();
+    const double G = settings_.gravitationalConstant;
+    const double cSquared = constants::kC * constants::kC;
+    const double strength = settings_.relativisticStrength;
+    if (strength == 0.0) return;
+
+    for (std::size_t i = 0; i < n && i < bodies_.size(); ++i) {
+        for (std::size_t j = 0; j < n && j < bodies_.size(); ++j) {
+            if (i == j) continue;
+            const double mass = bodies_[j].mass;
+            if (mass <= 0.0) continue;
+
+            const Vec3 delta = positions[i] - positions[j];  // j -> i
+            const double distanceSq = lengthSquared(delta);
+            if (distanceSq <= 0.0) continue;
+            const double distance = std::sqrt(distanceSq);
+
+            const Vec3 relativeVelocity = bodies_[i].velocity - bodies_[j].velocity;
+            const double speedSq = lengthSquared(relativeVelocity);
+            const double mu = G * mass;
+
+            const double radial = 4.0 * mu / distance - speedSq;
+            const double along = 4.0 * glm::dot(delta, relativeVelocity);
+
+            out[i] += (delta * radial + relativeVelocity * along) *
+                      (strength * mu / (cSquared * distanceSq * distance));
+        }
     }
 }
 

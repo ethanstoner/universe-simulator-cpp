@@ -25,6 +25,28 @@ double orbitalPeriod(double centralMass, double semiMajorAxis,
 double schwarzschildRadius(double mass, double G = 6.67430e-11,
                            double c = 299792458.0);
 
+// Perihelion distance and speed for an ellipse of semi-major axis a and
+// eccentricity e about a central mass. Starting a body at perihelion is the
+// cleanest way to set up an eccentric orbit: the velocity is purely tangential
+// there, so no vector decomposition is needed.
+double perihelionDistance(double semiMajorAxis, double eccentricity);
+double perihelionSpeed(double centralMass, double semiMajorAxis, double eccentricity,
+                       double G = 6.67430e-11);
+
+// Predicted relativistic perihelion advance per orbit, in radians:
+//     6 pi G M / (c^2 a (1 - e^2))
+// The closed-form value the simulation's 1PN correction should reproduce.
+double relativisticPerihelionAdvance(double centralMass, double semiMajorAxis,
+                                     double eccentricity, double G = 6.67430e-11,
+                                     double c = 299792458.0);
+
+// Direction of periapsis, as the argument of the eccentricity (Laplace-Runge-
+// Lenz) vector projected into the XZ plane. Constant for a closed Kepler
+// ellipse; it rotates when the orbit precesses, which is what makes it the
+// thing to measure.
+double periapsisAngle(const Vec3& relativePosition, const Vec3& relativeVelocity,
+                      double mu);
+
 // Osculating two-body orbital elements of a test body relative to a primary.
 struct OrbitalElements {
     bool valid = false;

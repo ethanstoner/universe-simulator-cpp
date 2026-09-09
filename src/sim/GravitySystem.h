@@ -64,6 +64,15 @@ struct SimulationSettings {
     // Barnes-Hut opening angle. 0 degenerates to direct summation, 0.5 is the
     // usual choice and is sub-percent accurate, larger is faster and wronger.
     double barnesHutTheta = 0.5;
+    // Leading post-Newtonian (1PN) correction. OFF by default: the simulator
+    // is Newtonian, and this is an opt-in extra term rather than a change of
+    // model. See docs/PHYSICS.md for exactly what it does and does not include.
+    bool relativisticCorrection = false;
+    // Multiplies the 1PN term. 1 is physical; larger exaggerates the effect so
+    // precession is visible in seconds rather than centuries, which is a
+    // *demonstration* setting and is labelled as such in the UI.
+    double relativisticStrength = 1.0;
+
     Stabilization stabilization = Stabilization::Softening;
     double softeningLength = 1.0e6;   // m -- ~0.16 Earth radii, negligible at AU scales
     double minimumDistance = 1.0e6;   // m, used when stabilization is MinDistance
@@ -154,6 +163,8 @@ private:
     void applyBounds(StepReport& report);
     void applyCollisions(double dt, StepReport& report);
     void recordTrails();
+    void applyRelativisticCorrection(const std::vector<Vec3>& positions,
+                                     std::vector<Vec3>& out) const;
 
     std::vector<CelestialBody> bodies_;
     SimulationSettings settings_;
