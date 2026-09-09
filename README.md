@@ -267,3 +267,9 @@ from nothing but the extra term in the pairwise sum.
 
 Progress and per-milestone results, including the bugs found along the way, are
 in [docs/PROGRESS.md](docs/PROGRESS.md).
+
+## Licence
+
+MIT, see [LICENSE](LICENSE). Third-party components and their licences are
+listed in [THIRD-PARTY.md](THIRD-PARTY.md); GLFW, GLM and Dear ImGui are fetched
+at configure time rather than redistributed here.

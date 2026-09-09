@@ -19,15 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Third-party components:
-
-  GLFW 3.4          zlib/libpng     https://github.com/glfw/glfw
-  GLM 1.0.1         MIT             https://github.com/g-truc/glm
-  Dear ImGui        MIT             https://github.com/ocornut/imgui
-  glad 2 (vendored) MIT / Public    https://github.com/Dav1dde/glad
-
-GLFW, GLM and Dear ImGui are fetched at configure time and are not redistributed
-in this repository. The generated glad loader under external/glad is vendored.
