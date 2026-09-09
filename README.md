@@ -49,6 +49,9 @@ only compiling.
   procedural starfield, so stars glow rather than being flat discs.
 - Solves gravity by exact O(N^2) summation or a Barnes-Hut octree, with a
   2000-body asteroid belt preset to run the tree against.
+- Forecasts where the selected body will go by integrating a copy of the
+  whole system, so the prediction includes perturbation from every other
+  body rather than being a Kepler ellipse.
 
 ## Engineering highlights
 
@@ -89,6 +92,13 @@ The parts that were genuinely hard, and what they cost:
   ~1.2%. The tree also breaks Newton's third law, so a test asserts its
   momentum drift is *worse* than direct summation rather than pretending
   otherwise.
+- **Trajectory forecasting that is not a conic section.** The predicted path
+  is produced by stepping a *copy* of the live system with the same
+  integrator, so it accounts for every other body. A test forecasts a quarter
+  of Earth's year, advances the real system by the same amount and requires
+  the endpoints to agree to **1e-6 AU**; another predicts Mercury over forty
+  years with and without Jupiter present and requires the answers to differ,
+  which a closed-form ellipse could not do.
 - **HDR render pipeline.** Multisampled `RGBA16F` target so a star's core can
   exceed 1.0 and survive to the bright pass, then bloom, ACES tone mapping and a
   procedural starfield. At 8 bits the overflow clips to white and the halo
@@ -117,6 +127,14 @@ same footage.
 <p align="center">
   <img src="docs/images/scene_three-body.png" width="49%" alt="Three stars, three overlapping gravitational wells">
   <img src="docs/images/scene_binary.png" width="49%" alt="Binary stars sharing a single merged well">
+  <img src="docs/images/scene_belt.png" width="49%" alt="Two thousand mutually attracting asteroids solved with Barnes-Hut">
+  <img src="docs/images/trajectory.png" width="49%" alt="Earth's predicted path for the coming year">
+</p>
+
+<p align="center">
+  <em>Left: 2000 asteroids, each attracting every other, solved with the
+  Barnes-Hut octree. Right: a one-year forecast, produced by integrating a copy
+  of the system rather than by drawing an ellipse.</em>
 </p>
 
 ## Build
