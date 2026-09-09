@@ -120,6 +120,38 @@ The practical consequence: if you fling a compact object straight through a
 star, expect the energy diagnostic to jump. That is the timestep, not the force
 law. Reduce the fixed step in the Simulation panel and the jump shrinks.
 
+## Solvers: exact and approximate
+
+Two ways of evaluating the same pairwise sum, selectable at runtime.
+
+**Direct summation** is O(N^2). Each unordered pair is visited once and the
+equal-and-opposite accelerations are applied together, so total linear momentum
+is conserved to rounding. This is the default for every preset except the
+asteroid belt.
+
+**Barnes-Hut** builds an octree and treats a cell of width `s` whose centre of
+mass lies a distance `d` away as a single point mass when `s/d < theta`. Build
+is O(N log N) and each force query is O(log N).
+
+The approximation has a real cost and it is not hidden:
+
+- **Newton's third law no longer holds exactly.** Body A may approximate a
+  cluster while a body inside that cluster resolves A exactly, so the two forces
+  are not equal and opposite. Momentum is conserved only to the opening-angle
+  error. `solver_barnes_hut_conserves_momentum_only_approximately` asserts that
+  the tree's drift *exceeds* direct summation's and stays below 1e-3 at
+  theta = 0.5, so a regression that made the approximation worse would fail.
+- **theta controls the trade directly.** theta = 0 opens every cell and
+  reproduces direct summation to 1e-12. theta = 0.5 gives roughly 1% force
+  error. Larger is faster and progressively wronger.
+- Only a single Plummer-style softening constant is supported by the tree, so
+  the MinDistance stabilisation mode degrades to that constant rather than
+  clamping per pair, which has no aggregate equivalent.
+
+Measured on a 40 AU disc (`--benchmark`), cost per doubling of N is x4.0 for
+direct summation and x2.3 for the tree, which is quadratic and N log N
+respectively. The crossover is near 4000 bodies.
+
 ## Diagnostics
 
 ```

@@ -47,6 +47,8 @@ only compiling.
   [docs/PHYSICS.md](docs/PHYSICS.md).
 - Renders through an HDR pipeline with bloom, ACES tone mapping and a
   procedural starfield, so stars glow rather than being flat discs.
+- Solves gravity by exact O(N^2) summation or a Barnes-Hut octree, with a
+  2000-body asteroid belt preset to run the tree against.
 
 ## Engineering highlights
 
@@ -79,6 +81,14 @@ The parts that were genuinely hard, and what they cost:
   dependency and is a separate static library, so all 107 unit tests run
   headless. The picking and scale maths were deliberately moved *into* `sim/`
   so they could be tested without a GL context.
+- **Barnes-Hut octree, measured rather than claimed.** `--benchmark` times it
+  against exact summation and prints speed *and* accuracy, because a solver
+  that is faster and wrong is not faster. Measured cost per doubling of N:
+  direct **x4.0** (quadratic), tree **x2.3** (N log N), crossing over near
+  4000 bodies and reaching **4.8x at 16384** with the force error flat at
+  ~1.2%. The tree also breaks Newton's third law, so a test asserts its
+  momentum drift is *worse* than direct summation rather than pretending
+  otherwise.
 - **HDR render pipeline.** Multisampled `RGBA16F` target so a star's core can
   exceed 1.0 and survive to the bright pass, then bloom, ACES tone mapping and a
   procedural starfield. At 8 bits the overflow clips to white and the halo
@@ -194,6 +204,7 @@ build/bin/universe-sim.exe --help
 | `intruder` | A 0.8 solar-mass star falling into the inner system |
 | `compact` | A 12 solar-mass compact object with a probe ring |
 | `compact-vs-sun` | A 30 solar-mass object crossing the solar system |
+| `belt` | Sun, Jupiter and 2000 mutually attracting asteroids (Barnes-Hut) |
 
 <p align="center">
   <img src="docs/images/scene_inner.png" width="49%" alt="Inner solar system">
@@ -288,8 +299,10 @@ The full statement is in [docs/PHYSICS.md](docs/PHYSICS.md). The essentials:
 - All presets are coplanar, so the grid can lie in the orbital plane.
 - Bodies are point masses for gravity: no oblateness, tides, rotation or axial
   tilt.
-- Gravity is O(N^2). Fine for the tens of bodies these scenes use; thousands
-  would need Barnes-Hut or a compute shader, which is deliberately not built.
+- Barnes-Hut trades exactness for speed: it approximates distant groups, so
+  momentum is conserved only to the opening-angle error. Direct summation
+  stays the default everywhere except the asteroid belt, and long runs should
+  use it. Neither solver is GPU-accelerated.
 - Lighting is not inverse-square, for readability across four orders of
   magnitude of scene scale.
 - The merge model discards the kinetic energy of relative motion and does not
