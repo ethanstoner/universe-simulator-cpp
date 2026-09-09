@@ -52,6 +52,8 @@ only compiling.
 - Forecasts where the selected body will go by integrating a copy of the
   whole system, so the prediction includes perturbation from every other
   body rather than being a Kepler ellipse.
+- Has an optional post-Newtonian correction that reproduces Mercury's
+  perihelion precession to **42.77 arcsec/century** against a predicted 43.
 
 ## Engineering highlights
 
@@ -92,6 +94,15 @@ The parts that were genuinely hard, and what they cost:
   ~1.2%. The tree also breaks Newton's third law, so a test asserts its
   momentum drift is *worse* than direct summation rather than pretending
   otherwise.
+- **Reproduces the classic test of general relativity.** An optional 1PN
+  correction advances Mercury's perihelion by a *measured* **42.77
+  arcsec/century** against the closed-form 43.00. Getting there required
+  noticing that velocity Verlet precesses a Kepler orbit on its own -- about
+  -37 arcsec/century at a 600 s step, the same order as the effect and in the
+  opposite direction. The measurement differences a Newtonian run against a
+  relativistic one to cancel it, and a separate test proves that drift is
+  truncation error by showing it falls exactly 4x per halving of the step
+  (-149.98 / -37.49 / -9.37 arcsec/century at 1200 / 600 / 300 s).
 - **Trajectory forecasting that is not a conic section.** The predicted path
   is produced by stepping a *copy* of the live system with the same
   integrator, so it accounts for every other body. A test forecasts a quarter
@@ -129,6 +140,16 @@ same footage.
   <img src="docs/images/scene_binary.png" width="49%" alt="Binary stars sharing a single merged well">
   <img src="docs/images/scene_belt.png" width="49%" alt="Two thousand mutually attracting asteroids solved with Barnes-Hut">
   <img src="docs/images/trajectory.png" width="49%" alt="Earth's predicted path for the coming year">
+</p>
+
+<p align="center">
+  <img src="docs/images/scene_precession.png" width="66%" alt="Relativistic perihelion precession tracing a rosette">
+</p>
+
+<p align="center">
+  <em>Relativistic perihelion precession. Exaggerated 300000x so the rosette
+  is visible in seconds; at strength 1 this is Mercury's real 43 arcseconds
+  per century, which the test suite measures as 42.77.</em>
 </p>
 
 <p align="center">
@@ -223,6 +244,7 @@ build/bin/universe-sim.exe --help
 | `compact` | A 12 solar-mass compact object with a probe ring |
 | `compact-vs-sun` | A 30 solar-mass object crossing the solar system |
 | `belt` | Sun, Jupiter and 2000 mutually attracting asteroids (Barnes-Hut) |
+| `precession` | Relativistic perihelion advance, exaggerated into a rosette |
 
 <p align="center">
   <img src="docs/images/scene_inner.png" width="49%" alt="Inner solar system">
@@ -296,7 +318,10 @@ been broken. Details in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 The full statement is in [docs/PHYSICS.md](docs/PHYSICS.md). The essentials:
 
-- **The dynamics are Newtonian.** No relativistic corrections anywhere.
+- **The dynamics are Newtonian by default.** A post-Newtonian correction is
+  available but off unless you enable it, and it is the two-body
+  Schwarzschild term applied pairwise rather than the full EIH N-body
+  Lagrangian.
 - **The warped grid is a visualisation.** It is displaced by a softened
   Newtonian potential and is a strictly one-way read of simulation state.
   Nothing in the physics reads it back. It is the rubber-sheet analogy, not
