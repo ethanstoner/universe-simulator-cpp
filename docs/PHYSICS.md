@@ -8,8 +8,9 @@ The dynamics are **Newtonian**. Every body is accelerated by
 a_i = sum over j != i of  G m_j (x_j - x_i) / |x_j - x_i|^3
 ```
 
-integrated with a fixed timestep. There are no relativistic corrections
-anywhere in the simulation.
+integrated with a fixed timestep. Relativity is **off by default**; an opt-in
+post-Newtonian correction exists and is described below, but nothing uses it
+unless you switch it on.
 
 The warped grid is a **visualisation**. It is a rubber-sheet analogy, not
 general relativity, and nothing in the physics reads it.
@@ -230,6 +231,61 @@ a well-proportioned funnel in every preset. That normalisation is arbitrary and
 chosen for readability. The *shape* of each well is the softened potential; the
 overall depth is a presentation choice.
 
+## The post-Newtonian correction
+
+Optional, off by default, and the only place the simulation is not purely
+Newtonian. Enabling it adds the leading (1PN) term to each pair:
+
+```
+a_1PN = (G m / (c^2 r^3)) [ (4 G m / r - v^2) r_vec + 4 (r_vec . v) v ]
+```
+
+For a test particle around a dominant mass this is the two-body Schwarzschild
+term, and it produces a prograde perihelion advance of
+
+```
+6 pi G M / (c^2 a (1 - e^2))   radians per orbit
+```
+
+### It reproduces Mercury's precession
+
+The classic test of general relativity. With the correction enabled at strength
+1, `tests/test_relativity.cpp` measures Mercury's perihelion advance at
+**42.77 arcsec/century** against a closed-form 43.00.
+
+That measurement needs a caveat, and it is an interesting one. A Newtonian
+two-body orbit should not precess at all, because a Kepler ellipse is closed.
+It does anyway: velocity Verlet conserves a *shadow* Hamiltonian whose orbit
+precesses, and on Mercury's eccentricity that artificial drift is
+
+| step | numerical precession |
+| --- | --- |
+| 1200 s | -149.98 arcsec/century |
+| 600 s | -37.49 |
+| 300 s | -9.37 |
+
+Exactly a factor of four per halving, which is what a second-order method must
+give, and retrograde where the real effect is prograde. At a 600 s step it is
+comparable in size to the 43 arcsec being measured, so a raw number would be
+mostly integrator error.
+
+The measurement therefore differences a Newtonian run against a relativistic one
+with identical initial conditions and step size, which cancels the truncation
+error and leaves the physics. The dt-squared table above is itself a test: a bug
+would not scale.
+
+### What it is not
+
+- **Not the full Einstein-Infeld-Hoffmann N-body Lagrangian.** The genuine
+  three-body cross terms are omitted, so this is exact only where one mass
+  dominates -- which is the case the presets use it for.
+- Not a geodesic integration, and not a change to the metric. There is still no
+  event horizon, no lensing, no time dilation and no gravitational-wave
+  radiation.
+- The `precession` preset exaggerates the term by 300000x so the rosette is
+  visible in seconds rather than centuries. That is a demonstration setting, is
+  labelled as such in the UI, and is not physics.
+
 ## Compact objects are not black holes
 
 The presets include a "Compact massive object" and a "Neutron-star-like" spawn
@@ -279,8 +335,11 @@ which is the single place `a = G m / r^2` appears, plus the `ForceModel`
 interface the integrators take. A geodesic integrator would replace that one
 function rather than being threaded through the renderer.
 
-Plausible order: Schwarzschild geodesics for test particles, then perihelion
-precession as a validation case (Mercury's 43 arcseconds per century is the
-classic test), then photon trajectories and lensing, then an accretion-disk
-visualisation. None of that should start before the Newtonian simulator is
-stable, and none of it is present today.
+Perihelion precession is **done** and is described above: the 1PN correction
+reproduces Mercury's 43 arcseconds per century.
+
+Still absent, in a plausible order: full EIH N-body terms so multi-mass
+systems are correct rather than only dominant-mass ones; Schwarzschild
+geodesics for test particles; photon trajectories and gravitational lensing;
+gravitational-wave inspiral; and an accretion-disc visualisation. None of
+that is present today.
