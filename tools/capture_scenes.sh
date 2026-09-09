@@ -8,7 +8,7 @@
 set -u
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-EXE="$ROOT/build/bin/gravitysim.exe"
+EXE="$ROOT/build/bin/universe-sim.exe"
 OUT="${1:-$ROOT/docs/images}"
 WIDTH="${WIDTH:-1100}"
 HEIGHT="${HEIGHT:-660}"

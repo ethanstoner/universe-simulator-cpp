@@ -52,7 +52,7 @@ only compiling.
 
 [**Windows x64 portable build**](https://github.com/ethanstoner/universe-simulator-cpp/releases/latest)
 -- 1 MB, no installer and no runtime redistributable. Unzip and run
-`gravitysim.exe`. Needs an OpenGL 3.3 capable GPU.
+`universe-sim.exe`. Needs an OpenGL 3.3 capable GPU.
 
 Or build from source, which takes about a minute; see below.
 
@@ -98,7 +98,7 @@ literals when a macro stringizes them, which the test assertions do.
 Run the tests:
 
 ```sh
-build/bin/gravsim_tests.exe          # or: ctest --test-dir build
+build/bin/simcore-tests.exe          # or: ctest --test-dir build
 ```
 
 ```sh
@@ -115,10 +115,10 @@ afterwards.
 ## Run
 
 ```sh
-build/bin/gravitysim.exe                        # solar system, panels open
-build/bin/gravitysim.exe --scene three-body
-build/bin/gravitysim.exe --list-scenes
-build/bin/gravitysim.exe --help
+build/bin/universe-sim.exe                        # solar system, panels open
+build/bin/universe-sim.exe --scene three-body
+build/bin/universe-sim.exe --list-scenes
+build/bin/universe-sim.exe --help
 ```
 
 ### Controls
@@ -173,8 +173,8 @@ startup and **replace** the compiled-in preset with the same key, so masses,
 radii, orbital radii and initial velocities can be edited without rebuilding.
 
 ```sh
-build/bin/gravitysim.exe --export-configs configs   # regenerate from code
-build/bin/gravitysim.exe --no-configs               # ignore configs/
+build/bin/universe-sim.exe --export-configs configs   # regenerate from code
+build/bin/universe-sim.exe --no-configs               # ignore configs/
 ```
 
 Numbers are written with 17 significant digits, so a save/load round trip
@@ -276,7 +276,7 @@ Rendering milestones are verified by capturing frames offscreen and inspecting
 them, not by assuming a draw call worked:
 
 ```sh
-build/bin/gravitysim.exe --scene inner --no-ui --warmup 24000000 \
+build/bin/universe-sim.exe --scene inner --no-ui --warmup 24000000 \
     --screenshot out.png --frame 4
 tools/capture_scenes.sh docs/images     # every preset at once
 ```
@@ -284,7 +284,7 @@ tools/capture_scenes.sh docs/images     # every preset at once
 Runtime spawning is verified through the same code path the UI uses:
 
 ```sh
-build/bin/gravitysim.exe --scene inner --spawn "Sun" --spawn-distance 14 \
+build/bin/universe-sim.exe --scene inner --spawn "Sun" --spawn-distance 14 \
     --warmup 20000000 --settle 60000000 --no-ui --screenshot spawned.png
 ```
 

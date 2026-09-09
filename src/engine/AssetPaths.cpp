@@ -34,8 +34,8 @@ std::string resolveAsset(const std::string& relativePath) {
         roots.push_back(exeDir);
         roots.push_back(exeDir.parent_path());
     }
-#ifdef GRAVITYSIM_SOURCE_DIR
-    roots.emplace_back(GRAVITYSIM_SOURCE_DIR);
+#ifdef UNIVERSE_SIM_SOURCE_DIR
+    roots.emplace_back(UNIVERSE_SIM_SOURCE_DIR);
 #endif
 
     for (const std::filesystem::path& root : roots) {

@@ -9,7 +9,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-EXE="$ROOT/build/bin/gravitysim.exe"
+EXE="$ROOT/build/bin/universe-sim.exe"
 OUT="${1:-$ROOT/docs/media}"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
@@ -26,7 +26,7 @@ if ! command -v ffmpeg >/dev/null 2>&1; then
   exit 1
 fi
 
-# shot <name> <frames> <extra gravitysim args...>  -> echoes the frame directory
+# shot <name> <frames> <extra universe-sim args...>  -> echoes the frame directory
 shot() {
   local name="$1"; shift
   local frames="$1"; shift

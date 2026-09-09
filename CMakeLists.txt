@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
-project(gravitysim LANGUAGES C CXX)
+project(universe-sim LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -69,25 +69,25 @@ add_library(imgui STATIC
 target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/backends)
 target_link_libraries(imgui PUBLIC glfw)
 
-# ---------------------------------------------------------------------- gravsim
+# ---------------------------------------------------------------------- simcore
 # The simulation core is deliberately free of any OpenGL/GLFW/ImGui dependency
 # so that it can be unit tested headlessly. See docs/ARCHITECTURE.md.
-file(GLOB GRAVSIM_SOURCES CONFIGURE_DEPENDS src/sim/*.cpp)
-add_library(gravsim STATIC ${GRAVSIM_SOURCES})
-target_include_directories(gravsim PUBLIC src)
-target_link_libraries(gravsim PUBLIC glm_headers)
+file(GLOB SIMCORE_SOURCES CONFIGURE_DEPENDS src/sim/*.cpp)
+add_library(simcore STATIC ${SIMCORE_SOURCES})
+target_include_directories(simcore PUBLIC src)
+target_link_libraries(simcore PUBLIC glm_headers)
 
 # ----------------------------------------------------------------- application
 file(GLOB_RECURSE APP_SOURCES CONFIGURE_DEPENDS
   src/main.cpp src/engine/*.cpp src/render/*.cpp src/ui/*.cpp)
-add_executable(gravitysim ${APP_SOURCES})
-target_link_libraries(gravitysim PRIVATE gravsim glad glfw imgui glm_headers)
-target_include_directories(gravitysim PRIVATE src)
+add_executable(universe-sim ${APP_SOURCES})
+target_link_libraries(universe-sim PRIVATE simcore glad glfw imgui glm_headers)
+target_include_directories(universe-sim PRIVATE src)
 if(WIN32)
-  target_link_libraries(gravitysim PRIVATE opengl32)
+  target_link_libraries(universe-sim PRIVATE opengl32)
 else()
   find_package(OpenGL REQUIRED)
-  target_link_libraries(gravitysim PRIVATE OpenGL::GL)
+  target_link_libraries(universe-sim PRIVATE OpenGL::GL)
 endif()
 
 # Shaders and configs are read from disk at runtime. They are NOT copied next to
@@ -96,8 +96,8 @@ endif()
 # name contains an ampersand ("AI & Media"), which cmd re-parses as a command
 # separator. Instead the source directory is baked in and AssetPaths searches
 # for the first location that exists. See docs/ARCHITECTURE.md "Asset lookup".
-target_compile_definitions(gravitysim PRIVATE
-  GRAVITYSIM_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
+target_compile_definitions(universe-sim PRIVATE
+  UNIVERSE_SIM_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
 # ----------------------------------------------------------------------- tests
 enable_testing()
@@ -109,5 +109,5 @@ add_subdirectory(tests)
 # entirely. It needs a working OpenGL 3.3 driver, so it is registered separately
 # from the headless unit tests and can be excluded with `ctest -E selftest` on a
 # machine without one.
-add_test(NAME gravitysim_selftest COMMAND gravitysim --selftest)
-set_tests_properties(gravitysim_selftest PROPERTIES LABELS "gpu" TIMEOUT 300)
+add_test(NAME universe-sim-selftest COMMAND universe-sim --selftest)
+set_tests_properties(universe-sim-selftest PROPERTIES LABELS "gpu" TIMEOUT 300)

@@ -60,7 +60,7 @@ jobs:
           GALLIUM_DRIVER: llvmpipe
         run: |
           xvfb-run -a --server-args="-screen 0 1280x720x24" \
-            ./build/bin/gravitysim --selftest
+            ./build/bin/universe-sim --selftest
 
   macos:
     name: macOS (AppleClang)

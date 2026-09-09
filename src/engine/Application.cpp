@@ -73,7 +73,7 @@ int exportSceneConfigs(const std::string& directory) {
 
 void AppOptions::printUsage() {
     std::printf(
-        "gravitysim -- interactive Newtonian gravity simulator\n"
+        "universe-sim -- interactive Newtonian gravity simulator\n"
         "\n"
         "  --scene NAME             scene preset to load (default solar-system)\n"
         "  --list-scenes            print the available presets and exit\n"
@@ -191,7 +191,7 @@ Application::Application(const AppOptions& options) : options_(options) {
     WindowConfig config;
     config.width = options.width;
     config.height = options.height;
-    config.title = "gravitysim";
+    config.title = "universe-sim";
     config.visible = !options.hidden;
     config.vsync = options.vsync;
     window_ = std::make_unique<Window>(config);

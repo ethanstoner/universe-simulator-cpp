@@ -9,7 +9,7 @@ namespace engine {
 struct WindowConfig {
     int width = 1600;
     int height = 900;
-    std::string title = "gravitysim";
+    std::string title = "universe-sim";
     bool visible = true;   // headless screenshot runs create a hidden window
     bool vsync = true;
     int msaaSamples = 4;

@@ -21,7 +21,7 @@ capture.
 
 Build: `cmake -S . -B build -G Ninja && cmake --build build`, clean.
 
-Run: `build/bin/gravitysim.exe --screenshot docs/images/m1_window.png --frame 5`
+Run: `build/bin/universe-sim.exe --screenshot docs/images/m1_window.png --frame 5`
 
 Tests: 6 passing (`tests/test_units.cpp`, unit formatting).
 
@@ -52,7 +52,7 @@ Implemented: triangle-fan circle mesh from centre + rim vertices; `CelestialBody
 with `integrate` via the shared integrators; fixed-timestep accumulator;
 axis-aligned bounds with configurable restitution and friction.
 
-Run: `build/bin/gravitysim.exe --scene bounce`
+Run: `build/bin/universe-sim.exe --scene bounce`
 
 Tests: 9 (`tests/test_kinematics.cpp`). Free fall matches `y = -1/2 g t^2` to 1e-12; fall time
 from 10 m matches `sqrt(2h/g)`; impact speed matches `sqrt(2gh)`; a perfectly

@@ -12,7 +12,7 @@
   ui/       ImGui panels
 ```
 
-`sim/` is built as a separate static library (`gravsim`) and the unit tests link
+`sim/` is built as a separate static library (`simcore`) and the unit tests link
 against **only** that library. If a physics change cannot be tested without
 opening a window, the layering has been violated.
 
@@ -98,7 +98,7 @@ a nested `cmd /C "cd /D <path> && ..."` and this repository may live under a
 directory containing an ampersand (`AI & Media`), which `cmd` re-parses as a
 command separator. `engine::resolveAsset` instead searches, in order: the
 current working directory, the executable's directory and its parent, then the
-`GRAVITYSIM_SOURCE_DIR` baked in at configure time. A side benefit is that
+`UNIVERSE_SIM_SOURCE_DIR` baked in at configure time. A side benefit is that
 shaders can be edited in the source tree and hot-reloaded without rebuilding.
 
 ## Render pipeline
