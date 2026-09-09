@@ -671,6 +671,88 @@ Scene scenePrecession() {
     return scene;
 }
 
+Scene sceneTrojans() {
+    Scene scene;
+    scene.key = "trojans";
+    scene.title = "Trojan asteroids at L4 and L5";
+    scene.description =
+        "Jupiter, plus two swarms of asteroids sitting 60 degrees ahead of and "
+        "behind it on the same orbit. Those are the L4 and L5 Lagrange points, "
+        "and nothing pins the asteroids there: they are placed near the points "
+        "with Jupiter's own angular velocity and stay because the equilibrium "
+        "is stable. Watch them librate in slow tadpole loops around the points "
+        "rather than sitting still. The equilateral points are only stable when "
+        "the primaries' mass ratio exceeds about 24.96 -- the Sun and Jupiter "
+        "are at 1047, comfortably inside it.";
+
+    scene.settings = astronomicalSettings();
+    scene.settings.softeningLength = 1.0e7;
+    scene.settings.trailLength = 1500;
+    scene.settings.trailSampleInterval = 2.0e5;
+
+    scene.bodies.push_back(makeSun());
+    const CelestialBody sun = scene.bodies.front();
+
+    CelestialBody jupiter = makePlanet(kJupiter, sun, 0.0);
+    scene.bodies.push_back(jupiter);
+
+    // Deterministic scatter, so the swarms look the same on every run.
+    std::uint64_t seed = 0x7401A45ull;
+    auto nextRandom = [&seed]() {
+        seed = seed * 6364136223846793005ull + 1442695040888963407ull;
+        return static_cast<double>(seed >> 11) / 9007199254740992.0;
+    };
+
+    const double radius = kJupiter.orbitRadius;
+    const double angularSpeed = std::sqrt(kG * kSolarMass / radius) / radius;
+
+    // L4 leads Jupiter by 60 degrees, L5 trails by the same.
+    const double lagrangeAngles[2] = {kPi / 3.0, -kPi / 3.0};
+    const glm::vec3 swarmColors[2] = {{0.55f, 0.85f, 0.95f}, {0.95f, 0.70f, 0.50f}};
+    const char* swarmNames[2] = {"L4", "L5"};
+
+    for (int swarm = 0; swarm < 2; ++swarm) {
+        for (int i = 0; i < 120; ++i) {
+            // Displaced in ANGLE, which is what produces a tadpole libration
+            // about the Lagrange point. The radial spread is kept tiny on
+            // purpose: a body at radius r carrying Jupiter's angular velocity
+            // is not on a circular orbit, and drifts in longitude at roughly
+            // 1.5 w dr/R. At the +-3% originally used that is 146 degrees over
+            // nine orbits, which swamped the libration entirely and sent the
+            // whole swarm around the orbit.
+            const double angle = lagrangeAngles[swarm] +
+                                 (nextRandom() - 0.5) * 0.24;
+            const double r = radius * (1.0 + (nextRandom() - 0.5) * 0.004);
+            const double height = (nextRandom() - 0.5) * 0.015 * radius;
+
+            CelestialBody rock = makeBody(
+                std::string(swarmNames[swarm]) + "-" + std::to_string(i + 1),
+                1.0e17, 3.0e5,
+                Vec3(r * std::cos(angle), height, r * std::sin(angle)), Vec3(0.0),
+                swarmColors[swarm]);
+            // Jupiter's angular velocity, not the local circular speed: the
+            // swarm has to co-rotate with the primary for the Lagrange points
+            // to mean anything.
+            const double speed = angularSpeed * r;
+            rock.velocity = Vec3(-speed * std::sin(angle), 0.0, speed * std::cos(angle));
+            rock.showTrail = false;
+            scene.bodies.push_back(rock);
+        }
+    }
+
+    scene.view.metresPerUnit = kAu / 2.6;
+    scene.view.largestBodyDrawnRadius = 1.5;
+    scene.view.bodyVisualExponent = 0.42;
+    scene.view.minVisualRadius = 0.085;
+    scene.view.cameraDistance = 40.0;
+    scene.view.cameraPitchDegrees = 58.0;
+    scene.view.gridExtent = 44.0;
+    scene.view.focusBody = "Sun";
+    scene.fixedTimeStep = 7200.0;
+    scene.defaultTimeScale = 8.0e6;
+    return scene;
+}
+
 std::vector<Scene> buildScenes() {
     std::vector<Scene> scenes;
     scenes.push_back(sceneKinematicsLab());
@@ -686,6 +768,7 @@ std::vector<Scene> buildScenes() {
     scenes.push_back(sceneCompactNearSun());
     scenes.push_back(sceneAsteroidBelt());
     scenes.push_back(scenePrecession());
+    scenes.push_back(sceneTrojans());
 
     // Every astronomical preset is built from heliocentric velocities, which
     // give the whole system a net drift. Remove it so scenes stay put.

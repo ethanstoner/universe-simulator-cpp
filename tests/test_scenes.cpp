@@ -1,6 +1,7 @@
 #include "TestFramework.h"
 
 #include <cmath>
+#include <cstdio>
 #include <set>
 
 #include "sim/Constants.h"
@@ -461,4 +462,118 @@ TEST(three_body_triangle_survives_several_orbits_before_breaking_up) {
     }
     CHECK_LESS(furthest, radius * 4.0);
     CHECK(computeDiagnostics(system).totalEnergy < 0.0);  // still bound
+}
+
+// --------------------------------------------- Lagrange points and Trojans
+
+TEST(trojans_stay_librating_around_l4_and_l5) {
+    // The claim the scene makes is that nothing pins the asteroids to the
+    // Lagrange points and they stay anyway. That is only worth saying if it is
+    // true, so this measures the angle between each asteroid and Jupiter, in
+    // Jupiter's rotating frame, over a century of simulated time.
+    GravitySystem system;
+    applyScene(*findScene("trojans"), system);
+
+    auto angleTo = [](const Vec3& v) { return std::atan2(v.z, v.x); };
+    auto wrap = [](double angle) {
+        while (angle > 3.14159265358979) angle -= 2.0 * 3.14159265358979;
+        while (angle < -3.14159265358979) angle += 2.0 * 3.14159265358979;
+        return angle;
+    };
+
+    const CelestialBody* jupiter = byName(system, "Jupiter");
+    CHECK(jupiter != nullptr);
+
+    // Jupiter's period is 11.86 years; run for roughly nine orbits.
+    const double dt = 7200.0;
+    const int steps = static_cast<int>(107.0 * constants::kJulianYear / dt);
+
+    double worstLeading = 0.0;
+    double worstTrailing = 0.0;
+
+    for (int i = 0; i < steps; ++i) {
+        system.step(dt);
+        if (i % 500 != 0) continue;
+
+        const CelestialBody* sun = byName(system, "Sun");
+        jupiter = byName(system, "Jupiter");
+        const double jupiterAngle = angleTo(jupiter->position - sun->position);
+
+        for (const CelestialBody& body : system.bodies()) {
+            if (body.name.rfind("L4-", 0) != 0 && body.name.rfind("L5-", 0) != 0) {
+                continue;
+            }
+            const double separation =
+                wrap(angleTo(body.position - sun->position) - jupiterAngle);
+            const double target = body.name.rfind("L4-", 0) == 0
+                                      ? 3.14159265358979 / 3.0
+                                      : -3.14159265358979 / 3.0;
+            const double excursion = std::abs(wrap(separation - target));
+            if (target > 0.0) worstLeading = std::max(worstLeading, excursion);
+            else worstTrailing = std::max(worstTrailing, excursion);
+        }
+    }
+
+    const double toDegrees = 180.0 / 3.14159265358979;
+    std::printf("         Trojan libration: L4 within %.1f deg, L5 within %.1f deg "
+                "of the Lagrange point after ~9 Jupiter orbits\n",
+                worstLeading * toDegrees, worstTrailing * toDegrees);
+
+    // Tadpole libration around L4/L5 is tens of degrees wide; escaping the
+    // point entirely would drift right around the orbit. The distinction that
+    // matters is bounded versus unbounded.
+    CHECK_LESS(worstLeading * toDegrees, 60.0);
+    CHECK_LESS(worstTrailing * toDegrees, 60.0);
+}
+
+TEST(trojans_would_not_stay_at_an_arbitrary_angle) {
+    // The control: L4 and L5 are special. Placing the same swarm 120 degrees
+    // ahead instead of 60 must NOT hold, otherwise the previous test is
+    // measuring "co-rotating bodies stay put" rather than Lagrange stability.
+    GravitySystem system;
+    applyScene(*findScene("trojans"), system);
+
+    const CelestialBody* sun = byName(system, "Sun");
+    const CelestialBody* jupiter = byName(system, "Jupiter");
+    const double radius = glm::length(jupiter->position - sun->position);
+    const double angularSpeed =
+        std::sqrt(constants::kG * constants::kSolarMass / radius) / radius;
+
+    // One test particle at 120 degrees ahead, co-rotating exactly.
+    const double angle = 2.0 * 3.14159265358979 / 3.0;
+    CelestialBody probe = makeBody("Probe", 1.0e17, 3.0e5,
+                                   Vec3(radius * std::cos(angle), 0.0,
+                                        radius * std::sin(angle)),
+                                   Vec3(0.0), glm::vec3(1.0f));
+    const double speed = angularSpeed * radius;
+    probe.velocity = Vec3(-speed * std::sin(angle), 0.0, speed * std::cos(angle));
+    const BodyId probeId = system.add(probe);
+
+    auto angleTo = [](const Vec3& v) { return std::atan2(v.z, v.x); };
+    auto wrap = [](double a) {
+        while (a > 3.14159265358979) a -= 2.0 * 3.14159265358979;
+        while (a < -3.14159265358979) a += 2.0 * 3.14159265358979;
+        return a;
+    };
+
+    const double dt = 7200.0;
+    const int steps = static_cast<int>(107.0 * constants::kJulianYear / dt);
+    double worst = 0.0;
+    for (int i = 0; i < steps; ++i) {
+        system.step(dt);
+        if (i % 500 != 0) continue;
+        const CelestialBody* s = byName(system, "Sun");
+        const CelestialBody* j = byName(system, "Jupiter");
+        const CelestialBody* p = system.find(probeId);
+        if (!s || !j || !p) break;
+        const double separation =
+            wrap(angleTo(p->position - s->position) - angleTo(j->position - s->position));
+        worst = std::max(worst, std::abs(wrap(separation - angle)));
+    }
+
+    const double toDegrees = 180.0 / 3.14159265358979;
+    std::printf("         Non-Lagrange probe at 120 deg drifted %.1f deg\n",
+                worst * toDegrees);
+    // It drifts far further than the Trojans do, which is the whole point.
+    CHECK(worst * toDegrees > 60.0);
 }
