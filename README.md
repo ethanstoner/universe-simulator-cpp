@@ -1,6 +1,6 @@
-# universe-sim
+# Universe Simulator
 
-[![CI](https://github.com/ethanstoner/universe-sim/actions/workflows/ci.yml/badge.svg)](https://github.com/ethanstoner/universe-sim/actions/workflows/ci.yml)
+[![CI](https://github.com/ethanstoner/universe-simulator-cpp/actions/workflows/ci.yml/badge.svg)](https://github.com/ethanstoner/universe-simulator-cpp/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)
 ![OpenGL 3.3](https://img.shields.io/badge/OpenGL-3.3%20core-5586A4?logo=opengl&logoColor=white)
@@ -50,7 +50,7 @@ only compiling.
 
 ## Download
 
-[**Windows x64 portable build**](https://github.com/ethanstoner/universe-sim/releases/latest)
+[**Windows x64 portable build**](https://github.com/ethanstoner/universe-simulator-cpp/releases/latest)
 -- 1 MB, no installer and no runtime redistributable. Unzip and run
 `gravitysim.exe`. Needs an OpenGL 3.3 capable GPU.
 
