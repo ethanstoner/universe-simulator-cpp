@@ -1,9 +1,20 @@
-# gravitysim
+# universe-sim
 
-An interactive Newtonian N-body simulator in C++20 and OpenGL 3.3: real
-astronomical data, four selectable integrators, live conserved-quantity
+[![CI](https://github.com/ethanstoner/universe-sim/actions/workflows/ci.yml/badge.svg)](https://github.com/ethanstoner/universe-sim/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)
+![OpenGL 3.3](https://img.shields.io/badge/OpenGL-3.3%20core-5586A4?logo=opengl&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-107%20unit%20%2B%205131%20self--test%20checks-brightgreen)
+
+An interactive Newtonian N-body universe simulator in C++20 and OpenGL 3.3:
+real astronomical data, four selectable integrators, live conserved-quantity
 diagnostics, runtime body spawning, and a GPU-deformed "spacetime" grid that is
 clearly labelled as the visual analogy it is.
+
+Built and tested on **three toolchains**: MinGW g++ 16.2, MSVC 19.44 and Linux
+gcc 13.3 and clang 18.1, all warning-free. CI builds every push on Linux (gcc and
+clang) and Windows, and runs the OpenGL self-test headlessly through Mesa's
+software rasteriser.
 
 <p align="center">
   <img src="docs/media/demo.gif" width="720" alt="The inner solar system orbiting inside its gravitational well">
@@ -56,16 +67,24 @@ same footage.
 ## Build
 
 Requires CMake 3.24+, a C++20 compiler and an OpenGL 3.3 capable GPU. GLFW, GLM
-and Dear ImGui are fetched automatically; GLAD is vendored.
+and Dear ImGui are fetched automatically at configure time; GLAD is vendored.
 
 ```sh
 cmake -S . -B build -G Ninja
 cmake --build build
 ```
 
-Developed with MinGW g++ 16.2 and Ninja on Windows 11 (RTX 4090). The layout is
-platform-neutral; only the executable-path lookup in `engine/AssetPaths.cpp` has
-a Windows-specific branch.
+**Linux** additionally needs the X11 and Wayland development packages. GLFW
+builds both backends by default, so the Wayland codegen tooling is required even
+if you only ever run under X11:
+
+```sh
+sudo apt install -y ninja-build   libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev   libgl1-mesa-dev libwayland-dev wayland-protocols libxkbcommon-dev
+```
+
+**Windows** builds with either MSVC or MinGW. MSVC requires `/Zc:preprocessor`,
+which the build sets automatically: the legacy preprocessor mangles raw string
+literals when a macro stringizes them, which the test assertions do.
 
 Run the tests:
 

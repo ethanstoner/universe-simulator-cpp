@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Linux (${{ matrix.compiler }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc, clang]
+        include:
+          - compiler: gcc
+            cc: gcc
+            cxx: g++
+          - compiler: clang
+            cc: clang
+            cxx: clang++
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build and GUI dependencies
+        run: |
+          sudo apt-get update
+          # GLFW builds both X11 and Wayland backends by default on Linux, so
+          # the Wayland codegen tooling is required even for an X11-only run.
+          # xvfb and the Mesa software rasteriser let the OpenGL self-test run
+          # on a runner with no GPU.
+          sudo apt-get install -y --no-install-recommends \
+            ninja-build clang \
+            libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev \
+            libgl1-mesa-dev libwayland-dev wayland-protocols libxkbcommon-dev \
+            xvfb libgl1-mesa-dri
+
+      - name: Configure
+        env:
+          CC: ${{ matrix.cc }}
+          CXX: ${{ matrix.cxx }}
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Unit tests
+        run: ctest --test-dir build --output-on-failure -E selftest
+
+      - name: Application self-test (headless OpenGL via llvmpipe)
+        env:
+          LIBGL_ALWAYS_SOFTWARE: 1
+          GALLIUM_DRIVER: llvmpipe
+        run: |
+          xvfb-run -a --server-args="-screen 0 1280x720x24" \
+            ./build/bin/gravitysim --selftest
+
+  windows:
+    name: Windows (MSVC)
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo
+
+      - name: Build
+        run: cmake --build build --config RelWithDebInfo
+
+      - name: Unit tests
+        # The self-test is excluded: GitHub's Windows runners have no OpenGL
+        # implementation, software or otherwise. It is covered on Linux above.
+        run: ctest --test-dir build --output-on-failure -C RelWithDebInfo -E selftest

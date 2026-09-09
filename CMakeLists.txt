@@ -12,6 +12,16 @@ endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+if(MSVC)
+  # /Zc:preprocessor is not optional here. MSVC's legacy preprocessor mangles
+  # raw string literals when they are stringized by a macro, and the test
+  # assertions do exactly that (`CHECK(expr)` stringizes `expr`), so the JSON
+  # tests fail to compile with "illegal escape sequence" without it.
+  # /utf-8 keeps source and execution charsets consistent regardless of the
+  # machine's locale.
+  add_compile_options(/Zc:preprocessor /utf-8 /permissive-)
+endif()
+
 include(FetchContent)
 
 # ---------------------------------------------------------------- dependencies
