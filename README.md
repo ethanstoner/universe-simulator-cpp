@@ -5,6 +5,14 @@ astronomical data, four selectable integrators, live conserved-quantity
 diagnostics, runtime body spawning, and a GPU-deformed "spacetime" grid that is
 clearly labelled as the visual analogy it is.
 
+<p align="center">
+  <img src="docs/media/demo.gif" width="720" alt="The inner solar system orbiting inside its gravitational well">
+</p>
+
+<p align="center">
+  <em>Every orbit here is produced by integrating a = &Sigma; G m / r&sup2;. Nothing is animated on a path.</em>
+</p>
+
 ![The solar system with the control panels open](docs/images/hero.png)
 
 ## What it does
@@ -28,6 +36,23 @@ clearly labelled as the visual analogy it is.
 - Renders through an HDR pipeline with bloom, ACES tone mapping and a
   procedural starfield, so stars glow rather than being flat discs.
 
+## Demo clips
+
+Rendered with `tools/make_demo.sh`, which is deterministic: simulated time
+advances a fixed amount per output frame, so the same command reproduces the
+same footage.
+
+| Clip | What it shows |
+| --- | --- |
+| [solar-system.mp4](docs/media/solar-system.mp4) | Sun through Neptune, camera sweeping a full circle |
+| [three-body.mp4](docs/media/three-body.mp4) | Three equal masses on a Lagrange triangle, drifting into chaos |
+| [spawned-star.mp4](docs/media/spawned-star.mp4) | A star inserted at runtime tearing the inner system apart |
+
+<p align="center">
+  <img src="docs/images/scene_three-body.png" width="49%" alt="Three stars, three overlapping gravitational wells">
+  <img src="docs/images/scene_binary.png" width="49%" alt="Binary stars sharing a single merged well">
+</p>
+
 ## Build
 
 Requires CMake 3.24+, a C++20 compiler and an OpenGL 3.3 capable GPU. GLFW, GLM
@@ -48,7 +73,16 @@ Run the tests:
 build/bin/gravsim_tests.exe          # or: ctest --test-dir build
 ```
 
-105 tests, no third-party test framework.
+```sh
+ctest --test-dir build            # 107 unit tests + the application self-test
+ctest --test-dir build -E selftest  # skip the test that needs a GPU
+```
+
+107 unit tests with no third-party test framework, plus a self-test that drives
+every UI-reachable state transition against a real GL context (scene loading,
+spawning, deleting, focusing, the reset buttons, every integrator and
+stabilisation mode, and emptying the scene entirely) and checks 5000+ invariants
+afterwards.
 
 ## Run
 
@@ -180,6 +214,19 @@ The full statement is in [docs/PHYSICS.md](docs/PHYSICS.md). The essentials:
 - **Softening is a documented modification**, not a hidden fudge, and it does
   not make a close encounter *accurate* -- only finite. The error there is
   timestep resolution, which the tests demonstrate by refining the step.
+
+## Known limitations of the interface
+
+- At wide zoom a small body can sit inside a larger body's drawn sphere and
+  become unclickable -- the Moon inside the Earth in the inner-system view, for
+  instance. Select it from the Bodies list or cycle with Tab instead. The
+  self-test reports how many bodies this affects rather than hiding it.
+- The background starfield is visible through the spacetime sheet, including
+  "below" it. That is correct for a transparent visualisation plane rather than
+  a floor, but it reads oddly at very shallow camera angles.
+- Mouse and keyboard interaction is not driven by any automated test. The logic
+  behind every control is covered by the self-test, but the click that reaches
+  it is not.
 
 ## Limitations
 

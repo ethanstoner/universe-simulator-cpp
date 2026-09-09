@@ -12,6 +12,7 @@
 
 #include "engine/AssetPaths.h"
 #include "engine/Screenshot.h"
+#include "engine/SelfTest.h"
 #include "sim/Constants.h"
 #include "sim/OrbitMath.h"
 #include "sim/SceneConfig.h"
@@ -88,6 +89,11 @@ void AppOptions::printUsage() {
         "  --no-configs             ignore configs/ and use the built-in presets\n"
         "  --no-post                disable HDR post-processing and bloom\n"
         "  --no-stars               hide the background starfield\n"
+        "  --selftest               exercise every UI-reachable path and exit\n"
+        "  --sequence DIR           write a deterministic PNG frame sequence and exit\n"
+        "  --sequence-frames N      how many frames to write\n"
+        "  --sequence-step SECONDS  simulated seconds advanced per frame\n"
+        "  --sequence-orbit DEG     camera yaw swept across the whole sequence\n"
         "  --spawn PRESET           spawn a body preset after the warm-up (repeatable)\n"
         "  --spawn-distance UNITS   how far ahead of the camera to spawn it\n"
         "  --spawn-at-rest          spawn with no automatic circular-orbit velocity\n"
@@ -126,6 +132,24 @@ AppOptions AppOptions::parse(int argc, char** argv) {
         else if (!std::strcmp(arg, "--no-configs")) options.noConfigs = true;
         else if (!std::strcmp(arg, "--no-post")) options.noPost = true;
         else if (!std::strcmp(arg, "--no-stars")) options.noStars = true;
+        else if (!std::strcmp(arg, "--selftest")) {
+            options.selfTest = true;
+            options.hidden = true;
+        }
+        else if (!std::strcmp(arg, "--sequence")) {
+            options.sequenceDir = valueFor(i);
+            options.hidden = true;
+            options.vsync = false;
+        }
+        else if (!std::strcmp(arg, "--sequence-frames")) {
+            options.sequenceFrames = std::atoi(valueFor(i));
+        }
+        else if (!std::strcmp(arg, "--sequence-step")) {
+            options.sequenceStepSeconds = std::atof(valueFor(i));
+        }
+        else if (!std::strcmp(arg, "--sequence-orbit")) {
+            options.sequenceOrbitDegrees = std::atof(valueFor(i));
+        }
         else if (!std::strcmp(arg, "--spawn")) options.spawnPresets.emplace_back(valueFor(i));
         else if (!std::strcmp(arg, "--spawn-distance")) {
             options.spawnDistance = std::atof(valueFor(i));
@@ -251,6 +275,7 @@ void Application::applySceneView(const sim::Scene& scene) {
     }
 
     const std::string focusName = !options_.focus.empty() ? options_.focus : view.focusBody;
+    state_.followBarycentre = (focusName == "barycentre" || focusName == "barycenter");
     state_.followed = sim::kInvalidBodyId;
     for (const sim::CelestialBody& body : system_.bodies()) {
         if (body.name == focusName) {
@@ -264,7 +289,10 @@ void Application::applySceneView(const sim::Scene& scene) {
     state_.selected = state_.followed;
 
     glm::dvec3 target(0.0);
-    if (const sim::CelestialBody* body = system_.find(state_.followed)) {
+    if (state_.followBarycentre) {
+        const sim::SystemDiagnostics d = sim::computeDiagnostics(system_);
+        if (d.totalMass > 0.0) target = glm::dvec3(d.centreOfMass) / view.metresPerUnit;
+    } else if (const sim::CelestialBody* body = system_.find(state_.followed)) {
         target = glm::dvec3(body->position) / renderSettings_.metresPerUnit;
     }
     camera_.frame(target, distance);
@@ -297,6 +325,118 @@ void Application::loadScene(const std::string& key) {
 }
 
 void Application::resetScene() { loadScene(state_.currentSceneKey); }
+
+void Application::repairDanglingReferences() {
+    const bool empty = system_.bodies().empty();
+    const sim::BodyId fallback = empty ? sim::kInvalidBodyId : system_.bodies().front().id;
+
+    if (!system_.find(state_.selected)) state_.selected = fallback;
+    if (!system_.find(state_.followed)) state_.followed = fallback;
+    // A trail frame pointing at a deleted body would silently reinterpret every
+    // stored sample as being in the inertial frame, which makes trails jump.
+    if (system_.settings().trailReference != sim::kInvalidBodyId &&
+        !system_.find(system_.settings().trailReference)) {
+        system_.settings().trailReference = sim::kInvalidBodyId;
+        system_.clearTrails();
+    }
+}
+
+bool Application::deleteBody(sim::BodyId id) {
+    const sim::CelestialBody* body = system_.find(id);
+    if (!body) return false;
+    const std::string name = body->name;  // copied before the vector is mutated
+
+    if (!system_.remove(id)) return false;
+    repairDanglingReferences();
+
+    // Removing mass changes the system's real total energy, so the drift
+    // reference has to move with it or the change is reported as drift.
+    diagnostics_ = sim::computeDiagnostics(system_);
+    energyTracker_.reset(diagnostics_);
+
+    setStatus("Deleted " + name);
+    return true;
+}
+
+void Application::resetRenderDefaults() {
+    // Start from a fresh RenderSettings so every look-and-feel value returns to
+    // its compiled-in default, then re-apply the current scene's view hints on
+    // top so scale and framing stay correct for what is loaded.
+    const render::RenderSettings defaults;
+    const double metresPerUnit = renderSettings_.metresPerUnit;
+    renderSettings_ = defaults;
+    renderSettings_.metresPerUnit = metresPerUnit;
+
+    if (const sim::Scene* scene = sim::findScene(state_.currentSceneKey)) {
+        const sim::SceneView& view = scene->view;
+        renderSettings_.metresPerUnit = view.metresPerUnit;
+        renderSettings_.trueScale = view.trueScale;
+        renderSettings_.minVisualRadius = view.minVisualRadius;
+        renderSettings_.bodyVisualExponent = view.bodyVisualExponent;
+        renderSettings_.bodyVisualGain = render::Renderer::gainForLargestRadius(
+            system_, view.metresPerUnit, view.bodyVisualExponent,
+            view.largestBodyDrawnRadius, view.scaleReferenceBody);
+        renderSettings_.showGrid = view.gridEnabled;
+        renderSettings_.gridExtent = view.gridExtent;
+        renderSettings_.gridMaxDepth =
+            std::max(std::min(view.gridExtent * 0.16, view.cameraDistance * 0.14), 0.5);
+        renderSettings_.showBoundsBox = scene->settings.bounds.enabled;
+    }
+    // Command line overrides still win, so --no-post stays off after a reset.
+    if (options_.noPost) renderSettings_.postProcessEnabled = false;
+    if (options_.noStars) renderSettings_.showStarfield = false;
+
+    setStatus("Rendering settings reset to defaults");
+}
+
+void Application::resetSimulationDefaults() {
+    const sim::Scene* scene = sim::findScene(state_.currentSceneKey);
+    if (!scene) return;
+
+    // Physics *settings* only. Body states are left alone, so this is not a
+    // scene restart: it undoes integrator/softening/collision experiments
+    // without throwing away the run.
+    const sim::BodyId trailReference = system_.settings().trailReference;
+    system_.settings() = scene->settings;
+    system_.settings().trailReference = trailReference;
+    system_.invalidate();
+
+    time_.fixedDt = scene->fixedTimeStep;
+    time_.timeScale = scene->defaultTimeScale;
+    time_.maxStepsPerFrame = engine::TimeControl{}.maxStepsPerFrame;
+    time_.paused = false;
+    time_.reset();
+
+    diagnostics_ = sim::computeDiagnostics(system_);
+    energyTracker_.reset(diagnostics_);
+    setStatus("Simulation settings reset to scene defaults");
+}
+
+void Application::resetCameraDefaults() {
+    const sim::Scene* scene = sim::findScene(state_.currentSceneKey);
+    if (!scene) return;
+    const sim::SceneView& view = scene->view;
+
+    camera_ = Camera{};  // fov, sensitivity, near/far all back to defaults
+    camera_.yaw = -90.0f;
+    camera_.pitch = -static_cast<float>(view.cameraPitchDegrees);
+    camera_.moveSpeed = static_cast<float>(view.cameraDistance * 0.4);
+    camera_.setMode(CameraMode::Orbit);
+
+    glm::dvec3 target(0.0);
+    if (const sim::CelestialBody* body = system_.find(state_.followed)) {
+        target = glm::dvec3(body->position) / renderSettings_.metresPerUnit;
+    }
+    camera_.frame(target, view.cameraDistance);
+    setStatus("Camera reset");
+}
+
+void Application::resetAllDefaults() {
+    resetRenderDefaults();
+    resetSimulationDefaults();
+    resetCameraDefaults();
+    setStatus("All settings reset to defaults");
+}
 
 sim::BodyId Application::spawnBody(const sim::CelestialBody& body) {
     sim::CelestialBody copy = body;
@@ -343,6 +483,7 @@ sim::BodyId Application::spawnFromCamera() {
 void Application::focusOn(sim::BodyId id) {
     const sim::CelestialBody* body = system_.find(id);
     if (!body) return;
+    state_.followBarycentre = false;
     state_.followed = id;
     state_.selected = id;
     camera_.setMode(CameraMode::Orbit);
@@ -357,12 +498,78 @@ void Application::focusOn(sim::BodyId id) {
 
 void Application::updateFollowCamera() {
     if (camera_.mode() != CameraMode::Orbit) return;
+
+    if (state_.followBarycentre) {
+        if (diagnostics_.totalMass > 0.0) {
+            camera_.setOrbitTarget(glm::dvec3(diagnostics_.centreOfMass) /
+                                   renderSettings_.metresPerUnit);
+        }
+        return;
+    }
     const sim::CelestialBody* body = system_.find(state_.followed);
     if (!body) return;
     camera_.setOrbitTarget(glm::dvec3(body->position) / renderSettings_.metresPerUnit);
 }
 
+int Application::runSequence() {
+    std::error_code code;
+    std::filesystem::create_directories(options_.sequenceDir, code);
+
+    const int frames = std::max(options_.sequenceFrames, 1);
+    const double stepSeconds = options_.sequenceStepSeconds > 0.0
+                                   ? options_.sequenceStepSeconds
+                                   : time_.fixedDt;
+    const long long stepsPerFrame =
+        std::max<long long>(1, static_cast<long long>(stepSeconds / time_.fixedDt));
+    const float startYaw = camera_.yaw;
+
+    std::printf("[sequence] %d frames, %.4g simulated seconds each (%lld steps)\n",
+                frames, stepSeconds, stepsPerFrame);
+
+    for (int frame = 0; frame < frames; ++frame) {
+        // Simulated time is advanced by a fixed amount per frame rather than by
+        // the wall clock, so the same command always produces the same footage.
+        for (long long i = 0; i < stepsPerFrame; ++i) system_.step(time_.fixedDt);
+        diagnostics_ = sim::computeDiagnostics(system_);
+        energyTracker_.update(diagnostics_);
+        repairDanglingReferences();
+
+        if (options_.sequenceOrbitDegrees != 0.0) {
+            const double t = static_cast<double>(frame) / std::max(frames - 1, 1);
+            camera_.yaw = startYaw + static_cast<float>(options_.sequenceOrbitDegrees * t);
+        }
+        updateFollowCamera();
+        // Recompute the camera's position from its orbit target. Without this
+        // the camera stays wherever it started and the yaw sweep merely pans
+        // the view, so a scene whose bodies move drifts out of frame.
+        camera_.update(input_, 0.0, /*acceptInput=*/false);
+
+        render();
+        if (ui_) {
+            ui_->beginFrame();
+            ui_->build(*this);
+            ui_->endFrame();
+        }
+
+        char path[1024];
+        std::snprintf(path, sizeof(path), "%s/frame_%05d.png",
+                      options_.sequenceDir.c_str(), frame);
+        if (!captureFramebufferToPng(window_->framebufferWidth(),
+                                     window_->framebufferHeight(), path)) {
+            std::fprintf(stderr, "[sequence] failed to write %s\n", path);
+            return 1;
+        }
+        window_->swapBuffers();
+        Window::pollEvents();
+    }
+    std::printf("[sequence] wrote %d frames to %s\n", frames,
+                options_.sequenceDir.c_str());
+    return 0;
+}
+
 int Application::run() {
+    if (options_.selfTest) return runSelfTest(*this);
+
     if (options_.listScenes) {
         for (const sim::Scene& scene : sim::builtinScenes()) {
             std::printf("%-16s %s\n", scene.key.c_str(), scene.title.c_str());
@@ -370,6 +577,8 @@ int Application::run() {
         return 0;
     }
 
+    // Warm-up and scripted spawns apply to sequences too, so a clip can start
+    // from a developed system.
     // Headless capture needs deterministic content, so advance by a requested
     // amount of *simulated* time rather than hoping the wall clock cooperates.
     if (options_.warmupSimSeconds > 0.0) {
@@ -444,6 +653,9 @@ int Application::run() {
                         body->name.c_str(), initialRadius, now, change);
         }
     }
+
+    // A frame sequence replaces the interactive loop entirely.
+    if (!options_.sequenceDir.empty()) return runSequence();
 
     while (!window_->shouldClose()) {
         clock_.tick();
@@ -567,14 +779,10 @@ void Application::advanceSimulation(double realDelta) {
         const sim::StepReport report = system_.step(time_.fixedDt);
         if (report.merges > 0) {
             mergeCount_ += report.merges;
-            // A merge changes the body count, so any held selection may be
-            // gone; fall back to something that still exists.
-            if (!system_.find(state_.selected) && !system_.bodies().empty()) {
-                state_.selected = system_.bodies().front().id;
-            }
-            if (!system_.find(state_.followed) && !system_.bodies().empty()) {
-                state_.followed = system_.bodies().front().id;
-            }
+            // A merge removes a body, so the selection, the camera focus and
+            // the trail reference frame may all now name something that no
+            // longer exists.
+            repairDanglingReferences();
         }
     }
 

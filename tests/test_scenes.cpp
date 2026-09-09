@@ -422,3 +422,43 @@ TEST(unstabilised_gravity_really_does_blow_up) {
     for (int i = 0; i < 200; ++i) guarded.step(1.0);
     CHECK_LESS(guarded.bodies()[1].speed(), constants::kC);
 }
+
+TEST(three_body_triangle_uses_the_lagrange_speed) {
+    // For three equal masses on an equilateral triangle of circumradius r the
+    // balance is v = sqrt(G m / (sqrt(3) r)). Getting this wrong -- the preset
+    // originally used the circular speed about a single central mass -- makes
+    // the configuration fly apart in under two years instead of orbiting.
+    GravitySystem system;
+    applyScene(*findScene("three-body"), system);
+    CHECK(system.size() == 3);
+
+    const CelestialBody& star = system.bodies()[0];
+    const double radius = glm::length(star.position);
+    const double expected =
+        std::sqrt(constants::kG * constants::kSolarMass / (std::sqrt(3.0) * radius));
+    // Within 2%: zeroNetMomentum shifts velocities slightly because one mass
+    // was nudged heavier.
+    CHECK_NEAR(glm::length(star.velocity) / expected, 1.0, 0.02);
+}
+
+TEST(three_body_triangle_survives_several_orbits_before_breaking_up) {
+    GravitySystem system;
+    applyScene(*findScene("three-body"), system);
+
+    const double radius = glm::length(system.bodies()[0].position);
+    const double speed = glm::length(system.bodies()[0].velocity);
+    const double period = 2.0 * 3.14159265358979 * radius / speed;
+
+    // Four orbits in, the stars must still be a bound cluster rather than
+    // scattered debris.
+    const double dt = 3600.0;
+    const int steps = static_cast<int>(4.0 * period / dt);
+    for (int i = 0; i < steps; ++i) system.step(dt);
+
+    double furthest = 0.0;
+    for (const CelestialBody& body : system.bodies()) {
+        furthest = std::max(furthest, glm::length(body.position));
+    }
+    CHECK_LESS(furthest, radius * 4.0);
+    CHECK(computeDiagnostics(system).totalEnergy < 0.0);  // still bound
+}

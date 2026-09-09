@@ -362,11 +362,13 @@ Scene sceneThreeBody() {
     scene.key = "three-body";
     scene.title = "Three-body chaos";
     scene.description =
-        "Three stars started near a Lagrange-style triangle. The three-body "
-        "problem has no general closed-form solution and this configuration is "
-        "chaotic: it usually ends with one star ejected. Identical initial "
-        "conditions still reproduce exactly, since the integrator is "
-        "deterministic.";
+        "Three equal-mass stars on a rotating equilateral triangle, the "
+        "Lagrange solution to the three-body problem, with one mass nudged 2% "
+        "heavier. That solution is linearly unstable for equal masses, so it "
+        "holds for several orbits and then breaks up, usually ejecting a star. "
+        "The three-body problem has no general closed-form solution, but the "
+        "integrator is deterministic: identical initial conditions reproduce "
+        "exactly, while a one-metre nudge diverges macroscopically.";
 
     scene.settings = astronomicalSettings();
     scene.settings.trailSampleInterval = 100000;
@@ -375,7 +377,22 @@ Scene sceneThreeBody() {
 
     const double mass = kSolarMass;
     const double radius = 1.5 * kAu;
-    const double speed = 0.9 * std::sqrt(kG * mass / radius);
+
+    // Speed for a rotating equilateral triangle of three equal masses.
+    //
+    // Each star sits at circumradius r, so the other two are r*sqrt(3) away.
+    // Each pulls with G m^2 / (3 r^2), and the two pulls resolve towards the
+    // centre as 2 cos(30 deg) times that, giving G m^2 / (sqrt(3) r^2). Setting
+    // that equal to the centripetal requirement m v^2 / r leaves
+    //     v = sqrt(G m / (sqrt(3) r)).
+    //
+    // The previous value here was 0.9 * sqrt(G M / r), the circular speed about
+    // a single central mass, which is simply the wrong problem: it is far too
+    // fast and the triangle tore itself apart inside two years instead of
+    // orbiting. The Lagrange triangle for equal masses is still linearly
+    // unstable, so it does eventually break up -- but over many orbits, which
+    // is the behaviour actually worth watching.
+    const double speed = std::sqrt(kG * mass / (std::sqrt(3.0) * radius));
     const glm::vec3 colors[3] = {
         {1.00f, 0.75f, 0.45f}, {0.65f, 0.80f, 1.00f}, {1.00f, 0.55f, 0.55f}};
 
@@ -389,9 +406,10 @@ Scene sceneThreeBody() {
         star.emissive = true;
         scene.bodies.push_back(star);
     }
-    // A deliberate asymmetry, so the configuration is not an exact (and
-    // artificially stable) Lagrange solution.
-    scene.bodies[2].mass *= 1.06;
+    // A small deliberate asymmetry. Without it the triangle is an exact
+    // solution and floating-point noise alone decides when it destabilises,
+    // which makes the moment of breakup arbitrary rather than reproducible.
+    scene.bodies[2].mass *= 1.02;
 
     scene.view.metresPerUnit = kAu / 4.0;
     // The stars sit 10.4 units apart, so 1.3 keeps them clearly separate.

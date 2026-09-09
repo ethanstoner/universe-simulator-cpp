@@ -57,6 +57,14 @@ struct AppOptions {
     bool noConfigs = false;            // ignore configs/, use the built-ins
     bool noPost = false;               // draw straight to the window, no HDR/bloom
     bool noStars = false;              // hide the decorative background starfield
+    bool selfTest = false;             // exercise every UI-reachable path and exit
+    // Deterministic frame sequence for the demo video. Simulated time is
+    // advanced by a fixed amount per frame rather than by the wall clock, so
+    // the same command always produces the same footage.
+    std::string sequenceDir;
+    int sequenceFrames = 0;
+    double sequenceStepSeconds = 0.0;  // simulated seconds per output frame
+    double sequenceOrbitDegrees = 0.0; // camera yaw swept over the whole clip
 
     static AppOptions parse(int argc, char** argv);
     static void printUsage();
@@ -68,9 +76,11 @@ struct AppOptions {
 struct AppState {
     sim::BodyId selected = sim::kInvalidBodyId;
     sim::BodyId followed = sim::kInvalidBodyId;
+    // Track the system's centre of mass instead of a single body. Following a
+    // body is useless in a chaotic scene: the three-body preset ejects a star,
+    // and the camera then leaves the rest of the system behind entirely.
+    bool followBarycentre = false;
     std::string currentSceneKey;
-    bool showHelp = false;
-    bool wantsReset = false;
     std::string statusMessage;
     double statusMessageAge = 0.0;
 
@@ -78,7 +88,6 @@ struct AppState {
     sim::CelestialBody spawnTemplate;
     double spawnDistance = 20.0;   // world units ahead of the camera
     bool spawnOrbitAuto = true;    // give the new body a circular orbit velocity
-    int spawnPresetIndex = 2;
 };
 
 class Application {
@@ -101,17 +110,31 @@ public:
 
     void loadScene(const std::string& key);
     void resetScene();
+    // Removes a body and repairs everything that referenced it: the selection,
+    // the camera's focus target and the trail reference frame.
+    bool deleteBody(sim::BodyId id);
+    // "Reset to defaults" for each group of settings. The scene's own view and
+    // physics hints are the defaults, so these re-apply the loaded preset
+    // WITHOUT restarting the simulation.
+    void resetRenderDefaults();
+    void resetSimulationDefaults();
+    void resetCameraDefaults();
+    void resetAllDefaults();
     void setStatus(const std::string& message);
     sim::BodyId spawnFromCamera();
     sim::BodyId spawnBody(const sim::CelestialBody& body);
     void focusOn(sim::BodyId id);
 
 private:
+    int runSequence();
     void processInput();
     void advanceSimulation(double realDelta);
     void render();
     void updateFollowCamera();
     void applySceneView(const sim::Scene& scene);
+    void resolveTrailReference(const sim::Scene& scene);
+    // Drops selection/focus/trail references that no longer name a live body.
+    void repairDanglingReferences();
 
     AppOptions options_;
     std::unique_ptr<Window> window_;
@@ -131,6 +154,9 @@ private:
     AppState state_;
     bool renderReady_ = false;
     int mergeCount_ = 0;
+
+public:
+    int mergeCount() const { return mergeCount_; }
 };
 
 }  // namespace engine

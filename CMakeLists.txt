@@ -92,3 +92,12 @@ target_compile_definitions(gravitysim PRIVATE
 # ----------------------------------------------------------------------- tests
 enable_testing()
 add_subdirectory(tests)
+
+# The application self-test drives every UI-reachable state transition against a
+# real GL context: scene loading, spawning, deleting, focusing, the reset
+# buttons, every integrator and stabilisation mode, and emptying the scene
+# entirely. It needs a working OpenGL 3.3 driver, so it is registered separately
+# from the headless unit tests and can be excluded with `ctest -E selftest` on a
+# machine without one.
+add_test(NAME gravitysim_selftest COMMAND gravitysim --selftest)
+set_tests_properties(gravitysim_selftest PROPERTIES LABELS "gpu" TIMEOUT 300)

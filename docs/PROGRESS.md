@@ -4,8 +4,9 @@ Milestones are marked COMPLETE only after the code has been built, run, and its
 behaviour checked. For rendering work that means a frame was captured offscreen
 and looked at; for physics it means a test asserts the numbers.
 
-Current state: **all twelve success criteria met**, plus a visual polish pass. 105 tests pass in 0.26 s
-(`ctest --test-dir build`).
+Current state: **all twelve success criteria met**, plus a visual polish pass
+and a UI hardening pass. 107 unit tests and a 5000-check application self-test,
+all passing (`ctest --test-dir build`).
 
 ---
 
@@ -291,6 +292,55 @@ competing with the grid, so the threshold went 1.0 -> 1.15, intensity 0.75 ->
 Known issue: stars are visible through the grid sheet, including "below" it.
 That is correct for a transparent visualisation plane rather than a floor, but
 it does read oddly at shallow camera angles.
+
+---
+
+## M11 -- UI hardening and release polish
+
+Status: **COMPLETE**
+
+Implemented: reset-to-defaults for rendering, simulation and camera settings,
+individually and together, from both a Reset menu and per-panel buttons; a
+barycentre-following camera mode; merge counts surfaced in the diagnostics
+panel; a deterministic frame-sequence mode (`--sequence`) used to render the
+demo clips; and `--selftest`, which drives every UI-reachable state transition
+against a real GL context.
+
+Bugs found by reading and by the self-test, not by using the app:
+
+1. **Use-after-free in Duplicate.** `spawnBody()` push_backs into the body
+   vector, which can reallocate. The handler then read `body->name` through a
+   pointer into that vector to build its status message.
+2. **Dangling references after deletion.** Removing a body left the selection,
+   the camera focus and -- worst -- the trail reference frame pointing at an id
+   that no longer existed. A dead trail frame silently reinterprets every stored
+   sample as inertial, so all trails jump. Deletion now goes through
+   `Application::deleteBody`, which repairs all three, and merges use the same
+   path.
+3. **The camera never moved in sequence mode.** `runSequence` set the orbit
+   target and swept the yaw but never called `Camera::update`, so the camera
+   stayed where it started and the sweep merely panned. Scenes whose bodies move
+   drifted out of frame, which is why the first demo clips were mostly empty
+   space.
+4. **The three-body preset was using the wrong speed.** It set
+   `0.9 * sqrt(GM/r)`, the circular speed about a single central mass, for a
+   configuration that has three. The correct balance for an equilateral triangle
+   of equal masses is `v = sqrt(G m / (sqrt(3) r))`; with the wrong value the
+   triangle tore itself apart in under two years instead of orbiting. Now
+   pinned by a test.
+5. **Unreadable time-scale buttons.** `"%.0g"` rendered 1e4 as `1e+04x`, wider
+   than the button it sat in.
+
+Self-test: 11 scenes x (load, step, four resets, spawn, focus, delete, delete
+the trail reference, all four integrators, all three stabilisation modes, delete
+every body, reset while empty, reload) plus picking and JSON round-trips.
+**5131 checks, 0 failures.**
+
+One finding kept rather than fixed: in the inner-system view the Moon sits
+inside the Earth's drawn sphere and cannot be clicked. That is a consequence of
+the radius exaggeration, not a picking bug, so the self-test asserts the weaker
+correct property -- a missed pick must be explained by an enclosing body -- and
+reports the count.
 
 ---
 

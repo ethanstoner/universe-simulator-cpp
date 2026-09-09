@@ -102,9 +102,18 @@ void placePanel(PanelSlot slot, float preferredHeight) {
 void beginPanelBody() { ImGui::PushItemWidth(-150.0f); }
 void endPanelBody() { ImGui::PopItemWidth(); }
 
-// Time scale presets, matching the spec's suggested ladder.
-constexpr double kTimeScales[] = {0.0,    0.1,    1.0,     10.0,    100.0,
-                                  1000.0, 1.0e4,  1.0e5,   1.0e6,   1.0e7};
+// Time scale presets, with labels written out rather than printf'd: "%.0g"
+// renders 1e4 as "1e+04x", which is both ugly and wider than the button.
+struct TimeScalePreset {
+    const char* label;
+    double value;
+};
+constexpr TimeScalePreset kTimeScales[] = {
+    {"0.1x", 0.1},   {"1x", 1.0},     {"10x", 10.0},   {"100x", 100.0},
+    {"1k", 1.0e3},   {"10k", 1.0e4},  {"100k", 1.0e5}, {"1M", 1.0e6},
+    {"10M", 1.0e7},  {"100M", 1.0e8},
+};
+constexpr int kTimeScaleCount = static_cast<int>(sizeof(kTimeScales) / sizeof(kTimeScales[0]));
 
 }  // namespace
 
@@ -171,6 +180,26 @@ void DebugUI::build(engine::Application& app) {
             ImGui::MenuItem("Spawn", nullptr, &showSpawn_);
             ImGui::MenuItem("Scenes", nullptr, &showScenes_);
             ImGui::MenuItem("Help", nullptr, &showHelp_);
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Reset")) {
+            if (ImGui::MenuItem("Restart scene", "R")) app.resetScene();
+            ImGui::Separator();
+            if (ImGui::MenuItem("Rendering settings")) app.resetRenderDefaults();
+            if (ImGui::MenuItem("Simulation settings")) app.resetSimulationDefaults();
+            if (ImGui::MenuItem("Camera")) app.resetCameraDefaults();
+            ImGui::Separator();
+            if (ImGui::MenuItem("Everything")) {
+                app.resetAllDefaults();
+                app.resetScene();
+            }
+            if (ImGui::IsItemHovered()) {
+                ImGui::SetTooltip("Resets all settings AND restarts the scene.");
+            }
+            if (ImGui::MenuItem("Show all panels")) {
+                showSimulation_ = showSystem_ = showRendering_ = true;
+                showBodies_ = showScenes_ = true;
+            }
             ImGui::EndMenu();
         }
         ImGui::Separator();
@@ -257,19 +286,9 @@ void DebugUI::simulationPanel(engine::Application& app) {
     ImGui::Text("= %s of simulated time per second",
                 sim::formatDuration(time.timeScale).c_str());
 
-    for (int i = 0; i < 5; ++i) {
-        if (i > 0) ImGui::SameLine();
-        char label[24];
-        const double value = kTimeScales[i + 2];
-        std::snprintf(label, sizeof(label), "%.0gx", value);
-        if (ImGui::SmallButton(label)) time.timeScale = value;
-    }
-    for (int i = 5; i < 8; ++i) {
-        if (i > 5) ImGui::SameLine();
-        char label[24];
-        const double value = kTimeScales[i + 2];
-        std::snprintf(label, sizeof(label), "%.0gx", value);
-        if (ImGui::SmallButton(label)) time.timeScale = value;
+    for (int i = 0; i < kTimeScaleCount; ++i) {
+        if (i % 5 != 0) ImGui::SameLine();
+        if (ImGui::SmallButton(kTimeScales[i].label)) time.timeScale = kTimeScales[i].value;
     }
 
     ImGui::Separator();
@@ -356,6 +375,15 @@ void DebugUI::simulationPanel(engine::Application& app) {
 
     ImGui::Checkbox("Pairwise gravity", &settings.pairwiseGravityEnabled);
 
+    ImGui::Separator();
+    if (ImGui::Button("Reset simulation settings to defaults", ImVec2(-1.0f, 0.0f))) {
+        app.resetSimulationDefaults();
+    }
+    ImGui::SetItemTooltip(
+        "Restores this scene's integrator, stabilisation, collision mode, step "
+        "size and time scale. Body positions and velocities are left alone, so "
+        "the run continues -- use Reset above to restart the scene itself.");
+
     endPanelBody();
     ImGui::End();
 }
@@ -376,6 +404,11 @@ void DebugUI::systemPanel(engine::Application& app) {
                   sim::formatDuration(app.system().elapsedSimulatedSeconds()));
     labelledValue("Physics steps", "%.0f",
                   static_cast<double>(app.system().stepCount()));
+    if (app.mergeCount() > 0) {
+        // Surfaced rather than silent: otherwise bodies just vanish from the
+        // list and it looks like a bug.
+        labelledValue("Bodies merged", "%.0f", static_cast<double>(app.mergeCount()));
+    }
 
     ImGui::Separator();
     labelledValue("Kinetic energy", sim::formatEnergy(d.kineticEnergy));
@@ -532,6 +565,14 @@ void DebugUI::renderingPanel(engine::Application& app) {
     ImGui::SliderFloat("Ambient", &settings.ambient, 0.0f, 0.5f);
     ImGui::SliderFloat("Star brightness", &settings.starBrightness, 0.1f, 3.0f);
 
+    ImGui::Separator();
+    if (ImGui::Button("Reset rendering to defaults", ImVec2(-1.0f, 0.0f))) {
+        app.resetRenderDefaults();
+    }
+    ImGui::SetItemTooltip(
+        "Restores every display setting on this panel, then re-applies the "
+        "current scene's scale and framing hints.");
+
     ImGui::SeparatorText("Camera");
     engine::Camera& camera = app.camera();
     int mode = camera.mode() == engine::CameraMode::Orbit ? 0 : 1;
@@ -550,6 +591,18 @@ void DebugUI::renderingPanel(engine::Application& app) {
             camera.setOrbitDistance(distance);
         }
     }
+    if (camera.mode() == engine::CameraMode::Orbit) {
+        if (ImGui::Checkbox("Follow barycentre", &app.state().followBarycentre)) {
+            if (!app.state().followBarycentre && !app.system().bodies().empty()) {
+                app.state().followed = app.state().selected;
+            }
+        }
+        ImGui::SetItemTooltip(
+            "Track the system's centre of mass instead of one body. Following a "
+            "single body is useless in a chaotic scene: three-body ejects a star "
+            "and the camera leaves everything else behind.");
+    }
+    if (ImGui::Button("Reset camera", ImVec2(-1.0f, 0.0f))) app.resetCameraDefaults();
 
     endPanelBody();
     ImGui::End();
@@ -585,25 +638,22 @@ void DebugUI::bodiesPanel(engine::Application& app) {
 
     if (ImGui::Button("Focus (F)")) app.focusOn(app.state().selected);
     ImGui::SameLine();
-    if (ImGui::Button("Delete")) {
-        if (app.system().remove(app.state().selected)) {
-            app.setStatus("Deleted body");
-            if (!app.system().bodies().empty()) {
-                app.state().selected = app.system().bodies().front().id;
-                app.state().followed = app.state().selected;
-            }
-        }
-    }
+    if (ImGui::Button("Delete")) app.deleteBody(app.state().selected);
     ImGui::SameLine();
     if (ImGui::Button("Duplicate")) {
         if (const sim::CelestialBody* body = app.system().find(app.state().selected)) {
+            // Everything needed is copied out FIRST. spawnBody() push_backs into
+            // the body vector, which can reallocate and leave `body` dangling --
+            // reading body->name after the call was a use-after-free.
             sim::CelestialBody copy = *body;
-            copy.name += " copy";
-            // Offset by two drawn radii so the duplicate is not created exactly
-            // on top of the original, which would be an immediate collision.
-            copy.position += sim::Vec3(body->radius * 4.0 + 1.0e7, 0.0, 0.0);
+            const std::string originalName = body->name;
+            copy.name = originalName + " copy";
+            // Offset so the duplicate is not created exactly on top of the
+            // original, which would be an immediate collision.
+            copy.position += sim::Vec3(copy.radius * 4.0 + 1.0e7, 0.0, 0.0);
+            copy.trail.clear();
             app.spawnBody(copy);
-            app.setStatus("Duplicated " + body->name);
+            app.setStatus("Duplicated " + originalName);
         }
     }
 
@@ -735,7 +785,6 @@ void DebugUI::spawnPanel(engine::Application& app) {
     for (std::size_t i = 0; i < presets.size(); ++i) {
         if (i % 2 != 0) ImGui::SameLine();
         if (ImGui::Button(presets[i].name.c_str(), ImVec2(160, 0))) {
-            state.spawnPresetIndex = static_cast<int>(i);
             state.spawnTemplate.name = presets[i].name;
             state.spawnTemplate.mass = presets[i].mass;
             state.spawnTemplate.radius = presets[i].radius;
