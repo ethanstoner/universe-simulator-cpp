@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "sim/BarnesHut.h"
 #include "sim/CelestialBody.h"
 #include "sim/Constants.h"
 #include "sim/Integrator.h"
@@ -19,6 +20,21 @@ enum class Stabilization {
     Softening,    // Plummer softening: a = G m r / (r^2 + eps^2)^(3/2)
     MinDistance,  // clamp the separation used in the denominator to a floor
 };
+
+// How the pairwise sum is evaluated.
+enum class GravitySolver {
+    // Exact O(N^2) summation. Each unordered pair is visited once and the
+    // equal-and-opposite accelerations are applied together, so total momentum
+    // is conserved to rounding. The default.
+    Direct,
+    // Barnes-Hut octree, O(N log N). Distant groups are approximated by their
+    // centre of mass, which breaks the exact third-law pairing: body A may
+    // approximate a cluster that resolves A exactly, so momentum is conserved
+    // only to the approximation error. Worth it above a few hundred bodies.
+    BarnesHut,
+};
+
+const char* gravitySolverName(GravitySolver solver);
 
 enum class CollisionMode {
     Ignore,   // bodies pass through one another
@@ -44,6 +60,10 @@ struct SimulationSettings {
     IntegratorType integrator = IntegratorType::VelocityVerlet;
 
     bool pairwiseGravityEnabled = true;
+    GravitySolver solver = GravitySolver::Direct;
+    // Barnes-Hut opening angle. 0 degenerates to direct summation, 0.5 is the
+    // usual choice and is sub-percent accurate, larger is faster and wronger.
+    double barnesHutTheta = 0.5;
     Stabilization stabilization = Stabilization::Softening;
     double softeningLength = 1.0e6;   // m -- ~0.16 Earth radii, negligible at AU scales
     double minimumDistance = 1.0e6;   // m, used when stabilization is MinDistance
@@ -142,6 +162,10 @@ private:
     std::vector<Vec3> positions_;
     std::vector<Vec3> velocities_;
     std::vector<Vec3> accelerations_;
+    // Rebuilt on every force evaluation when the Barnes-Hut solver is active.
+    // Held as a member so the node storage is reused between steps.
+    mutable BarnesHutTree tree_;
+    mutable std::vector<double> treeMasses_;
 
     double elapsed_ = 0.0;
     double lastTrailSample_ = 0.0;

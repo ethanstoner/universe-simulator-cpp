@@ -1,11 +1,17 @@
 #include "TestFramework.h"
 
 #include <cmath>
+#include <chrono>
 #include <cstdint>
+#include <cstdio>
+#include <string>
 #include <vector>
 
 #include "sim/BarnesHut.h"
 #include "sim/Constants.h"
+#include "sim/Diagnostics.h"
+#include "sim/GravitySystem.h"
+#include "sim/SceneLibrary.h"
 #include "sim/Vec.h"
 
 using namespace sim;
@@ -243,4 +249,101 @@ TEST(barneshut_node_count_is_linear_ish_in_body_count) {
     // be quadratic.
     CHECK_LESS(static_cast<double>(large.nodeCount()), 200.0 * 1000.0);
     CHECK(large.depth() < 32);
+}
+
+// ----------------------------------------- the solver inside GravitySystem
+
+TEST(solver_barnes_hut_agrees_with_direct_on_a_real_scene) {
+    // End-to-end rather than tree-only: the same preset stepped with each
+    // solver must stay on the same trajectory.
+    auto advance = [](GravitySolver solver) {
+        GravitySystem system;
+        applyScene(*findScene("inner"), system);
+        system.settings().solver = solver;
+        system.settings().barnesHutTheta = 0.3;
+        for (int i = 0; i < 2000; ++i) system.step(1800.0);
+        return system;
+    };
+
+    const GravitySystem direct = advance(GravitySolver::Direct);
+    const GravitySystem tree = advance(GravitySolver::BarnesHut);
+    CHECK(direct.size() == tree.size());
+
+    for (std::size_t i = 0; i < direct.size(); ++i) {
+        const double radius = glm::length(direct.bodies()[i].position);
+        if (radius <= 0.0) continue;
+        const double drift =
+            glm::length(tree.bodies()[i].position - direct.bodies()[i].position);
+        // A few thousand steps of a slightly different force law: the orbits
+        // must still coincide to well under a percent of their radius.
+        CHECK_LESS(drift / radius, 0.005);
+    }
+}
+
+TEST(solver_barnes_hut_conserves_momentum_only_approximately) {
+    // The honest caveat, asserted rather than asserted-away. Barnes-Hut breaks
+    // the exact third-law pairing, so momentum drifts where direct summation
+    // holds it to rounding. This pins the size of that difference so a future
+    // change cannot quietly make it worse.
+    auto momentumDrift = [](GravitySolver solver) {
+        GravitySystem system;
+        applyScene(*findScene("inner"), system);
+        system.settings().solver = solver;
+        system.settings().barnesHutTheta = 0.5;
+
+        double scale = 0.0;
+        for (const CelestialBody& body : system.bodies()) {
+            scale += glm::length(body.momentum());
+        }
+        const Vec3 before = computeDiagnostics(system).linearMomentum;
+        for (int i = 0; i < 3000; ++i) system.step(1800.0);
+        const Vec3 after = computeDiagnostics(system).linearMomentum;
+        return glm::length(after - before) / scale;
+    };
+
+    const double directDrift = momentumDrift(GravitySolver::Direct);
+    const double treeDrift = momentumDrift(GravitySolver::BarnesHut);
+
+    CHECK_LESS(directDrift, 1e-12);   // exact pairing: rounding only
+    CHECK(treeDrift > directDrift);   // the approximation really does cost this
+    CHECK_LESS(treeDrift, 1e-3);      // but it stays small at theta = 0.5
+}
+
+TEST(solver_barnes_hut_is_faster_for_many_bodies) {
+    // The entire reason the tree exists. Timing is inherently noisy, so this
+    // asserts only a large margin at a body count where the asymptotics
+    // dominate, and reports the numbers.
+    auto timeSteps = [](GravitySolver solver, int bodyCount, int steps) {
+        GravitySystem system;
+        system.settings().solver = solver;
+        system.settings().barnesHutTheta = 0.5;
+        system.settings().trailLength = 0;
+        system.settings().stabilization = Stabilization::Softening;
+        system.settings().softeningLength = 1.0e8;
+
+        Lcg random;
+        for (int i = 0; i < bodyCount; ++i) {
+            CelestialBody body;
+            body.name = "b" + std::to_string(i);
+            body.mass = 1.0e22;
+            body.radius = 1.0e6;
+            body.showTrail = false;
+            body.position = Vec3(random.range(-1e12, 1e12), random.range(-1e11, 1e11),
+                                 random.range(-1e12, 1e12));
+            system.add(body);
+        }
+
+        const auto start = std::chrono::steady_clock::now();
+        for (int i = 0; i < steps; ++i) system.step(3600.0);
+        const auto end = std::chrono::steady_clock::now();
+        return std::chrono::duration<double>(end - start).count();
+    };
+
+    const int bodies = 3000;
+    const double directSeconds = timeSteps(GravitySolver::Direct, bodies, 3);
+    const double treeSeconds = timeSteps(GravitySolver::BarnesHut, bodies, 3);
+    std::printf("         %d bodies: direct %.3f s, Barnes-Hut %.3f s (%.1fx)\n",
+                bodies, directSeconds, treeSeconds, directSeconds / treeSeconds);
+
+    CHECK(treeSeconds < directSeconds);
 }

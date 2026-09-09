@@ -16,6 +16,14 @@ const char* stabilizationName(Stabilization mode) {
     return "?";
 }
 
+const char* gravitySolverName(GravitySolver solver) {
+    switch (solver) {
+        case GravitySolver::Direct: return "Direct O(N^2)";
+        case GravitySolver::BarnesHut: return "Barnes-Hut O(N log N)";
+    }
+    return "?";
+}
+
 const char* collisionModeName(CollisionMode mode) {
     switch (mode) {
         case CollisionMode::Ignore: return "Ignore";
@@ -108,6 +116,35 @@ void GravitySystem::accelerations(const std::vector<Vec3>& positions,
     const double G = settings_.gravitationalConstant;
     const double softeningSq = settings_.softeningLength * settings_.softeningLength;
     const double minDistanceSq = settings_.minimumDistance * settings_.minimumDistance;
+
+    if (settings_.solver == GravitySolver::BarnesHut) {
+        // The tree only supports Plummer-style softening, which is the same
+        // constant added to r^2 that the direct path uses. MinDistance clamps
+        // per pair and has no aggregate equivalent, so it degrades to the
+        // softening term here; None passes zero.
+        double treeSoftening = 0.0;
+        if (settings_.stabilization == Stabilization::Softening) {
+            treeSoftening = softeningSq;
+        } else if (settings_.stabilization == Stabilization::MinDistance) {
+            treeSoftening = minDistanceSq;
+        }
+
+        treeMasses_.resize(n);
+        for (std::size_t i = 0; i < n && i < bodies_.size(); ++i) {
+            treeMasses_[i] = bodies_[i].mass;
+        }
+        tree_.build(positions, treeMasses_);
+
+        for (std::size_t i = 0; i < n; ++i) {
+            if (i < bodies_.size() && bodies_[i].fixed) continue;
+            out[i] += tree_.accelerationAt(positions[i], static_cast<int>(i), G,
+                                           settings_.barnesHutTheta, treeSoftening);
+        }
+        for (std::size_t i = 0; i < n && i < bodies_.size(); ++i) {
+            if (bodies_[i].fixed) out[i] = Vec3(0.0);
+        }
+        return;
+    }
 
     // Each unordered pair is visited once and the equal-and-opposite pair of
     // accelerations is applied together (Newton's third law), which halves the
