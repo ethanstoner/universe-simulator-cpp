@@ -15,6 +15,7 @@
 #include "render/Starfield.h"
 #include "render/TrailRenderer.h"
 #include "sim/CelestialBody.h"
+#include "sim/Trajectory.h"
 #include "sim/ViewMath.h"
 
 namespace sim {
@@ -76,6 +77,13 @@ public:
 
     // Bundles the display-scale settings for sim/ViewMath.
     static ViewScale toViewScale(const RenderSettings& settings);
+
+    // Draws a predicted path. Separate from drawScene so the caller decides
+    // when a forecast is fresh enough to show.
+    void drawTrajectory(const sim::Trajectory& trajectory,
+                        const sim::GravitySystem& system,
+                        const glm::dvec3& cameraPosition,
+                        const RenderSettings& settings);
 
     LineRenderer& lines() { return lines_; }
     const glm::mat4& lastViewProjection() const { return viewProjection_; }

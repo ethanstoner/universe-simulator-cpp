@@ -14,6 +14,7 @@
 #include "sim/Diagnostics.h"
 #include "sim/GravitySystem.h"
 #include "sim/SceneLibrary.h"
+#include "sim/Trajectory.h"
 
 namespace ui {
 class DebugUI;
@@ -57,6 +58,7 @@ struct AppOptions {
     bool noConfigs = false;            // ignore configs/, use the built-ins
     bool noPost = false;               // draw straight to the window, no HDR/bloom
     bool noStars = false;              // hide the decorative background starfield
+    bool showTrajectory = false;       // draw the selected body's predicted path
     bool selfTest = false;             // exercise every UI-reachable path and exit
     int benchmarkBodies = 0;           // >0: run the solver benchmark and exit
     // Deterministic frame sequence for the demo video. Simulated time is
@@ -132,6 +134,7 @@ private:
     void advanceSimulation(double realDelta);
     void render();
     void updateFollowCamera();
+    void updateTrajectory(double realDelta);
     void applySceneView(const sim::Scene& scene);
     void resolveTrailReference(const sim::Scene& scene);
     // Drops selection/focus/trail references that no longer name a live body.
@@ -147,6 +150,11 @@ private:
     sim::GravitySystem system_;
     sim::SystemDiagnostics diagnostics_;
     sim::EnergyTracker energyTracker_;
+
+    // Cached forecast for the selected body, refreshed on a wall-clock timer.
+    sim::Trajectory trajectory_;
+    double trajectoryAge_ = 0.0;
+    sim::BodyId trajectoryFor_ = sim::kInvalidBodyId;
 
     render::Renderer renderer_;
     render::RenderSettings renderSettings_;

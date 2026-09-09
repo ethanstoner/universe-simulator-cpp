@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include <algorithm>
+#include <cmath>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -133,6 +134,7 @@ AppOptions AppOptions::parse(int argc, char** argv) {
         else if (!std::strcmp(arg, "--no-configs")) options.noConfigs = true;
         else if (!std::strcmp(arg, "--no-post")) options.noPost = true;
         else if (!std::strcmp(arg, "--no-stars")) options.noStars = true;
+        else if (!std::strcmp(arg, "--trajectory")) options.showTrajectory = true;
         else if (!std::strcmp(arg, "--benchmark")) {
             // Optional body count; defaults to 8192.
             options.benchmarkBodies = 8192;
@@ -211,6 +213,7 @@ Application::Application(const AppOptions& options) : options_(options) {
 
     if (options_.noPost) renderSettings_.postProcessEnabled = false;
     if (options_.noStars) renderSettings_.showStarfield = false;
+    if (options_.showTrajectory) renderSettings_.showTrajectory = true;
 
     renderReady_ = renderer_.initialize(renderSettings_);
     if (!renderReady_) {
@@ -504,6 +507,59 @@ void Application::focusOn(sim::BodyId id) {
     setStatus("Focused on " + body->name);
 }
 
+void Application::updateTrajectory(double realDelta) {
+    if (!renderSettings_.showTrajectory) {
+        trajectory_.points.clear();
+        trajectoryFor_ = sim::kInvalidBodyId;
+        return;
+    }
+
+    trajectoryAge_ += realDelta;
+    // Forecasting integrates a full copy of the system, so it is far too
+    // expensive to redo every frame. Recompute on a timer, or immediately when
+    // the selection changes so the path never lags behind the highlighted body.
+    const bool selectionChanged = trajectoryFor_ != state_.selected;
+    if (!selectionChanged &&
+        trajectoryAge_ < renderSettings_.trajectoryRefreshSeconds) {
+        return;
+    }
+    trajectoryAge_ = 0.0;
+    trajectoryFor_ = state_.selected;
+
+    sim::TrajectoryRequest request;
+    request.body = state_.selected;
+    request.horizonSeconds =
+        renderSettings_.trajectoryHorizonYears * sim::constants::kJulianYear;
+    request.stepSeconds = time_.fixedDt;
+    request.maxSamples = renderSettings_.trajectorySamples;
+    request.referenceBody = system_.settings().trailReference;
+    // Forecasting a body in its own frame is identically zero, which draws as a
+    // single degenerate point. Fall back to the inertial frame in that case.
+    if (request.referenceBody == request.body) {
+        request.referenceBody = sim::kInvalidBodyId;
+    }
+
+    // Keep the total number of integration steps bounded regardless of the
+    // horizon: a long forecast takes coarser samples rather than more of them.
+    const double totalSteps = request.horizonSeconds / std::max(time_.fixedDt, 1e-9);
+    // Rounded UP and against the number of intervals rather than the number of
+    // samples. Rounding down left a "1 year" forecast covering 0.97 years and
+    // flagged as truncated, because the samples ran out before the horizon.
+    const double intervals = std::max(request.maxSamples - 1, 1);
+    request.stepsPerSample =
+        static_cast<int>(std::max(1.0, std::ceil(totalSteps / intervals)));
+
+    trajectory_ = sim::predictTrajectory(system_, request);
+    if (const char* debug = std::getenv("UNIVERSE_SIM_DEBUG_TRAJECTORY")) {
+        (void)debug;
+        std::printf("[traj] body=%u samples=%zu horizon=%.4g/%.4g s steps/sample=%d "
+                    "truncated=%d\n",
+                    request.body, trajectory_.points.size(),
+                    trajectory_.horizonSeconds, request.horizonSeconds,
+                    request.stepsPerSample, trajectory_.truncated ? 1 : 0);
+    }
+}
+
 void Application::updateFollowCamera() {
     if (camera_.mode() != CameraMode::Orbit) return;
 
@@ -672,6 +728,7 @@ int Application::run() {
 
         processInput();
         advanceSimulation(clock_.deltaSeconds());
+        updateTrajectory(clock_.deltaSeconds());
         updateFollowCamera();
         render();
 
@@ -810,6 +867,10 @@ void Application::render() {
     if (renderReady_) {
         renderer_.drawScene(system_, camera_, renderSettings_, window_->aspect(),
                             state_.selected);
+        if (renderSettings_.showTrajectory) {
+            renderer_.drawTrajectory(trajectory_, system_, camera_.position(),
+                                     renderSettings_);
+        }
     }
     // Resolves and composites to the window. ImGui draws after this, so the
     // panels are never tone mapped or bloomed.

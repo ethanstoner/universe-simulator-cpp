@@ -194,6 +194,44 @@ void Renderer::drawScene(const sim::GravitySystem& system, const engine::Camera&
     drawAnnotations(system, camera, settings, selected);
 }
 
+void Renderer::drawTrajectory(const sim::Trajectory& trajectory,
+                              const sim::GravitySystem& system,
+                              const glm::dvec3& cameraPosition,
+                              const RenderSettings& settings) {
+    if (trajectory.points.size() < 2 || settings.metresPerUnit <= 0.0) return;
+
+    // Predictions stored relative to a body are drawn attached to where that
+    // body is now, exactly as trails are.
+    sim::Vec3 frameOrigin(0.0);
+    if (system.settings().trailReference != sim::kInvalidBodyId) {
+        if (const sim::CelestialBody* reference =
+                system.find(system.settings().trailReference)) {
+            frameOrigin = reference->position;
+        }
+    }
+
+    lines_.begin();
+    const std::size_t count = trajectory.points.size();
+    for (std::size_t i = 0; i + 1 < count; ++i) {
+        const glm::dvec3 a =
+            (trajectory.points[i] + frameOrigin) / settings.metresPerUnit - cameraPosition;
+        const glm::dvec3 b =
+            (trajectory.points[i + 1] + frameOrigin) / settings.metresPerUnit -
+            cameraPosition;
+        // Fades along its length so the direction of travel is obvious and the
+        // forecast is visually distinct from the solid trail behind the body.
+        // Only a gentle fade: at 0.75 the far half of a full-orbit forecast was
+        // so faint that the prediction looked truncated.
+        const float t = static_cast<float>(i) / static_cast<float>(count - 1);
+        const float alpha = 0.95f * (1.0f - t * 0.45f);
+        lines_.addSegment(glm::vec3(a), glm::vec3(b),
+                          glm::vec4(0.45f, 0.95f, 0.75f, alpha));
+    }
+    glDepthMask(GL_FALSE);
+    lines_.flush(viewProjection_);
+    glDepthMask(GL_TRUE);
+}
+
 void Renderer::drawBodies(const sim::GravitySystem& system, const engine::Camera& camera,
                           const RenderSettings& settings, sim::BodyId selected) {
     if (!bodyShader_.valid()) return;

@@ -481,6 +481,20 @@ void DebugUI::renderingPanel(engine::Application& app) {
     ImGui::SameLine();
     ImGui::Checkbox("Wireframe", &settings.wireframe);
 
+    ImGui::Checkbox("Predicted path", &settings.showTrajectory);
+    ImGui::SetItemTooltip(
+        "Forecasts the selected body by integrating a copy of the whole system "
+        "with the same integrator, so it includes perturbation from every other "
+        "body. It is a prediction under current conditions: spawning a body or "
+        "editing an orbit changes it.");
+    if (settings.showTrajectory) {
+        float years = static_cast<float>(settings.trajectoryHorizonYears);
+        if (ImGui::SliderFloat("Forecast (years)", &years, 0.01f, 50.0f, "%.2f",
+                               ImGuiSliderFlags_Logarithmic)) {
+            settings.trajectoryHorizonYears = years;
+        }
+        ImGui::SliderInt("Forecast samples", &settings.trajectorySamples, 50, 4000);
+    }
     ImGui::Checkbox("Velocity vectors", &settings.showVelocityVectors);
     ImGui::Checkbox("Acceleration vectors", &settings.showAccelerationVectors);
     ImGui::Checkbox("Schwarzschild radius", &settings.showSchwarzschildRadius);

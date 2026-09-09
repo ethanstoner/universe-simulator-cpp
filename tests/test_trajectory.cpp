@@ -225,3 +225,21 @@ TEST(trajectory_works_with_the_barnes_hut_solver) {
         CHECK(std::isfinite(point.x) && std::isfinite(point.y) && std::isfinite(point.z));
     }
 }
+
+TEST(trajectory_in_its_own_frame_is_degenerate) {
+    // Documents the edge case the application guards against: expressing a
+    // body's path relative to itself is identically zero, so every sample sits
+    // on the origin and the drawn path collapses to a point.
+    GravitySystem system;
+    applyScene(*findScene("earth-moon"), system);
+    const BodyId earth = idOf(system, "Earth");
+
+    TrajectoryRequest request = requestFor(system, earth, 10.0 * constants::kDay, 600.0);
+    request.referenceBody = earth;
+
+    const Trajectory path = predictTrajectory(system, request);
+    CHECK(path.points.size() > 2);
+    for (const Vec3& point : path.points) {
+        CHECK(glm::length(point) == 0.0);
+    }
+}

@@ -36,6 +36,12 @@ struct RenderSettings {
     bool showGrid = true;
     bool showLabels = true;
     bool showVelocityVectors = false;
+    // Predicted future path of the selected body. Recomputed on a timer
+    // rather than every frame: it integrates a whole copy of the system.
+    bool showTrajectory = false;
+    double trajectoryHorizonYears = 1.0;
+    int trajectorySamples = 500;
+    float trajectoryRefreshSeconds = 0.25f;  // wall-clock, not simulated
     bool showAccelerationVectors = false;
     bool showSchwarzschildRadius = false;
     bool showBoundsBox = false;
