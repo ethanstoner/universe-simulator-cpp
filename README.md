@@ -48,6 +48,42 @@ only compiling.
 - Renders through an HDR pipeline with bloom, ACES tone mapping and a
   procedural starfield, so stars glow rather than being flat discs.
 
+## Engineering highlights
+
+The parts that were genuinely hard, and what they cost:
+
+- **Floating-origin rendering.** Physics runs in `double`; Earth's orbital
+  radius is 1.5e11 m and `float` would quantise its position into 16 km steps.
+  Every position is made camera-relative *in double* and only then narrowed to
+  float, so nothing downstream ever sees an absolute astronomical coordinate.
+- **Scale compression that preserves ordering.** The Sun is 109 Earth radii, so
+  any constant exaggeration large enough to make Earth visible draws the Sun
+  wider than Earth's entire orbit. Drawn radius is
+  `gain * (r / metresPerUnit) ^ 0.35`, with the gain solved per scene from a
+  named reference body. Gravity never reads a drawn radius.
+- **Symplectic integration, and a test that proves it.** Velocity Verlet by
+  default. The energy test asserts *boundedness* rather than smallness: peak
+  drift over orbits 1-25 is compared against orbits 26-50, which is the property
+  that actually separates a symplectic method from an accurate one. The inner
+  solar system holds to better than **1e-5 relative energy drift over a
+  simulated decade**, and Earth completes exactly one orbit per Julian year.
+- **Time acceleration that does not corrupt the physics.** Up to 1e9x by taking
+  *more fixed steps*, never a larger one, with a step budget that degrades into
+  slow motion instead of freezing and reports when it is hit.
+- **Honest failure analysis.** A compact object thrown through a star moves the
+  total energy by a factor of thousands. Rather than hide it, a test refines the
+  timestep across 600 s, 150 s and 37.5 s and requires the drift to fall
+  monotonically, which distinguishes unresolved-encounter truncation error from
+  a masked singularity.
+- **Testability enforced by layering.** `sim/` has no OpenGL, GLFW or ImGui
+  dependency and is a separate static library, so all 107 unit tests run
+  headless. The picking and scale maths were deliberately moved *into* `sim/`
+  so they could be tested without a GL context.
+- **HDR render pipeline.** Multisampled `RGBA16F` target so a star's core can
+  exceed 1.0 and survive to the bright pass, then bloom, ACES tone mapping and a
+  procedural starfield. At 8 bits the overflow clips to white and the halo
+  disappears entirely.
+
 ## Download
 
 [**Windows x64 portable build**](https://github.com/ethanstoner/universe-simulator-cpp/releases/latest)
@@ -243,20 +279,9 @@ The full statement is in [docs/PHYSICS.md](docs/PHYSICS.md). The essentials:
   not make a close encounter *accurate* -- only finite. The error there is
   timestep resolution, which the tests demonstrate by refining the step.
 
-## Known limitations of the interface
-
-- At wide zoom a small body can sit inside a larger body's drawn sphere and
-  become unclickable -- the Moon inside the Earth in the inner-system view, for
-  instance. Select it from the Bodies list or cycle with Tab instead. The
-  self-test reports how many bodies this affects rather than hiding it.
-- The background starfield is visible through the spacetime sheet, including
-  "below" it. That is correct for a transparent visualisation plane rather than
-  a floor, but it reads oddly at very shallow camera angles.
-- Mouse and keyboard interaction is not driven by any automated test. The logic
-  behind every control is covered by the self-test, but the click that reaches
-  it is not.
-
 ## Limitations
+
+### The model
 
 - Orbits start as circles at the semi-major axis; real eccentricities and phases
   are not reproduced.
@@ -269,6 +294,19 @@ The full statement is in [docs/PHYSICS.md](docs/PHYSICS.md). The essentials:
   magnitude of scene scale.
 - The merge model discards the kinetic energy of relative motion and does not
   conserve spin angular momentum, because rotation is not modelled.
+
+### The interface
+
+- At wide zoom a small body can sit inside a larger body's drawn sphere and
+  become unclickable -- the Moon inside the Earth in the inner-system view, for
+  instance. Select it from the Bodies list or cycle with Tab instead. The
+  self-test reports how many bodies this affects rather than hiding it.
+- The background starfield is visible through the spacetime sheet, including
+  "below" it. That is correct for a transparent visualisation plane rather than
+  a floor, but it reads oddly at very shallow camera angles.
+- Mouse and keyboard interaction is not driven by any automated test. The logic
+  behind every control is covered by the self-test, but the click that reaches
+  it is not.
 
 ## Verification
 
