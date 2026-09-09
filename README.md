@@ -47,6 +47,14 @@ software rasteriser.
 - Renders through an HDR pipeline with bloom, ACES tone mapping and a
   procedural starfield, so stars glow rather than being flat discs.
 
+## Download
+
+[**Windows x64 portable build**](https://github.com/ethanstoner/universe-sim/releases/latest)
+-- 1 MB, no installer and no runtime redistributable. Unzip and run
+`gravitysim.exe`. Needs an OpenGL 3.3 capable GPU.
+
+Or build from source, which takes about a minute; see below.
+
 ## Demo clips
 
 Rendered with `tools/make_demo.sh`, which is deterministic: simulated time
