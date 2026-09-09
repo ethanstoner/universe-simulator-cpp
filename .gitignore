@@ -1,9 +1,20 @@
-build/
+# Build output. The glob covers build/, build_rel/, build_msvc/, build-debug/
+# and any other out-of-source directory, which a bare "build/" did not: a
+# stray build_rel/ was committed once because of exactly that.
+build*/
 out/
-*.png
-!docs/images/*.png
-.vscode/
-.cache/
+cmake-build-*/
+_deps/
+CMakeCache.txt
+CMakeFiles/
 compile_commands.json
 
-# screenshots captured for milestone verification are kept
+# Editors and tooling
+.vscode/
+.idea/
+.cache/
+*.user
+
+# Loose screenshots dropped by F12, but keep the ones the docs reference.
+*.png
+!docs/images/*.png
