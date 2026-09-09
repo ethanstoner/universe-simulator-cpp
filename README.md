@@ -49,6 +49,9 @@ only compiling.
   procedural starfield, so stars glow rather than being flat discs.
 - Solves gravity by exact O(N^2) summation or a Barnes-Hut octree, with a
   2000-body asteroid belt preset to run the tree against.
+- Demonstrates real celestial mechanics: Trojan asteroids librating at the
+  L4 and L5 Lagrange points, with a control showing an arbitrary angle does
+  not hold.
 - Forecasts where the selected body will go by integrating a copy of the
   whole system, so the prediction includes perturbation from every other
   body rather than being a Kepler ellipse.
@@ -134,6 +137,8 @@ same footage.
 | [solar-system.mp4](docs/media/solar-system.mp4) | Sun through Neptune, camera sweeping a full circle |
 | [three-body.mp4](docs/media/three-body.mp4) | Three equal masses on a Lagrange triangle, drifting into chaos |
 | [spawned-star.mp4](docs/media/spawned-star.mp4) | A star inserted at runtime tearing the inner system apart |
+| [precession.mp4](docs/media/precession.mp4) | Relativistic perihelion advance, exaggerated into a rosette |
+| [trojans.mp4](docs/media/trojans.mp4) | Asteroids librating around Jupiter's L4 and L5 points |
 
 <p align="center">
   <img src="docs/images/scene_three-body.png" width="49%" alt="Three stars, three overlapping gravitational wells">
@@ -143,13 +148,16 @@ same footage.
 </p>
 
 <p align="center">
-  <img src="docs/images/scene_precession.png" width="66%" alt="Relativistic perihelion precession tracing a rosette">
+  <img src="docs/images/scene_precession.png" width="49%" alt="Relativistic perihelion precession tracing a rosette">
+  <img src="docs/images/scene_trojans.png" width="49%" alt="Trojan asteroid swarms at Jupiter's L4 and L5 points">
 </p>
 
 <p align="center">
-  <em>Relativistic perihelion precession. Exaggerated 300000x so the rosette
-  is visible in seconds; at strength 1 this is Mercury's real 43 arcseconds
-  per century, which the test suite measures as 42.77.</em>
+  <em>Left: relativistic perihelion precession, exaggerated 300000x so the
+  rosette is visible in seconds. At strength 1 this is Mercury's real 43
+  arcseconds per century, measured by the test suite as 42.77. Right: Trojan
+  swarms librating 60 degrees ahead of and behind Jupiter at L4 and L5,
+  held there by nothing but the stability of the equilibrium.</em>
 </p>
 
 <p align="center">

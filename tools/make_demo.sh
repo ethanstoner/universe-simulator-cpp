@@ -68,6 +68,15 @@ d=$(shot intruder 240 --scene inner --focus barycentre --distance 95 \
       --spawn Sun --spawn-distance 14 --warmup 20000000 --sequence-step 220000)
 encode "$d" "$OUT/spawned-star.mp4"
 
+# 4. Relativistic perihelion precession tracing a rosette. Exaggerated so the
+#    effect is visible; the real one is 43 arcsec per century.
+d=$(shot precession 240 --scene precession --sequence-step 900000)
+encode "$d" "$OUT/precession.mp4"
+
+# 5. Trojan asteroids librating around Jupiter's L4 and L5 points.
+d=$(shot trojans 240 --scene trojans --sequence-step 9000000 --sequence-orbit 40)
+encode "$d" "$OUT/trojans.mp4"
+
 # A short looping GIF for the top of the README. Two-pass palette generation,
 # because GIF's default 256-colour dithering wrecks the gradients in the grid.
 echo "  building README gif"
