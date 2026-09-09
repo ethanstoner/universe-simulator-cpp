@@ -49,7 +49,7 @@ struct RenderSettings {
     int gridResolution = 140;      // cells per side
     double gridExtent = 60.0;      // half-width, world units
     float gridStrength = 1.0f;     // global multiplier on well depth
-    float gridOpacity = 0.42f;
+    float gridOpacity = 0.34f;
     double gridMaxDepth = 9.0;     // world units; the displacement saturates here
     // Softening radius for each well, as a fraction of gridExtent. Without this
     // the funnel would be a spike one pixel wide.
@@ -60,6 +60,25 @@ struct RenderSettings {
     // --- lighting ----------------------------------------------------------
     float ambient = 0.05f;
     float starBrightness = 1.0f;
+
+    // --- background starfield (decorative; not simulated bodies) ------------
+    bool showStarfield = true;
+    float starfieldBrightness = 0.75f;
+    float starfieldSize = 1.6f;
+
+    // --- HDR post-processing -----------------------------------------------
+    // The scene renders into an RGBA16F target so a star's core can sit well
+    // above 1.0 and still be recoverable by the bright pass. Disabling this
+    // falls back to drawing straight to the window.
+    bool postProcessEnabled = true;
+    bool bloomEnabled = true;
+    float bloomThreshold = 1.15f;
+    float bloomSoftKnee = 0.45f;
+    float bloomIntensity = 0.55f;
+    int bloomIterations = 5;
+    float exposure = 1.0f;
+    bool tonemap = true;
+    float vignette = 0.25f;
 
     // --- mesh quality ------------------------------------------------------
     int sphereLatitudeSegments = 24;

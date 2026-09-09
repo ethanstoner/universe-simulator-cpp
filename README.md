@@ -25,6 +25,8 @@ clearly labelled as the visual analogy it is.
   ever enlarging the physics timestep.
 - Draws a warped grid that responds to mass, as a **visualisation** -- see
   [docs/PHYSICS.md](docs/PHYSICS.md).
+- Renders through an HDR pipeline with bloom, ACES tone mapping and a
+  procedural starfield, so stars glow rather than being flat discs.
 
 ## Build
 

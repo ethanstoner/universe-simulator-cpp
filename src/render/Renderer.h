@@ -9,8 +9,10 @@
 #include "render/GridRenderer.h"
 #include "render/LineRenderer.h"
 #include "render/Mesh.h"
+#include "render/PostProcess.h"
 #include "render/RenderSettings.h"
 #include "render/Shader.h"
+#include "render/Starfield.h"
 #include "render/TrailRenderer.h"
 #include "sim/CelestialBody.h"
 #include "sim/ViewMath.h"
@@ -32,7 +34,11 @@ public:
     bool initialize(const RenderSettings& settings);
     void reloadShaders();
 
-    void beginFrame(int width, int height);
+    // beginFrame binds the HDR target; endFrame resolves, blooms and
+    // composites it to the window. ImGui must be drawn after endFrame so the
+    // UI is not tone mapped.
+    void beginFrame(int width, int height, int samples, const RenderSettings& settings);
+    void endFrame(const RenderSettings& settings);
     void drawScene(const sim::GravitySystem& system, const engine::Camera& camera,
                    const RenderSettings& settings, float aspect,
                    sim::BodyId selected);
@@ -81,6 +87,10 @@ private:
                          const RenderSettings& settings, sim::BodyId selected);
     void rebuildSphere(const RenderSettings& settings);
 
+    PostProcess post_;
+    bool usingPost_ = false;
+
+    Starfield starfield_;
     Shader bodyShader_;
     Mesh sphereMesh_;
     GridRenderer grid_;

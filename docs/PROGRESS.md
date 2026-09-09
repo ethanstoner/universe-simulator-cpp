@@ -4,7 +4,7 @@ Milestones are marked COMPLETE only after the code has been built, run, and its
 behaviour checked. For rendering work that means a frame was captured offscreen
 and looked at; for physics it means a test asserts the numbers.
 
-Current state: **all twelve success criteria met.** 105 tests pass in 0.26 s
+Current state: **all twelve success criteria met**, plus a visual polish pass. 105 tests pass in 0.26 s
 (`ctest --test-dir build`).
 
 ---
@@ -258,6 +258,39 @@ thousands. That is timestep resolution, not the force law, and the two are
 distinguishable by refining the step -- which a test now does at 600 s, 150 s and
 37.5 s, requiring the drift to fall monotonically and by more than 10x overall.
 Documented in `docs/PHYSICS.md`.
+
+---
+
+## M10 -- Visual polish
+
+Status: **COMPLETE**
+
+Implemented: HDR render target (multisampled `RGBA16F`) with a bright pass,
+half-resolution separable Gaussian bloom, ACES filmic tone mapping, exposure and
+a subtle vignette; a procedural fixed-seed starfield drawn as round point
+sprites with a power-law brightness distribution and blackbody-ish tints; a
+graceful fallback to direct rendering when the framebuffer cannot be created.
+
+Emissive bodies now output well above 1.0 on purpose, so the bright pass finds
+them and the tone map rolls their cores to white while the bloom halo keeps the
+star's colour. That is the whole reason the target has to be floating point: at
+8 bits the overflow is clipped before bloom can see it.
+
+Run: `--no-post` and `--no-stars` disable the new work, which is how the
+fallback path is exercised rather than assumed.
+
+Observed: captured before and after across the presets. The Sun gains a real
+halo, the previously empty black void has a sky, and the grid reads far better
+against it. UI panels remain crisp because ImGui draws after the composite --
+confirmed in `docs/images/hero.png`.
+
+Tuning: the first pass had bloom washing out the inner planets and the starfield
+competing with the grid, so the threshold went 1.0 -> 1.15, intensity 0.75 ->
+0.55, star brightness 1.0 -> 0.75 and grid opacity 0.42 -> 0.34.
+
+Known issue: stars are visible through the grid sheet, including "below" it.
+That is correct for a transparent visualisation plane rather than a floor, but
+it does read oddly at shallow camera angles.
 
 ---
 

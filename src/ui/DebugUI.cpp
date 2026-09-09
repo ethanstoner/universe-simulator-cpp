@@ -497,6 +497,35 @@ void DebugUI::renderingPanel(engine::Application& app) {
     ImGui::SameLine();
     ImGui::Checkbox("Shaded sheet", &settings.gridShaded);
 
+    ImGui::SeparatorText("Look");
+    ImGui::Checkbox("Starfield", &settings.showStarfield);
+    ImGui::SetItemTooltip(
+        "Decorative background only. These are not simulated bodies and not a "
+        "star catalogue; they are generated from a fixed seed so the sky is the "
+        "same on every run.");
+    if (settings.showStarfield) {
+        ImGui::SliderFloat("Star brightness", &settings.starfieldBrightness, 0.0f, 2.5f);
+        ImGui::SliderFloat("Star size", &settings.starfieldSize, 0.5f, 5.0f);
+    }
+
+    ImGui::Checkbox("HDR post-processing", &settings.postProcessEnabled);
+    ImGui::SetItemTooltip(
+        "Renders the scene into a floating-point buffer so a star's core can be "
+        "brighter than white. Turning this off draws straight to the window and "
+        "loses bloom and tone mapping.");
+    if (settings.postProcessEnabled) {
+        ImGui::Checkbox("Bloom", &settings.bloomEnabled);
+        if (settings.bloomEnabled) {
+            ImGui::SliderFloat("Bloom intensity", &settings.bloomIntensity, 0.0f, 2.0f);
+            ImGui::SliderFloat("Bloom threshold", &settings.bloomThreshold, 0.1f, 4.0f);
+            ImGui::SliderFloat("Bloom knee", &settings.bloomSoftKnee, 0.0f, 1.5f);
+            ImGui::SliderInt("Bloom blur passes", &settings.bloomIterations, 1, 12);
+        }
+        ImGui::SliderFloat("Exposure", &settings.exposure, 0.1f, 4.0f);
+        ImGui::Checkbox("ACES tone map", &settings.tonemap);
+        ImGui::SliderFloat("Vignette", &settings.vignette, 0.0f, 1.0f);
+    }
+
     ImGui::SeparatorText("Quality");
     ImGui::SliderInt("Sphere latitude", &settings.sphereLatitudeSegments, 3, 96);
     ImGui::SliderInt("Sphere longitude", &settings.sphereLongitudeSegments, 3, 192);

@@ -32,9 +32,16 @@ opening a window, the layering has been violated.
 | `src/sim/SceneConfig.*` | JSON <-> scene loading |
 | `src/sim/Json.*` | Small dependency-free JSON parser/writer |
 | `src/sim/Units.*` | Human-readable formatting (m -> AU, kg -> M_sun, s -> yr) |
-| `src/engine/*` | Window, Input, Clock, Camera, AssetPaths, Screenshot, Application |
-| `src/render/*` | Shader, Mesh, MeshFactory, Renderer, Grid/Trail/Line renderers |
-| `src/ui/DebugUI.*` | The ImGui control panel |
+| `src/sim/ViewMath.*` | Camera-relative positioning, drawn-radius power law, ray picking. Lives in `sim/` only so it can be tested without a GL context |
+| `src/engine/*` | Window, Input, Clock, TimeControl, Camera, AssetPaths, Screenshot, Application |
+| `src/render/Shader,Mesh,MeshFactory` | GL resource wrappers and procedural geometry |
+| `src/render/Renderer.*` | Draw orchestration and the camera-relative invariant |
+| `src/render/GridRenderer.*` | The spacetime-analogy sheet |
+| `src/render/TrailRenderer.*` | Fading orbit trails, optionally in a body's frame |
+| `src/render/LineRenderer.*` | Batched arrows, rings and boxes |
+| `src/render/PostProcess.*` | HDR target, bloom chain, tone map, vignette |
+| `src/render/Starfield.*` | Decorative fixed-seed background stars |
+| `src/ui/DebugUI.*` | The ImGui control panels and body labels |
 
 ## Units
 
@@ -52,13 +59,19 @@ Three independent scale factors exist and must never be confused:
 | Name | Meaning | Used by |
 | --- | --- | --- |
 | physical radius | the body's true radius, metres | collision/merge tests |
-| `renderScale` | metres -> world units for the GPU | position transform only |
-| `bodyVisualScale` | per-body exaggeration of drawn size | model matrix only |
+| `metresPerUnit` | metres -> world units for the GPU | position transform only |
+| `bodyVisualGain` / `bodyVisualExponent` | drawn-radius exaggeration | model matrix only |
 
-**Gravity uses mass and position only.** Neither `renderScale` nor
-`bodyVisualScale` is readable from `sim/`; they live in the renderer. This is
-enforced structurally: `sim/CelestialBody` stores `renderRadiusScale` purely as
-a display hint and no code in `sim/` reads it for physics.
+**Gravity uses mass and position only.** The display scales live in
+`render::RenderSettings`, which nothing in `sim/` includes.
+
+The exaggeration is a *power law*, `gain * (r / metresPerUnit) ^ exponent`, not
+a multiplier. A multiplier cannot work: the Sun is 109 Earth radii, so any
+factor large enough to make the Earth visible draws the Sun wider than the
+Earth's entire orbit. The exponent compresses that ratio while preserving the
+ordering, and each scene solves its own gain from a named reference body --
+which must be named explicitly, because the Earth-Moon preset still contains the
+Sun and solving from "largest" made the Earth six pixels across.
 
 ## Timestep
 
@@ -88,6 +101,32 @@ current working directory, the executable's directory and its parent, then the
 `GRAVITYSIM_SOURCE_DIR` baked in at configure time. A side benefit is that
 shaders can be edited in the source tree and hot-reloaded without rebuilding.
 
+## Render pipeline
+
+The scene is not drawn straight to the window. It goes into a multisampled
+`RGBA16F` framebuffer first:
+
+```
+starfield -> grid -> bodies -> trails -> annotations     (into MSAA HDR target)
+  -> blit resolve -> bright pass -> ping-pong Gaussian blur (half res)
+  -> composite: scene + bloom, exposure, ACES tone map, vignette, gamma
+  -> default framebuffer -> ImGui
+```
+
+Floating point is the point: a star's fragment shader deliberately outputs a
+colour well above 1.0 so that the bright pass can find it. An 8-bit target would
+clip that to white before bloom ever saw it, and the halo would vanish.
+
+ImGui draws *after* the composite, straight to the default framebuffer, so the
+panels are never tone mapped, bloomed or vignetted. If framebuffer creation
+fails the renderer falls back to drawing directly to the window: bloom and tone
+mapping are lost, the scene is not. Both paths are exercised
+(`--no-post` takes the fallback).
+
+The starfield is decorative. It is generated once from a fixed seed so the sky
+is identical on every run, which keeps captured frames comparable; the stars are
+not bodies and take no part in the simulation.
+
 ## Physics vs visualisation
 
 The warped grid is a **visual analogy only**. It is computed in a vertex shader
@@ -98,7 +137,7 @@ throughout. See `docs/PHYSICS.md`.
 
 ## Future relativistic extension
 
-The seam for a relativistic model is `sim::Integrator` plus a force/geodesic
-provider interface. `GravitySystem::computeAccelerations` is the single place
-where `a = -G m / r^2` appears, so a Schwarzschild geodesic integrator would
-replace that one function rather than being threaded through the renderer.
+The seam for a relativistic model is the `sim::ForceModel` interface the
+integrators take. `GravitySystem::accelerations` is the single place where
+`a = G m / r^2` appears, so a Schwarzschild geodesic integrator would replace
+that one function rather than being threaded through the renderer.

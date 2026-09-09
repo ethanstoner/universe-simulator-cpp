@@ -86,6 +86,8 @@ void AppOptions::printUsage() {
         "  --no-ui                  hide the ImGui panels\n"
         "  --export-configs DIR     write every scene to DIR as JSON and exit\n"
         "  --no-configs             ignore configs/ and use the built-in presets\n"
+        "  --no-post                disable HDR post-processing and bloom\n"
+        "  --no-stars               hide the background starfield\n"
         "  --spawn PRESET           spawn a body preset after the warm-up (repeatable)\n"
         "  --spawn-distance UNITS   how far ahead of the camera to spawn it\n"
         "  --spawn-at-rest          spawn with no automatic circular-orbit velocity\n"
@@ -122,6 +124,8 @@ AppOptions AppOptions::parse(int argc, char** argv) {
         else if (!std::strcmp(arg, "--no-ui")) options.noUi = true;
         else if (!std::strcmp(arg, "--export-configs")) options.exportConfigs = valueFor(i);
         else if (!std::strcmp(arg, "--no-configs")) options.noConfigs = true;
+        else if (!std::strcmp(arg, "--no-post")) options.noPost = true;
+        else if (!std::strcmp(arg, "--no-stars")) options.noStars = true;
         else if (!std::strcmp(arg, "--spawn")) options.spawnPresets.emplace_back(valueFor(i));
         else if (!std::strcmp(arg, "--spawn-distance")) {
             options.spawnDistance = std::atof(valueFor(i));
@@ -172,6 +176,9 @@ Application::Application(const AppOptions& options) : options_(options) {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_LINE_SMOOTH);
+
+    if (options_.noPost) renderSettings_.postProcessEnabled = false;
+    if (options_.noStars) renderSettings_.showStarfield = false;
 
     renderReady_ = renderer_.initialize(renderSettings_);
     if (!renderReady_) {
@@ -580,10 +587,17 @@ void Application::advanceSimulation(double realDelta) {
 }
 
 void Application::render() {
-    renderer_.beginFrame(window_->framebufferWidth(), window_->framebufferHeight());
-    if (!renderReady_) return;
-    renderer_.drawScene(system_, camera_, renderSettings_, window_->aspect(),
-                        state_.selected);
+    // 4x MSAA matches the window hint, so the offscreen HDR target has the same
+    // edge quality the default framebuffer would have had.
+    renderer_.beginFrame(window_->framebufferWidth(), window_->framebufferHeight(), 4,
+                         renderSettings_);
+    if (renderReady_) {
+        renderer_.drawScene(system_, camera_, renderSettings_, window_->aspect(),
+                            state_.selected);
+    }
+    // Resolves and composites to the window. ImGui draws after this, so the
+    // panels are never tone mapped or bloomed.
+    renderer_.endFrame(renderSettings_);
 }
 
 }  // namespace engine

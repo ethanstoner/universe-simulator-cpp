@@ -55,6 +55,8 @@ struct AppOptions {
     bool spawnAtRest = false;          // skip the automatic circular-orbit velocity
     double settleSimSeconds = 0.0;     // simulated seconds to advance AFTER spawning
     bool noConfigs = false;            // ignore configs/, use the built-ins
+    bool noPost = false;               // draw straight to the window, no HDR/bloom
+    bool noStars = false;              // hide the decorative background starfield
 
     static AppOptions parse(int argc, char** argv);
     static void printUsage();

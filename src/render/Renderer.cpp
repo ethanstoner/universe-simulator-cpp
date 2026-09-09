@@ -123,6 +123,13 @@ bool Renderer::initialize(const RenderSettings& settings) {
     ok = grid_.initialize(settings) && ok;
     ok = trails_.initialize() && ok;
     ok = lines_.initialize() && ok;
+    ok = starfield_.initialize() && ok;
+    // Post-processing failing is not fatal: the renderer falls back to drawing
+    // straight to the default framebuffer, losing bloom but not the scene.
+    if (!post_.initialize()) {
+        std::fprintf(stderr, "[render] post-processing unavailable: %s\n",
+                     post_.lastError().c_str());
+    }
     rebuildSphere(settings);
     return ok;
 }
@@ -132,21 +139,46 @@ void Renderer::reloadShaders() {
     grid_.reloadShader();
     trails_.reloadShader();
     lines_.reloadShader();
+    starfield_.reloadShader();
+    post_.reloadShaders();
 }
 
-void Renderer::beginFrame(int width, int height) {
-    glViewport(0, 0, width, height);
-    glClearColor(0.015f, 0.017f, 0.032f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+void Renderer::beginFrame(int width, int height, int samples,
+                          const RenderSettings& settings) {
+    // A near-black background rather than pure black: the grid and trails read
+    // better against a very slightly blue field.
+    const glm::vec3 clearColor(0.008f, 0.009f, 0.018f);
+
+    usingPost_ = false;
+    if (settings.postProcessEnabled) {
+        usingPost_ = post_.resize(width, height, samples) && post_.begin(clearColor);
+    }
+    if (!usingPost_) {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(0, 0, width, height);
+        glClearColor(clearColor.r, clearColor.g, clearColor.b, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void Renderer::endFrame(const RenderSettings& settings) {
+    if (usingPost_) {
+        post_.end(settings);
+        usingPost_ = false;
+    }
 }
 
 void Renderer::drawScene(const sim::GravitySystem& system, const engine::Camera& camera,
                          const RenderSettings& settings, float aspect,
                          sim::BodyId selected) {
     viewProjection_ = camera.viewProjection(aspect);
+
+    // Stars first: they are the backdrop, and they write no depth.
+    starfield_.draw(viewProjection_, settings);
 
     if (settings.gridResolution != 0 && settings.showGrid) {
         grid_.draw(system, camera.position(), gridCentreFor(camera), viewProjection_,

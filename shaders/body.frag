@@ -27,7 +27,10 @@ void main() {
         // A star is its own light source. The rim term fakes a limb glow so it
         // reads as a sphere rather than a flat disc.
         float rim = pow(1.0 - max(dot(normal, toEye), 0.0), 2.0);
-        vec3 color = uBaseColor * (1.25 + 0.9 * rim);
+        // Deliberately above 1.0: the HDR target keeps the overflow, the bright
+        // pass picks it up, and the tone map rolls the core to white while the
+        // bloom halo retains the star's colour.
+        vec3 color = uBaseColor * (1.95 + 1.30 * rim);
         fragColor = vec4(color, 1.0);
     } else {
         vec3 lit = uBaseColor * uAmbient;
