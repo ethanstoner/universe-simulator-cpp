@@ -27,6 +27,25 @@ namespace sim {
 // and the UI says so. See docs/PHYSICS.md.
 class BarnesHutTree {
 public:
+    BarnesHutTree() = default;
+
+    // The tree holds raw pointers into the caller's position and mass arrays
+    // for the duration of a build. Copying it would carry those pointers into
+    // the copy, where they would refer to the *original* owner's storage --
+    // which is exactly what happens when a GravitySystem is copied to forecast
+    // a trajectory. It is a cache, so a copy simply starts empty and is rebuilt
+    // on the next force evaluation.
+    BarnesHutTree(const BarnesHutTree&) {}
+    BarnesHutTree& operator=(const BarnesHutTree&) {
+        nodes_.clear();
+        positions_ = nullptr;
+        masses_ = nullptr;
+        depth_ = 0;
+        return *this;
+    }
+    BarnesHutTree(BarnesHutTree&&) = default;
+    BarnesHutTree& operator=(BarnesHutTree&&) = default;
+
     // Rebuilds from scratch. Bodies with non-positive mass are ignored.
     void build(const std::vector<Vec3>& positions, const std::vector<double>& masses);
 
