@@ -399,6 +399,35 @@ void DebugUI::simulationPanel(engine::Application& app) {
                            "opening-angle error. Use Direct for long runs.");
     }
 
+    ImGui::SeparatorText("Relativity");
+    if (ImGui::Checkbox("1PN correction", &settings.relativisticCorrection)) {
+        app.system().invalidate();
+    }
+    ImGui::SetItemTooltip(
+        "Adds the leading post-Newtonian term. At strength 1 it advances "
+        "Mercury's perihelion by 43 arcseconds per century, which the test "
+        "suite measures as 42.77. Off by default: the simulator is Newtonian "
+        "unless you ask for this.");
+    if (settings.relativisticCorrection) {
+        float strength = static_cast<float>(settings.relativisticStrength);
+        if (ImGui::SliderFloat("Strength", &strength, 1.0f, 1.0e6f, "%.0f",
+                               ImGuiSliderFlags_Logarithmic)) {
+            settings.relativisticStrength = strength;
+        }
+        ImGui::SetItemTooltip(
+            "1 is physical. Anything above it exaggerates the effect so the "
+            "precession is visible in seconds rather than centuries, which is a "
+            "demonstration setting and not physics.");
+        if (settings.relativisticStrength > 1.5) {
+            ImGui::TextColored(ImVec4(1.0f, 0.75f, 0.4f, 1.0f),
+                               "Exaggerated %.0fx: for demonstration, not physical.",
+                               settings.relativisticStrength);
+        }
+        ImGui::TextColored(ImVec4(0.75f, 0.8f, 0.95f, 1.0f),
+                           "Two-body Schwarzschild term applied pairwise,\n"
+                           "not the full N-body EIH Lagrangian.");
+    }
+
     ImGui::Checkbox("Pairwise gravity", &settings.pairwiseGravityEnabled);
 
     ImGui::Separator();

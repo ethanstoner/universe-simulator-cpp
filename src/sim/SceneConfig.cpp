@@ -102,6 +102,8 @@ std::string sceneToJson(const Scene& scene) {
                                    ? "barnes-hut"
                                    : "direct"));
     physics.set("barnesHutTheta", Json(scene.settings.barnesHutTheta));
+    physics.set("relativisticCorrection", Json(scene.settings.relativisticCorrection));
+    physics.set("relativisticStrength", Json(scene.settings.relativisticStrength));
     physics.set("stabilization", Json(stabilizationKey(scene.settings.stabilization)));
     physics.set("softeningLengthMetres", Json(scene.settings.softeningLength));
     physics.set("minimumDistanceMetres", Json(scene.settings.minimumDistance));
@@ -188,6 +190,8 @@ bool sceneFromJson(const std::string& text, Scene& out, std::string& error) {
                           ? GravitySolver::BarnesHut
                           : GravitySolver::Direct;
     settings.barnesHutTheta = physics["barnesHutTheta"].asNumber(0.5);
+    settings.relativisticCorrection = physics["relativisticCorrection"].asBool(false);
+    settings.relativisticStrength = physics["relativisticStrength"].asNumber(1.0);
     settings.stabilization = stabilizationFromKey(physics["stabilization"].asString("softening"));
     settings.softeningLength = physics["softeningLengthMetres"].asNumber(settings.softeningLength);
     settings.minimumDistance = physics["minimumDistanceMetres"].asNumber(settings.minimumDistance);

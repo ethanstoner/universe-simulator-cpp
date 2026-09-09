@@ -7,7 +7,7 @@
         0.41999998688697815
       ],
       "emissive": true,
-      "fixed": false,
+      "fixed": true,
       "massKg": 1.9889199999999999e+30,
       "name": "Sun",
       "positionMetres": [
@@ -20,37 +20,37 @@
       "velocityMetresPerSecond": [
         0,
         0,
-        -0.089446720017005474
+        -0.0097898318990877684
       ]
     },
     {
       "color": [
-        0.31999999284744263,
-        0.55000001192092896,
-        0.92000001668930054
+        0.85000002384185791,
+        0.72000002861022949,
+        0.55000001192092896
       ],
       "emissive": false,
       "fixed": false,
-      "massKg": 5.9721900000000004e+24,
-      "name": "Earth",
+      "massKg": 3.3011000000000001e+23,
+      "name": "Mercury",
       "positionMetres": [
-        149597900000,
+        46001212048.5,
         0,
         0
       ],
-      "radiusMetres": 6371000,
+      "radiusMetres": 2439700,
       "showTrail": true,
       "velocityMetresPerSecond": [
         0,
         0,
-        29788.464596106704
+        58983.952199974687
       ]
     }
   ],
-  "defaultTimeScale": 2000000,
-  "description": "Earth around the Sun and nothing else. The velocity is set once from v = sqrt(GM/r) and the orbit is then produced entirely by gravity.",
-  "fixedTimeStepSeconds": 3600,
-  "key": "two-body",
+  "defaultTimeScale": 200000,
+  "description": "A single eccentric orbit with the post-Newtonian correction switched on and EXAGGERATED, so the perihelion visibly rotates in seconds instead of centuries and the orbit traces a rosette. At strength 1 this is the real effect that advances Mercury's perihelion by 43 arcseconds per century, which the test suite measures as 42.77. The default here is 300000x that: a demonstration setting, not physics. Turn the strength down to 1 in the Simulation panel to see how small the true effect really is. Everything else remains Newtonian.",
+  "fixedTimeStepSeconds": 300,
+  "key": "precession",
   "physics": {
     "barnesHutTheta": 0.5,
     "bounds": {
@@ -75,30 +75,30 @@
     "integrator": "velocity-verlet",
     "minimumDistanceMetres": 1000000,
     "pairwiseGravity": true,
-    "relativisticCorrection": false,
-    "relativisticStrength": 1,
+    "relativisticCorrection": true,
+    "relativisticStrength": 300000,
     "softeningLengthMetres": 1000000,
     "solver": "direct",
-    "stabilization": "softening",
-    "trailLength": 1200,
-    "trailSampleIntervalSeconds": 26000,
+    "stabilization": "none",
+    "trailLength": 6000,
+    "trailSampleIntervalSeconds": 30000,
     "uniformGravity": [
       0,
       0,
       0
     ]
   },
-  "title": "Two-body orbit (M4)",
+  "title": "Relativistic precession",
   "view": {
-    "bodyVisualExponent": 0.34999999999999998,
-    "cameraDistance": 32,
-    "cameraPitchDegrees": 28,
+    "bodyVisualExponent": 0.40000000000000002,
+    "cameraDistance": 34,
+    "cameraPitchDegrees": 62,
     "focusBody": "Sun",
     "gridEnabled": true,
-    "gridExtent": 30,
-    "largestBodyDrawnRadius": 1.8999999999999999,
-    "metresPerUnit": 14959787070,
-    "minVisualRadius": 0.089999999999999997,
+    "gridExtent": 34,
+    "largestBodyDrawnRadius": 1.1000000000000001,
+    "metresPerUnit": 5753764257.6923075,
+    "minVisualRadius": 0.10000000000000001,
     "scaleReferenceBody": "",
     "trailReferenceBody": "",
     "trueScale": false

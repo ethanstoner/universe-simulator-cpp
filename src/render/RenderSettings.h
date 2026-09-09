@@ -49,6 +49,7 @@ struct RenderSettings {
 
     // --- trails ------------------------------------------------------------
     float trailOpacity = 0.85f;
+    // Set per scene from its recorded trail length; see Application.
     int trailMaxSamples = 1200;
 
     // --- spacetime grid (a VISUALISATION -- see docs/PHYSICS.md) ------------

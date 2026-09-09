@@ -618,6 +618,59 @@ Scene sceneAsteroidBelt() {
     return scene;
 }
 
+Scene scenePrecession() {
+    Scene scene;
+    scene.key = "precession";
+    scene.title = "Relativistic precession";
+    scene.description =
+        "A single eccentric orbit with the post-Newtonian correction switched "
+        "on and EXAGGERATED, so the perihelion visibly rotates in seconds "
+        "instead of centuries and the orbit traces a rosette. At strength 1 "
+        "this is the real effect that advances Mercury's perihelion by 43 "
+        "arcseconds per century, which the test suite measures as 42.77. The "
+        "default here is 300000x that: a demonstration setting, not physics. "
+        "Turn the strength down to 1 in the Simulation panel to see how small "
+        "the true effect really is. Everything else remains Newtonian.";
+
+    scene.settings = astronomicalSettings();
+    scene.settings.stabilization = Stabilization::None;
+    scene.settings.relativisticCorrection = true;
+    // Exaggerated purely so the rosette is visible on a human timescale. The
+    // test suite measures the real 43 arcsec/century at strength 1.
+    //
+    // 3e5 advances the perihelion about 8.6 degrees per orbit instead of
+    // 5.0e-7 radians, while the correction stays under 1% of the Newtonian
+    // term so the orbit itself is not distorted.
+    scene.settings.relativisticStrength = 3.0e5;
+    // Mercury's period is 7.6e6 s, so 6000 samples at 30000 s retain about 24
+    // orbits: enough for the rosette to close on itself.
+    scene.settings.trailLength = 6000;
+    scene.settings.trailSampleInterval = 30000.0;
+
+    CelestialBody sun = makeSun();
+    sun.fixed = true;  // pins the focus so the rosette stays centred
+    scene.bodies.push_back(sun);
+
+    // Mercury's real semi-major axis and eccentricity, so the orbit shape is
+    // the one the 43 arcsec figure belongs to.
+    CelestialBody planet = makeBody("Mercury", 3.3011e23, 2.4397e6, Vec3(0.0), Vec3(0.0),
+                                    {0.85f, 0.72f, 0.55f});
+    placeInEllipticalOrbit(planet, scene.bodies.front(), 5.790905e10, 0.205630, kG);
+    scene.bodies.push_back(planet);
+
+    scene.view.metresPerUnit = kAu / 26.0;
+    scene.view.largestBodyDrawnRadius = 1.1;
+    scene.view.bodyVisualExponent = 0.4;
+    scene.view.minVisualRadius = 0.10;
+    scene.view.cameraDistance = 34.0;
+    scene.view.cameraPitchDegrees = 62.0;  // nearly overhead: the rosette is a plan view
+    scene.view.gridExtent = 34.0;
+    scene.view.focusBody = "Sun";
+    scene.fixedTimeStep = 300.0;
+    scene.defaultTimeScale = 2.0e5;
+    return scene;
+}
+
 std::vector<Scene> buildScenes() {
     std::vector<Scene> scenes;
     scenes.push_back(sceneKinematicsLab());
@@ -632,6 +685,7 @@ std::vector<Scene> buildScenes() {
     scenes.push_back(sceneCompactObject());
     scenes.push_back(sceneCompactNearSun());
     scenes.push_back(sceneAsteroidBelt());
+    scenes.push_back(scenePrecession());
 
     // Every astronomical preset is built from heliocentric velocities, which
     // give the whole system a net drift. Remove it so scenes stay put.
@@ -667,6 +721,22 @@ void placeInCircularOrbit(CelestialBody& body, const CelestialBody& primary,
     // the difference is one part in 3e5, but for the Earth-Moon pair it is
     // over 1%.
     const double speed = std::sqrt(G * (primary.mass + body.mass) / radius);
+    const Vec3 tangent(-std::sin(phaseRadians), 0.0, std::cos(phaseRadians));
+    body.velocity = primary.velocity + tangent * speed;
+}
+
+void placeInEllipticalOrbit(CelestialBody& body, const CelestialBody& primary,
+                            double semiMajorAxis, double eccentricity, double G,
+                            double phaseRadians) {
+    const double radius = perihelionDistance(semiMajorAxis, eccentricity);
+    const Vec3 offset(radius * std::cos(phaseRadians), 0.0,
+                      radius * std::sin(phaseRadians));
+    body.position = primary.position + offset;
+
+    // Total mass, as with the circular case: for a planet round the Sun the
+    // difference is tiny, but the helper should be correct for any pair.
+    const double speed =
+        perihelionSpeed(primary.mass + body.mass, semiMajorAxis, eccentricity, G);
     const Vec3 tangent(-std::sin(phaseRadians), 0.0, std::cos(phaseRadians));
     body.velocity = primary.velocity + tangent * speed;
 }

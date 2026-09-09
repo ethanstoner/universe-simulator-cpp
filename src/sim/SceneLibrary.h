@@ -106,4 +106,12 @@ CelestialBody makeBody(const std::string& name, double mass, double radius,
 void placeInCircularOrbit(CelestialBody& body, const CelestialBody& primary,
                           double radius, double G, double phaseRadians = 0.0);
 
+// Places `body` at PERIHELION of an ellipse about `primary`, in the XZ plane.
+// Perihelion is the clean starting point: the velocity is purely tangential
+// there, so the orbit needs no vector decomposition and the initial
+// periapsis direction is exactly the phase angle.
+void placeInEllipticalOrbit(CelestialBody& body, const CelestialBody& primary,
+                            double semiMajorAxis, double eccentricity, double G,
+                            double phaseRadians = 0.0);
+
 }  // namespace sim

@@ -258,6 +258,12 @@ void Application::applySceneView(const sim::Scene& scene) {
     renderSettings_.gridMaxDepth =
         std::max(std::min(view.gridExtent * 0.16, view.cameraDistance * 0.14), 0.5);
     renderSettings_.showBoundsBox = scene.settings.bounds.enabled;
+    // Draw as much of the trail as the scene actually records. Leaving this at
+    // the global default meant the precession scene stored 6000 samples and
+    // drew only the most recent 1200, hiding most of the rosette it exists to
+    // show. Capped so a scene cannot ask for an unbounded line buffer.
+    renderSettings_.trailMaxSamples = static_cast<int>(
+        std::clamp<std::size_t>(scene.settings.trailLength, 2, 8000));
 
     time_.fixedDt = scene.fixedTimeStep;
     time_.timeScale = scene.defaultTimeScale;

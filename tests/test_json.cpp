@@ -263,3 +263,27 @@ TEST(config_round_trips_the_gravity_solver) {
     CHECK(sceneFromJson(text, minimal, error));
     CHECK(minimal.settings.solver == GravitySolver::Direct);
 }
+
+TEST(config_round_trips_the_relativistic_correction) {
+    const Scene* precession = findScene("precession");
+    CHECK(precession != nullptr);
+    CHECK(precession->settings.relativisticCorrection);
+
+    Scene restored;
+    std::string error;
+    const bool ok = sceneFromJson(sceneToJson(*precession), restored, error);
+    if (!ok) ::testing::fail(error);
+
+    CHECK(restored.settings.relativisticCorrection);
+    CHECK(restored.settings.relativisticStrength ==
+          precession->settings.relativisticStrength);
+
+    // And the simulator stays Newtonian for a scene that does not ask.
+    Scene minimal;
+    const char* text = R"({
+      "key": "x", "view": {"metresPerUnit": 1},
+      "bodies": [{"name": "a", "massKg": 1, "radiusMetres": 1}]
+    })";
+    CHECK(sceneFromJson(text, minimal, error));
+    CHECK(!minimal.settings.relativisticCorrection);
+}

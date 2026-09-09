@@ -46075,6 +46075,8 @@
     "integrator": "velocity-verlet",
     "minimumDistanceMetres": 1000000,
     "pairwiseGravity": true,
+    "relativisticCorrection": false,
+    "relativisticStrength": 1,
     "softeningLengthMetres": 100000000,
     "solver": "barnes-hut",
     "stabilization": "softening",

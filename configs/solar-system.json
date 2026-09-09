@@ -259,6 +259,8 @@
     "integrator": "velocity-verlet",
     "minimumDistanceMetres": 1000000,
     "pairwiseGravity": true,
+    "relativisticCorrection": false,
+    "relativisticStrength": 1,
     "softeningLengthMetres": 1000000,
     "solver": "direct",
     "stabilization": "softening",
