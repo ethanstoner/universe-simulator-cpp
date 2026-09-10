@@ -1,0 +1,5626 @@
+{
+  "bodies": [
+    {
+      "color": [
+        1,
+        0.87000000476837158,
+        0.41999998688697815
+      ],
+      "emissive": true,
+      "fixed": false,
+      "massKg": 1.9889199999999999e+30,
+      "name": "Sun",
+      "positionMetres": [
+        0,
+        0,
+        0
+      ],
+      "radiusMetres": 696340000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -7.9506713075613037e-12,
+        0,
+        12.456773896139135
+      ]
+    },
+    {
+      "color": [
+        0.85000002384185791,
+        0.72000002861022949,
+        0.55000001192092896
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1.8982000000000001e+27,
+      "name": "Jupiter",
+      "positionMetres": [
+        778479000000,
+        0,
+        0
+      ],
+      "radiusMetres": 69911000,
+      "showTrail": true,
+      "velocityMetresPerSecond": [
+        -7.9506713075613037e-12,
+        0,
+        -13052.115994262307
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-1",
+      "positionMetres": [
+        387597371694.92633,
+        1652176302.3065257,
+        -675238069543.39209
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11326.561472375253,
+        0,
+        -6489.1693266617795
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-2",
+      "positionMetres": [
+        455301817580.22363,
+        -3450617925.0517573,
+        -630758026951.82422
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10580.445458732918,
+        0,
+        -7624.8555429195303
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-3",
+      "positionMetres": [
+        322154734773.552,
+        -582005947.90643561,
+        -708815984540.76917
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11889.803291055832,
+        0,
+        -5391.4230895375604
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-4",
+      "positionMetres": [
+        466482793206.5943,
+        -3163970172.1852851,
+        -623980616595.08228
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10466.759992092893,
+        0,
+        -7812.4071835414134
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-5",
+      "positionMetres": [
+        452343783841.00385,
+        4740038572.1740036,
+        -634393890360.33057
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10641.434067431263,
+        0,
+        -7575.2369676409044
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-6",
+      "positionMetres": [
+        366475066719.30359,
+        578359324.23908055,
+        -686476836354.71228
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11515.082512440707,
+        0,
+        -6134.8600888748315
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-7",
+      "positionMetres": [
+        376053096685.38867,
+        713681549.50792301,
+        -681269397615.51025
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11427.732024289047,
+        0,
+        -6295.523638648433
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-8",
+      "positionMetres": [
+        432965142102.90125,
+        2766418082.1834006,
+        -646373186209.89832
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10842.376871097011,
+        0,
+        -7250.1762419531751
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-9",
+      "positionMetres": [
+        416174817937.88342,
+        3573731.0028332788,
+        -658784723164.8501
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11050.570162660064,
+        0,
+        -6968.5324079128613
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-10",
+      "positionMetres": [
+        359181682737.02557,
+        3590403996.758287,
+        -691143804590.93872
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11593.367053851394,
+        0,
+        -6012.5195904003158
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-11",
+      "positionMetres": [
+        349417618521.00183,
+        1903800746.2871733,
+        -696933537903.01685
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11690.485053007242,
+        0,
+        -5848.7354695823087
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-12",
+      "positionMetres": [
+        345286005521.6358,
+        1825271624.7331307,
+        -698107385016.08362
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11710.175369778499,
+        0,
+        -5779.4310705441612
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-13",
+      "positionMetres": [
+        394051146657.98224,
+        -680285570.54563403,
+        -672359316658.44409
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11278.272768011784,
+        0,
+        -6597.4260766068164
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-14",
+      "positionMetres": [
+        376379605345.46362,
+        -2061921312.3774693,
+        -681248770553.11584
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11427.386022336932,
+        0,
+        -6301.0005520163404
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-15",
+      "positionMetres": [
+        373718594184.06433,
+        4493954178.9185238,
+        -682001521524.57617
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11440.012798782462,
+        0,
+        -6256.3642854049995
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-16",
+      "positionMetres": [
+        389244374156.58868,
+        4779506541.2931929,
+        -672985250783.57666
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11288.772296497737,
+        0,
+        -6516.7964340015451
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-17",
+      "positionMetres": [
+        389989758993.33832,
+        -3897153190.1461439,
+        -673731089812.16541
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11301.283130804695,
+        0,
+        -6529.2996496151591
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-18",
+      "positionMetres": [
+        466441246635.90149,
+        3794302337.5232263,
+        -623183743949.4353
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10453.393110968022,
+        0,
+        -7811.7102740984428
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-19",
+      "positionMetres": [
+        385434921287.94806,
+        63638810.54633861,
+        -676571896564.69836
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11348.935320106557,
+        0,
+        -6452.8960053394712
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-20",
+      "positionMetres": [
+        369988295388.70099,
+        -1667036928.3340304,
+        -684818430902.90515
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11487.264129349958,
+        0,
+        -6193.7916010115059
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-21",
+      "positionMetres": [
+        394583778342.53015,
+        -1020512214.2786448,
+        -669742231941.34155
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11234.37333125947,
+        0,
+        -6606.3605336365363
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-22",
+      "positionMetres": [
+        461849749150.08057,
+        2355552168.8268309,
+        -626282168614.34778
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10505.366628187492,
+        0,
+        -7734.6916922543023
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-23",
+      "positionMetres": [
+        417237951231.83478,
+        -4805200088.8449268,
+        -655624652605.45947
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10997.562586425232,
+        0,
+        -6986.3655917192946
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-24",
+      "positionMetres": [
+        377765261190.24866,
+        -245213914.00405559,
+        -680726257706.62976
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11418.621300466566,
+        0,
+        -6324.2437854971286
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-25",
+      "positionMetres": [
+        384814382141.66864,
+        -3694608440.5521498,
+        -676158653810.03198
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11342.003513866857,
+        0,
+        -6442.4869731723393
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-26",
+      "positionMetres": [
+        461140575908.15485,
+        -2233083518.5261602,
+        -627392868520.13501
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10523.997702659886,
+        0,
+        -7722.7958962653893
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-27",
+      "positionMetres": [
+        369856815131.37872,
+        1900921291.9757464,
+        -685583302257.94238
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11500.094215229368,
+        0,
+        -6191.5861281803145
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-28",
+      "positionMetres": [
+        448555848767.74945,
+        -1262617063.674293,
+        -636384019294.31384
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10674.816838227873,
+        0,
+        -7511.6974822419315
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-29",
+      "positionMetres": [
+        450374034312.35266,
+        3496425724.9954381,
+        -634069760541.19666
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10635.997057157341,
+        0,
+        -7542.1960445535296
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-30",
+      "positionMetres": [
+        457149412427.02576,
+        4655948733.1473179,
+        -631017583565.29321
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10584.799306761668,
+        0,
+        -7655.8474220096696
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-31",
+      "positionMetres": [
+        342300346170.57617,
+        5672437157.9381943,
+        -700547382354.99976
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11751.10431187792,
+        0,
+        -5729.3490984210302
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-32",
+      "positionMetres": [
+        403214368248.78082,
+        2158788306.0299077,
+        -664965389504.08228
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11154.24574078452,
+        0,
+        -6751.1315581466224
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-33",
+      "positionMetres": [
+        310310990413.3974,
+        -4635475652.8773851,
+        -714166729345.49255
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11979.557620213658,
+        0,
+        -5192.7540502621196
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-34",
+      "positionMetres": [
+        430940093935.31982,
+        2712667884.4380231,
+        -647885174371.30188
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10867.739224951292,
+        0,
+        -7216.2077298250879
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-35",
+      "positionMetres": [
+        330556948462.91919,
+        -5071329646.4920931,
+        -703205270587.51306
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11795.688193933951,
+        0,
+        -5532.3632914444288
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-36",
+      "positionMetres": [
+        391941623218.02588,
+        2733352936.6191545,
+        -672362128650.89697
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11278.319936864984,
+        0,
+        -6562.0405614858464
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-37",
+      "positionMetres": [
+        440743130421.19562,
+        -973635825.55388403,
+        -642340059855.16162
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10774.724504260421,
+        0,
+        -7380.645578313537
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-38",
+      "positionMetres": [
+        376133924914.22321,
+        -953965355.82686579,
+        -681311344908.84985
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11428.435655523779,
+        0,
+        -6296.879465495128
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-39",
+      "positionMetres": [
+        385435498758.59766,
+        -4799299070.6345329,
+        -675243630350.53296
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11326.654750326778,
+        0,
+        -6452.9056919331433
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-40",
+      "positionMetres": [
+        408931079297.3208,
+        -472403454.21981281,
+        -663755206061.50977
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11133.945912067196,
+        0,
+        -6847.0246690828599
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-41",
+      "positionMetres": [
+        412401952508.91174,
+        -323969624.8622697,
+        -659660619790.54126
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11065.262605846872,
+        0,
+        -6905.2457033626506
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-42",
+      "positionMetres": [
+        321082580332.05347,
+        3871999420.520834,
+        -708942495718.54846
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11891.925411677717,
+        0,
+        -5373.4385834244413
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-43",
+      "positionMetres": [
+        435837965789.12415,
+        2289634862.6030984,
+        -646335865094.33569
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10841.750840177394,
+        0,
+        -7298.365488900261
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-44",
+      "positionMetres": [
+        449085772211.70679,
+        -2004578183.4594607,
+        -634862238408.87134
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10649.290219507893,
+        0,
+        -7520.5865107703366
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-45",
+      "positionMetres": [
+        309474239044.22906,
+        3173137690.8482461,
+        -715845593009.63257
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -12007.719172936058,
+        0,
+        -5178.7182364544233
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-46",
+      "positionMetres": [
+        312370123310.10529,
+        689422942.62217534,
+        -712868214445.96399
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11957.77610418887,
+        0,
+        -5227.2943055977285
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-47",
+      "positionMetres": [
+        390264118499.78894,
+        760969304.09701133,
+        -674960666079.56714
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11321.90825815736,
+        0,
+        -6533.9018039596922
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-48",
+      "positionMetres": [
+        323877788026.5708,
+        -2588763046.7690663,
+        -706647651493.12634
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11853.43129329019,
+        0,
+        -5420.3258861522272
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-49",
+      "positionMetres": [
+        418304537299.2207,
+        1914827080.3848937,
+        -658275265503.47717
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11042.024430748035,
+        0,
+        -7004.2566929511822
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-50",
+      "positionMetres": [
+        461555277977.4953,
+        -1669213191.5956364,
+        -625161328851.84766
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10486.56546598521,
+        0,
+        -7729.7521813046533
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-51",
+      "positionMetres": [
+        308457257739.72687,
+        -2733616541.4772696,
+        -714286345554.73718
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11981.564083427467,
+        0,
+        -5161.6592141906312
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-52",
+      "positionMetres": [
+        437008730626.59058,
+        -3060575228.0554485,
+        -643350518076.9978
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10791.674107194736,
+        0,
+        -7318.0041030415314
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-53",
+      "positionMetres": [
+        444783547219.73212,
+        3756057495.2967744,
+        -638091972882.54993
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10703.466350424664,
+        0,
+        -7448.4202363294689
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-54",
+      "positionMetres": [
+        386830842806.69769,
+        1024389412.2325333,
+        -675610980967.69324
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11332.816753825773,
+        0,
+        -6476.3114370307267
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-55",
+      "positionMetres": [
+        398981861908.47186,
+        -4025443008.4788613,
+        -667347019078.66895
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11194.195611797013,
+        0,
+        -6680.1347565620426
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-56",
+      "positionMetres": [
+        389330243507.36975,
+        1645453120.6840532,
+        -673346546038.57471
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11294.832726292789,
+        0,
+        -6518.2368215094248
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-57",
+      "positionMetres": [
+        368947003601.90338,
+        4403528690.7854748,
+        -686473446385.23792
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11515.025648499864,
+        0,
+        -6176.3247904659775
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-58",
+      "positionMetres": [
+        433509797393.9491,
+        -5590434112.6213064,
+        -646210496023.8042
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10839.64787746223,
+        0,
+        -7259.3123850611601
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-59",
+      "positionMetres": [
+        361033465521.70544,
+        2983714544.4089375,
+        -689765406633.89282
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11570.245565448889,
+        0,
+        -6043.5817186928543
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-60",
+      "positionMetres": [
+        379428933368.61554,
+        505362586.30925095,
+        -681028710280.13489
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11423.694692831128,
+        0,
+        -6352.150513580299
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-61",
+      "positionMetres": [
+        326606132021.51721,
+        753103645.46882582,
+        -707115104332.97949
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11861.27242897973,
+        0,
+        -5466.0916054894724
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-62",
+      "positionMetres": [
+        437203753905.86615,
+        5696632522.5918627,
+        -645588243885.72815
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10829.210111271113,
+        0,
+        -7321.2754576361449
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-63",
+      "positionMetres": [
+        317442853007.36389,
+        -2521051712.3729863,
+        -710862515678.59753
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11924.132162284046,
+        0,
+        -5312.3851607202723
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-64",
+      "positionMetres": [
+        438793457692.82764,
+        4083174444.4638886,
+        -642709395054.2572
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10780.919797483888,
+        0,
+        -7347.9414269853896
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-65",
+      "positionMetres": [
+        454671211801.07599,
+        5041634079.5242386,
+        -631441689477.83362
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10591.913333511426,
+        0,
+        -7614.2776512920918
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-66",
+      "positionMetres": [
+        408607844536.98645,
+        -2072489576.9243951,
+        -664319404948.17273
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11143.40988286605,
+        0,
+        -6841.6026726817809
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-67",
+      "positionMetres": [
+        430937456845.02942,
+        4305645909.8858318,
+        -646955457016.24048
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10852.143983437203,
+        0,
+        -7216.1634948113488
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-68",
+      "positionMetres": [
+        308503398621.20062,
+        -173673331.35023332,
+        -716050175340.86047
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -12011.150872739925,
+        0,
+        -5162.4331894061506
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-69",
+      "positionMetres": [
+        335577631490.59772,
+        -3507550189.4727244,
+        -703376409416.57568
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11798.558906583488,
+        0,
+        -5616.5811066288816
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-70",
+      "positionMetres": [
+        316800900312.34381,
+        -1558425318.6306393,
+        -711301658165.97815
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11931.498415169954,
+        0,
+        -5301.6169339415019
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-71",
+      "positionMetres": [
+        409409609527.91656,
+        -1628425306.2003868,
+        -660653465758.62988
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11081.916777756582,
+        0,
+        -6855.051618862065
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-72",
+      "positionMetres": [
+        443356122565.79486,
+        -4633579600.8309298,
+        -640023358889.46045
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10735.86375708888,
+        0,
+        -7424.4763655389233
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-73",
+      "positionMetres": [
+        314507865593.69867,
+        -255874623.63256562,
+        -712329747539.19885
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11948.743766121142,
+        0,
+        -5263.1531685371201
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-74",
+      "positionMetres": [
+        410911860150.6712,
+        4024395340.6915789,
+        -662930748969.46216
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11120.116324614095,
+        0,
+        -6880.2506335400303
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-75",
+      "positionMetres": [
+        457566103170.97101,
+        2310892319.0850739,
+        -631639111225.53552
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10595.224920434897,
+        0,
+        -7662.8370654245573
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-76",
+      "positionMetres": [
+        310658407612.55078,
+        873129215.5691756,
+        -713264779341.34399
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11964.428153100072,
+        0,
+        -5198.5816871212674
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-77",
+      "positionMetres": [
+        446280540138.71851,
+        -2379672926.9932923,
+        -639199492301.93079
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10722.044074861838,
+        0,
+        -7473.531057364894
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-78",
+      "positionMetres": [
+        467542358089.53943,
+        4142438448.3328977,
+        -623867451540.4342
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10464.861741674544,
+        0,
+        -7830.1805101975424
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-79",
+      "positionMetres": [
+        347634433490.20508,
+        -122041743.7837688,
+        -698135595450.7179
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11710.648576542839,
+        0,
+        -5818.8240120106166
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-80",
+      "positionMetres": [
+        314622216043.26746,
+        1164295265.182899,
+        -712070330431.03101
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11944.392258178712,
+        0,
+        -5265.071302977185
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-81",
+      "positionMetres": [
+        355316883165.44189,
+        -5486374301.6915493,
+        -691509898199.28455
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11599.507972064694,
+        0,
+        -5947.6907664633691
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-82",
+      "positionMetres": [
+        315143054657.45081,
+        5131981725.5307674,
+        -710541985454.651
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11918.755532249339,
+        0,
+        -5273.8079409820948
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-83",
+      "positionMetres": [
+        419961947422.30054,
+        -5402308458.4784946,
+        -656761861574.45044
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11016.638328560035,
+        0,
+        -7032.0583802237834
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-84",
+      "positionMetres": [
+        420598395817.36224,
+        -1496472082.1266832,
+        -655527310565.78186
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10995.929754027318,
+        0,
+        -7042.7342769123925
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-85",
+      "positionMetres": [
+        399255847297.91736,
+        -4856239213.1279755,
+        -669517629867.82239
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11230.605816797113,
+        0,
+        -6684.7306354025013
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-86",
+      "positionMetres": [
+        382970787986.07483,
+        -3026962078.4564023,
+        -678111096412.15088
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11374.754127541732,
+        0,
+        -6411.562202376218
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-87",
+      "positionMetres": [
+        440054995979.80487,
+        43986834.787936777,
+        -642580483752.41772
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10778.757416761255,
+        0,
+        -7369.10269084432
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-88",
+      "positionMetres": [
+        395802492849.17743,
+        -4403528505.6742783,
+        -671284801970.78174
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11260.248670716725,
+        0,
+        -6626.803463914669
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-89",
+      "positionMetres": [
+        349095961604.12598,
+        -2319733331.7674785,
+        -696505478481.72522
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11683.304709410253,
+        0,
+        -5843.3399402033556
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-90",
+      "positionMetres": [
+        320594891624.09302,
+        1950300174.8682263,
+        -707779846044.68323
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11872.422922709971,
+        0,
+        -5365.2580077441744
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-91",
+      "positionMetres": [
+        421219104400.10767,
+        -814117800.09782112,
+        -653747550860.8064
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10966.075753470017,
+        0,
+        -7053.1461512364385
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-92",
+      "positionMetres": [
+        392137606544.80835,
+        -2774168223.7757773,
+        -673117028067.7771
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11290.982751709733,
+        0,
+        -6565.328020085246
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-93",
+      "positionMetres": [
+        458372282283.91986,
+        5008678540.8775911,
+        -630190802526.18701
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10570.930737014167,
+        0,
+        -7676.3600548595796
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-94",
+      "positionMetres": [
+        446861670131.77917,
+        3082835357.4128823,
+        -638658328014.4032
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10712.966490457453,
+        0,
+        -7483.2790335035825
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-95",
+      "positionMetres": [
+        366247597255.89685,
+        -2562744297.291492,
+        -687326432408.57288
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11529.333785235865,
+        0,
+        -6131.0444763130181
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-96",
+      "positionMetres": [
+        323040179536.45825,
+        -1409440747.5950222,
+        -709423189438.10107
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11899.988652199063,
+        0,
+        -5406.27569484791
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-97",
+      "positionMetres": [
+        446333877969.45099,
+        -4387266847.3619547,
+        -639362101886.23462
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10724.771716468096,
+        0,
+        -7474.4257554659689
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-98",
+      "positionMetres": [
+        313927407605.92297,
+        3736138011.5709662,
+        -712598939723.61414
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11953.259242902132,
+        0,
+        -5253.4164647326106
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-99",
+      "positionMetres": [
+        459081433867.5993,
+        888243750.8364054,
+        -626841595763.24915
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10514.750557022593,
+        0,
+        -7688.2554875492815
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-100",
+      "positionMetres": [
+        378546031808.40118,
+        4012110778.7327123,
+        -679727088689.8418
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11401.861064632123,
+        0,
+        -6337.3405683966894
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-101",
+      "positionMetres": [
+        434264726491.25629,
+        -3869776683.6847391,
+        -644954733936.0354
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10818.583504579034,
+        0,
+        -7271.9756977705829
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-102",
+      "positionMetres": [
+        403727597798.60596,
+        -5580811028.8676233,
+        -667240100033.51453
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11192.402133034288,
+        0,
+        -6759.7405603752222
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-103",
+      "positionMetres": [
+        446792441410.38165,
+        -3128047371.94241,
+        -639192558587.07104
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10721.927767516128,
+        0,
+        -7482.1177788232972
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-104",
+      "positionMetres": [
+        415238241667.46649,
+        -303535214.24053806,
+        -657775963532.13879
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11033.649052156798,
+        0,
+        -6952.8221137530263
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-105",
+      "positionMetres": [
+        356116174722.33655,
+        -2172990767.8477979,
+        -692637357357.46497
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11618.420169167795,
+        0,
+        -5961.0982228285584
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-106",
+      "positionMetres": [
+        321077430728.52991,
+        -2128315198.3673849,
+        -710205029473.21838
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11913.103373685824,
+        0,
+        -5373.3522030743125
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-107",
+      "positionMetres": [
+        351568411352.77289,
+        3591161696.0351048,
+        -695411698387.00293
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11664.957450807802,
+        0,
+        -5884.8132446992731
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-108",
+      "positionMetres": [
+        353094292003.46869,
+        8192862.3667232739,
+        -692619706659.88171
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11618.124093279566,
+        0,
+        -5910.4086335986285
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-109",
+      "positionMetres": [
+        426355820916.83185,
+        -4887412743.2681704,
+        -649569151697.35583
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10895.986555132979,
+        0,
+        -7139.3103324594922
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-110",
+      "positionMetres": [
+        388617905401.56451,
+        2330150098.2782831,
+        -673679406349.92004
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11300.416183369958,
+        0,
+        -6506.2879375402872
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-111",
+      "positionMetres": [
+        355608412735.13062,
+        5029013457.4451046,
+        -690812415590.0365
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11587.808276792915,
+        0,
+        -5952.5809344515683
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-112",
+      "positionMetres": [
+        353968717414.4776,
+        3654041576.1865025,
+        -693754670823.67017
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11637.162180659305,
+        0,
+        -5925.076398373054
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-113",
+      "positionMetres": [
+        357725427909.39435,
+        -1804353923.7744887,
+        -690286720939.23254
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11578.990182780452,
+        0,
+        -5988.0921172340559
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-114",
+      "positionMetres": [
+        321956020645.64008,
+        785268961.28614807,
+        -707319121384.37671
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11864.694646680853,
+        0,
+        -5388.0898240024198
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-115",
+      "positionMetres": [
+        406842278390.70587,
+        3768401993.9977794,
+        -663566820491.74414
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11130.785899572784,
+        0,
+        -6811.9867573603678
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-116",
+      "positionMetres": [
+        462340325590.34082,
+        -4387555981.2218142,
+        -626993512752.28857
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10517.298839165833,
+        0,
+        -7742.920707261208
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-117",
+      "positionMetres": [
+        341255040197.22253,
+        4337605344.4286737,
+        -699842771069.9115
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11739.285038950848,
+        0,
+        -5711.8149532081616
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-118",
+      "positionMetres": [
+        391013314107.01178,
+        -1056560235.6092767,
+        -672060423635.68103
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -11273.259084173907,
+        0,
+        -6546.4689421036974
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-119",
+      "positionMetres": [
+        436027684109.99005,
+        3920181513.8763561,
+        -643531973787.72656
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10794.717877021685,
+        0,
+        -7301.5478571947142
+      ]
+    },
+    {
+      "color": [
+        0.55000001192092896,
+        0.85000002384185791,
+        0.94999998807907104
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L4-120",
+      "positionMetres": [
+        460694712127.65948,
+        -2439456097.2926431,
+        -626842709018.71619
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        -10514.769230964497,
+        0,
+        -7715.3168992332749
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-1",
+      "positionMetres": [
+        405278004434.99408,
+        681109348.83841348,
+        666362335843.84106
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11177.678363002602,
+        0,
+        -6785.7473524479838
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-2",
+      "positionMetres": [
+        363449085078.45197,
+        4467457625.2885456,
+        687712732813.28662
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11535.813655785438,
+        0,
+        -6084.1017436106777
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-3",
+      "positionMetres": [
+        443859003777.47034,
+        -3067715233.8944316,
+        637944700598.78772
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10700.995979380054,
+        0,
+        -7432.9117829335564
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-4",
+      "positionMetres": [
+        428348145347.33618,
+        5180031771.4797306,
+        650939890540.53748
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10918.979568219991,
+        0,
+        -7172.729930898724
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-5",
+      "positionMetres": [
+        316099147234.82941,
+        3716924784.5606813,
+        710995331260.06018
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11926.360034075893,
+        0,
+        -5289.8456050881541
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-6",
+      "positionMetres": [
+        337350948234.27277,
+        -5102109653.7895374,
+        700748693318.74475
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11754.481137191475,
+        0,
+        -5646.3270318265095
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-7",
+      "positionMetres": [
+        454899479474.30518,
+        150096091.08853075,
+        630850952290.73486
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10582.004204619705,
+        0,
+        -7618.1066531650677
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-8",
+      "positionMetres": [
+        309894287502.22577,
+        5158542986.2547712,
+        712938532816.2135
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11958.955636829554,
+        0,
+        -5185.7642027520478
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-9",
+      "positionMetres": [
+        454456131347.98047,
+        5167023794.5442991,
+        630288166951.30017
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10572.563944909276,
+        0,
+        -7610.669854155979
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-10",
+      "positionMetres": [
+        313644887317.08191,
+        2027297871.6982422,
+        712633640239.18066
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11953.841315419078,
+        0,
+        -5248.6774199970032
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-11",
+      "positionMetres": [
+        421098934368.01581,
+        5086172789.9829521,
+        656206286653.99597
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11007.319017678612,
+        0,
+        -7051.1303981013316
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-12",
+      "positionMetres": [
+        418770941767.39575,
+        950600087.36281705,
+        656034526555.61426
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11004.43788374886,
+        0,
+        -7012.0802430708418
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-13",
+      "positionMetres": [
+        347249935825.45233,
+        1887079260.4098463,
+        696044480496.88281
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11675.571848587551,
+        0,
+        -5812.3743809364205
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-14",
+      "positionMetres": [
+        438785891935.98572,
+        -5247917197.245451,
+        644742597163.99805
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10815.025085263804,
+        0,
+        -7347.8145176569305
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-15",
+      "positionMetres": [
+        327943361599.39111,
+        -593167119.35842788,
+        706212810586.68787
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11846.137195875304,
+        0,
+        -5488.5225282997199
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-16",
+      "positionMetres": [
+        438614368638.10291,
+        3613796625.9349341,
+        643913664885.3656
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10801.120430248253,
+        0,
+        -7344.937355860161
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-17",
+      "positionMetres": [
+        453676822764.38806,
+        5583801137.4605179,
+        630752276307.31323
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10580.348996416134,
+        0,
+        -7597.5975956798275
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-18",
+      "positionMetres": [
+        450715228320.22253,
+        571268360.73825765,
+        633435386978.97681
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10625.355964077677,
+        0,
+        -7547.9192925137022
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-19",
+      "positionMetres": [
+        442673120571.55493,
+        3867055286.3904653,
+        641208392749.64954
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10755.741722312825,
+        0,
+        -7413.019570635839
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-20",
+      "positionMetres": [
+        398975351917.18402,
+        -3160390966.627161,
+        669723372515.92529
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11234.056979959158,
+        0,
+        -6680.0255568296334
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-21",
+      "positionMetres": [
+        324946597725.9043,
+        -4493870353.0232487,
+        707303637871.55139
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11864.434923528761,
+        0,
+        -5438.2542869753006
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-22",
+      "positionMetres": [
+        426764225784.01508,
+        -3154366568.5539017,
+        650614862261.3468
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10913.527487019945,
+        0,
+        -7146.16098712844
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-23",
+      "positionMetres": [
+        312939666935.60541,
+        -4990168932.8976498,
+        711437175985.44067
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11933.77161477461,
+        0,
+        -5236.8479299805895
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-24",
+      "positionMetres": [
+        349858941649.49359,
+        -912716115.3836416,
+        695850078488.73914
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11672.31091530356,
+        0,
+        -5856.1383009235924
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-25",
+      "positionMetres": [
+        377001446134.74249,
+        5690054966.2917852,
+        680463832919.53687
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11414.219341191814,
+        0,
+        -6311.4314181707914
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-26",
+      "positionMetres": [
+        459160939688.33868,
+        3797269592.8988595,
+        630017597611.54163
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10568.025367483706,
+        0,
+        -7689.5891320913097
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-27",
+      "positionMetres": [
+        398793277083.55078,
+        2497155742.2409978,
+        669349673778.96692
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11227.788491988431,
+        0,
+        -6676.9714017268052
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-28",
+      "positionMetres": [
+        440364876376.73151,
+        613960006.30362976,
+        642175986964.97827
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10771.972316905407,
+        0,
+        -7374.3006788180237
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-29",
+      "positionMetres": [
+        443208339943.04913,
+        -754154237.33441198,
+        638655881630.04712
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10712.925454378394,
+        0,
+        -7421.9974339789624
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-30",
+      "positionMetres": [
+        372941176384.44867,
+        1661635317.808126,
+        682455341310.6958
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11447.625251244346,
+        0,
+        -6243.323743269957
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-31",
+      "positionMetres": [
+        450899658891.70044,
+        1908181389.9086285,
+        633101404705.81799
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10619.753687016826,
+        0,
+        -7551.0129631751361
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-32",
+      "positionMetres": [
+        443410908440.96149,
+        -4625411575.3371496,
+        641298914419.09131
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10757.260148627574,
+        0,
+        -7425.3953533905888
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-33",
+      "positionMetres": [
+        387328309623.38104,
+        733188753.28030193,
+        675465535026.72021
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11330.377018174519,
+        0,
+        -6484.6560324168267
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-34",
+      "positionMetres": [
+        334481289468.53107,
+        3748970257.6483884,
+        702312387816.38757
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11780.710822172867,
+        0,
+        -5598.1908738090951
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-35",
+      "positionMetres": [
+        458719116881.82153,
+        -5397039697.7643652,
+        629172567225.4967
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10553.850679998986,
+        0,
+        -7682.1779190634397
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-36",
+      "positionMetres": [
+        437657165676.82031,
+        -349166061.14501536,
+        643091634535.13928
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10787.331549386883,
+        0,
+        -7328.8810659803012
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-37",
+      "positionMetres": [
+        389049030816.98682,
+        -1429873058.885273,
+        674111726361.32507
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11307.667994850639,
+        0,
+        -6513.5197106590413
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-38",
+      "positionMetres": [
+        449696545262.88666,
+        741090069.94663775,
+        635651224270.26428
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10662.524806334337,
+        0,
+        -7530.8317247502546
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-39",
+      "positionMetres": [
+        380438939907.24402,
+        3671217778.3373265,
+        678637043344.88892
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11383.576453375468,
+        0,
+        -6369.0925399014932
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-40",
+      "positionMetres": [
+        446386605168.13953,
+        5756995510.5537224,
+        636740889217.94104
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10680.803036740541,
+        0,
+        -7475.3102107183458
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-41",
+      "positionMetres": [
+        350932594759.51135,
+        -5640695699.8377409,
+        696318276436.10962
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11680.16454955691,
+        0,
+        -5874.147945964557
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-42",
+      "positionMetres": [
+        364538183128.73608,
+        519853889.6003117,
+        688094444940.71655
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11542.216561769412,
+        0,
+        -6102.370464780869
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-43",
+      "positionMetres": [
+        310691012104.79663,
+        4754021611.0271196,
+        715034145216.42419
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11994.1078057369,
+        0,
+        -5199.1286005764705
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-44",
+      "positionMetres": [
+        381891573627.76019,
+        -603042246.19852257,
+        678558785584.86877
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11382.263744022221,
+        0,
+        -6393.4592719837019
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-45",
+      "positionMetres": [
+        380721468258.44739,
+        -5214733281.8266201,
+        679311897818.84741
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11394.896580348412,
+        0,
+        -6373.8317198765762
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-46",
+      "positionMetres": [
+        455388973327.52319,
+        -5339865655.597435,
+        630564809727.00464
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10577.2043992116,
+        0,
+        -7626.317508667591
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-47",
+      "positionMetres": [
+        432490569392.38226,
+        -305988236.81628758,
+        648301239742.89172
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10874.718378260905,
+        0,
+        -7242.2156763078765
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-48",
+      "positionMetres": [
+        467622847591.45007,
+        5543340229.9086876,
+        623546436714.1803
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10459.476982835964,
+        0,
+        -7831.5306551795748
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-49",
+      "positionMetres": [
+        417687799571.14398,
+        -2706610607.1790457,
+        655782476969.3031
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11000.209959906577,
+        0,
+        -6993.9114264378213
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-50",
+      "positionMetres": [
+        331553774303.11926,
+        -4868683797.7891073,
+        704239716437.53333
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11813.040169538659,
+        0,
+        -5549.0842224249845
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-51",
+      "positionMetres": [
+        363549515951.34637,
+        -4417937968.9063463,
+        688586055083.58521
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11550.462916284658,
+        0,
+        -6085.7863886371824
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-52",
+      "positionMetres": [
+        327474243840.4328,
+        2524722198.239903,
+        707614296474.16943
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11869.645965260834,
+        0,
+        -5480.653464965927
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-53",
+      "positionMetres": [
+        405064493745.67126,
+        1010381142.248463,
+        663015414316.29724
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11121.536515949198,
+        0,
+        -6782.1658868039349
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-54",
+      "positionMetres": [
+        444714722814.49152,
+        -5250746938.1524115,
+        638956712367.69836
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10717.971641784699,
+        0,
+        -7447.2657637191132
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-55",
+      "positionMetres": [
+        414281974568.36987,
+        -2026095032.4807105,
+        657419187133.7356
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11027.664422452566,
+        0,
+        -6936.7815221891469
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-56",
+      "positionMetres": [
+        373335835832.36145,
+        -4001641583.2406421,
+        681444279938.3916
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11430.665530958595,
+        0,
+        -6249.9438298720952
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-57",
+      "positionMetres": [
+        411902929307.88007,
+        -2638937533.450758,
+        662362106062.22717
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11110.577809036926,
+        0,
+        -6896.8750009132928
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-58",
+      "positionMetres": [
+        347791344545.45245,
+        -2837412832.966989,
+        695818000565.85376
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11671.772834614903,
+        0,
+        -5821.4560654938514
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-59",
+      "positionMetres": [
+        428770058945.59088,
+        3261906114.5393515,
+        649383447684.14636
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10892.871523537211,
+        0,
+        -7179.8071833852364
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-60",
+      "positionMetres": [
+        409650879013.612,
+        4914325717.3349285,
+        662519813341.65918
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11113.223218523886,
+        0,
+        -6859.0987154112654
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-61",
+      "positionMetres": [
+        446784758063.57208,
+        3912663136.0461206,
+        637903465340.3551
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10700.304291943379,
+        0,
+        -7481.9888970201573
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-62",
+      "positionMetres": [
+        333944587560.49316,
+        -4341301845.254096,
+        701827555869.31348
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11772.57816629933,
+        0,
+        -5589.1881421387034
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-63",
+      "positionMetres": [
+        429371598296.11145,
+        -1155660837.924124,
+        649206134568.6134
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10889.897242326584,
+        0,
+        -7189.8975096553922
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-64",
+      "positionMetres": [
+        367707283600.97839,
+        3159478167.8253698,
+        686827865761.35229
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11520.970741099969,
+        0,
+        -6155.5295103531344
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-65",
+      "positionMetres": [
+        393377911593.91382,
+        -519373582.88315433,
+        672579320829.98779
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11281.963156462252,
+        0,
+        -6586.1331138985888
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-66",
+      "positionMetres": [
+        445391754620.11053,
+        -4892263364.6728668,
+        637344764198.13757
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10690.932541271364,
+        0,
+        -7458.6224136341298
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-67",
+      "positionMetres": [
+        326527581442.74146,
+        2213026820.3949666,
+        708102221343.6698
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11877.830502356075,
+        0,
+        -5464.7739843432073
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-68",
+      "positionMetres": [
+        364004091492.93274,
+        5810558891.3388853,
+        686860090758.43347
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11521.511288836909,
+        0,
+        -6093.4115182734567
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-69",
+      "positionMetres": [
+        317161866835.9353,
+        3694202415.2356291,
+        711623805504.73096
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11936.902170971227,
+        0,
+        -5307.6718495384457
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-70",
+      "positionMetres": [
+        395351765693.94147,
+        -4018776758.3531666,
+        669595994523.46973
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11231.920319236293,
+        0,
+        -6619.2428877840875
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-71",
+      "positionMetres": [
+        404523343254.49567,
+        2435844794.9724526,
+        664287262391.21667
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11142.870717994172,
+        0,
+        -6773.0885338219687
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-72",
+      "positionMetres": [
+        371857587427.53412,
+        1864380365.06756,
+        684698966632.33838
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11485.260214782091,
+        0,
+        -6225.1474325954423
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-73",
+      "positionMetres": [
+        317767119168.45813,
+        4901669292.0161943,
+        711896882706.83545
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11941.482815718393,
+        0,
+        -5317.8244580180799
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-74",
+      "positionMetres": [
+        345100600742.71375,
+        -3311056465.7246881,
+        698265519791.97583
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11712.827950165834,
+        0,
+        -5776.321058356677
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-75",
+      "positionMetres": [
+        423261714257.41669,
+        -4918972518.969099,
+        653477567563.12756
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10961.547006416769,
+        0,
+        -7087.4092462194203
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-76",
+      "positionMetres": [
+        359766591773.19574,
+        -187008660.22983524,
+        691917231993.73059
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11606.340660372209,
+        0,
+        -6022.3309568690474
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-77",
+      "positionMetres": [
+        349545403183.04596,
+        -2032698071.1550362,
+        694579488360.22937
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11650.997814271666,
+        0,
+        -5850.8789518519752
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-78",
+      "positionMetres": [
+        376683492557.27924,
+        2921850213.9145017,
+        682788560226.68982
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11453.214723618612,
+        0,
+        -6306.0980092548298
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-79",
+      "positionMetres": [
+        465068351686.01147,
+        3962043004.0854273,
+        624194234009.75671
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10470.343247966641,
+        0,
+        -7788.6810941004042
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-80",
+      "positionMetres": [
+        358057144655.60754,
+        918985726.49944007,
+        691845150845.44165
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11605.131558584384,
+        0,
+        -5993.6563919496994
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-81",
+      "positionMetres": [
+        325250052571.94342,
+        -5500399336.319232,
+        706208158433.22852
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11846.059159839549,
+        0,
+        -5443.3444916346389
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-82",
+      "positionMetres": [
+        382739207207.99207,
+        2225623018.3749614,
+        676907329967.56079
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11354.561938670831,
+        0,
+        -6407.6776259029921
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-83",
+      "positionMetres": [
+        369560569940.65979,
+        3429028111.2896156,
+        685889451671.01453
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11505.229619027361,
+        0,
+        -6186.6168595402287
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-84",
+      "positionMetres": [
+        306168498965.33746,
+        75212596.246272132,
+        714127481917.20593
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11978.899276987495,
+        0,
+        -5123.2671742230241
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-85",
+      "positionMetres": [
+        431156455961.76715,
+        -369143547.59346688,
+        647784613292.7312
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10866.05239583199,
+        0,
+        -7219.8370242967403
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-86",
+      "positionMetres": [
+        376914507731.63196,
+        -3770399956.6728816,
+        680395051686.55078
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11413.065592760406,
+        0,
+        -6309.9730981921684
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-87",
+      "positionMetres": [
+        393534695312.51221,
+        -1168287193.231343,
+        670879619941.63843
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11253.452076496695,
+        0,
+        -6588.7630314146036
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-88",
+      "positionMetres": [
+        414119004255.75562,
+        -1844994332.0471594,
+        659958967672.31946
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11070.267145394515,
+        0,
+        -6934.0478296631227
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-89",
+      "positionMetres": [
+        354052907891.38025,
+        5164509052.1159344,
+        694297281759.38098
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11646.26403139331,
+        0,
+        -5926.4886241568756
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-90",
+      "positionMetres": [
+        420420733209.03345,
+        -5476212204.9814749,
+        653975339870.50659
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10969.896726157227,
+        0,
+        -7039.7541332484871
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-91",
+      "positionMetres": [
+        397357945678.22986,
+        -4650249604.7851515,
+        669585807453.68225
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11231.74943954604,
+        0,
+        -6652.8949017057221
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-92",
+      "positionMetres": [
+        460902141720.03491,
+        -1941895979.1400094,
+        629160610214.052
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10553.650110997825,
+        0,
+        -7718.7963594935927
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-93",
+      "positionMetres": [
+        397709684920.31451,
+        5218075592.357501,
+        670754190947.3811
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11251.348108610471,
+        0,
+        -6658.7950372688902
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-94",
+      "positionMetres": [
+        312825644267.35455,
+        -4319208480.2156124,
+        711444106166.03247
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11933.887862835891,
+        0,
+        -5234.9352938016782
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-95",
+      "positionMetres": [
+        360811607073.98718,
+        568939532.36839688,
+        688634999477.36987
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11551.283918105994,
+        0,
+        -6039.8602262895211
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-96",
+      "positionMetres": [
+        412143411474.5177,
+        -2917448402.1352873,
+        661633724109.37244
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11098.359802771438,
+        0,
+        -6900.9088908349204
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-97",
+      "positionMetres": [
+        305741167474.57928,
+        3030748763.999227,
+        715408663475.48682
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        12000.390040514727,
+        0,
+        -5116.0990410601125
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-98",
+      "positionMetres": [
+        324288137609.39905,
+        1115755460.6265702,
+        709368747536.08948
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11899.075434213242,
+        0,
+        -5427.20916182152
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-99",
+      "positionMetres": [
+        442769402073.18219,
+        -5460816001.7131491,
+        641328730898.50842
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10757.760295467986,
+        0,
+        -7414.6346133830157
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-100",
+      "positionMetres": [
+        427667352646.80457,
+        1837964144.5907016,
+        648948329598.47864
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10885.572776669471,
+        0,
+        -7161.3101950746914
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-101",
+      "positionMetres": [
+        407517760666.41388,
+        -5319265439.3656206,
+        663640852963.75842
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11132.027733206038,
+        0,
+        -6823.3174151896583
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-102",
+      "positionMetres": [
+        358746995825.6958,
+        -2399352001.5238624,
+        692127699842.45374
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11609.871084875871,
+        0,
+        -6005.228076126331
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-103",
+      "positionMetres": [
+        441641826072.91705,
+        -1458038899.2069414,
+        641146497303.03015
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10754.703477266203,
+        0,
+        -7395.7204563503492
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-104",
+      "positionMetres": [
+        466310186686.45203,
+        -4284116261.7040858,
+        622012560891.9989
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10433.747481531816,
+        0,
+        -7809.5118515850172
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-105",
+      "positionMetres": [
+        312977043249.29962,
+        1927153368.5267897,
+        713530004201.8053
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11968.877081295188,
+        0,
+        -5237.4748868033212
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-106",
+      "positionMetres": [
+        396108578354.1012,
+        714072921.07512116,
+        669455203727.65442
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11229.558669804079,
+        0,
+        -6631.9377957062188
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-107",
+      "positionMetres": [
+        354223671632.78607,
+        3577976458.6458282,
+        693327155317.71704
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11629.990960793317,
+        0,
+        -5929.353045020458
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-108",
+      "positionMetres": [
+        332102682651.14276,
+        4470162304.2653246,
+        704928803753.36328
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11824.599040690371,
+        0,
+        -5558.2917070545054
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-109",
+      "positionMetres": [
+        341600015145.20984,
+        -3949515751.0913854,
+        700236556892.30688
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11745.890471205752,
+        0,
+        -5717.6016233191194
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-110",
+      "positionMetres": [
+        407761346033.3797,
+        4686679401.4751444,
+        664507053053.32886
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11146.557525000109,
+        0,
+        -6827.4033587363174
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-111",
+      "positionMetres": [
+        375509680916.09753,
+        -5397261972.6145134,
+        680679076393.68567
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11417.829872871585,
+        0,
+        -6286.4082874951773
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-112",
+      "positionMetres": [
+        382659281504.99823,
+        544154613.5146836,
+        679514714454.27698
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11398.298662062152,
+        0,
+        -6406.3369381825933
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-113",
+      "positionMetres": [
+        413256940640.3974,
+        -4127494281.2508554,
+        659219441681.13049
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11057.862207081002,
+        0,
+        -6919.5874238109236
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-114",
+      "positionMetres": [
+        435032932375.52008,
+        -60740638.50614839,
+        643944588096.7323
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10801.639141603946,
+        0,
+        -7284.8617176264206
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-115",
+      "positionMetres": [
+        310558560831.03967,
+        1235638283.0970056,
+        714701942314.45813
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11988.535376159631,
+        0,
+        -5196.9068397457795
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-116",
+      "positionMetres": [
+        454745331037.49896,
+        -2528298013.3654642,
+        632777011456.3335
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10614.312257916134,
+        0,
+        -7615.5209403267254
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-117",
+      "positionMetres": [
+        421099205417.73438,
+        -4706816116.8149176,
+        654903987507.4397
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10985.474024032348,
+        0,
+        -7051.1349447367156
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-118",
+      "positionMetres": [
+        432855598607.7121,
+        2510644331.6933885,
+        647153610392.44666
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10855.467842825145,
+        0,
+        -7248.3387402065728
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-119",
+      "positionMetres": [
+        404532052450.96405,
+        5809325915.0852537,
+        665961248866.68823
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        11170.950459900867,
+        0,
+        -6773.234623406699
+      ]
+    },
+    {
+      "color": [
+        0.94999998807907104,
+        0.69999998807907104,
+        0.5
+      ],
+      "emissive": false,
+      "fixed": false,
+      "massKg": 1e+17,
+      "name": "L5-120",
+      "positionMetres": [
+        419683996018.05487,
+        -3126900924.5018001,
+        654942233392.41418
+      ],
+      "radiusMetres": 300000,
+      "showTrail": false,
+      "velocityMetresPerSecond": [
+        10986.115567195817,
+        0,
+        -7027.3959747574418
+      ]
+    }
+  ],
+  "defaultTimeScale": 8000000,
+  "description": "Jupiter, plus two swarms of asteroids sitting 60 degrees ahead of and behind it on the same orbit. Those are the L4 and L5 Lagrange points, and nothing pins the asteroids there: they are placed near the points with Jupiter's own angular velocity and stay because the equilibrium is stable. Watch them librate in slow tadpole loops around the points rather than sitting still. The equilateral points are only stable when the primaries' mass ratio exceeds about 24.96 -- the Sun and Jupiter are at 1047, comfortably inside it.",
+  "fixedTimeStepSeconds": 7200,
+  "key": "trojans",
+  "physics": {
+    "barnesHutTheta": 0.5,
+    "bounds": {
+      "enabled": false,
+      "friction": 0,
+      "max": [
+        10,
+        20,
+        10
+      ],
+      "min": [
+        -10,
+        0,
+        -10
+      ],
+      "restitution": 0.80000000000000004
+    },
+    "collisionMode": "ignore",
+    "collisionRadiusScale": 1,
+    "collisionRestitution": 0.5,
+    "gravitationalConstant": 6.6742999999999994e-11,
+    "integrator": "velocity-verlet",
+    "minimumDistanceMetres": 1000000,
+    "pairwiseGravity": true,
+    "relativisticCorrection": false,
+    "relativisticStrength": 1,
+    "softeningLengthMetres": 10000000,
+    "solver": "direct",
+    "stabilization": "softening",
+    "trailLength": 1500,
+    "trailSampleIntervalSeconds": 200000,
+    "uniformGravity": [
+      0,
+      0,
+      0
+    ]
+  },
+  "title": "Trojan asteroids at L4 and L5",
+  "view": {
+    "bodyVisualExponent": 0.41999999999999998,
+    "cameraDistance": 40,
+    "cameraPitchDegrees": 58,
+    "focusBody": "Sun",
+    "gridEnabled": true,
+    "gridExtent": 44,
+    "largestBodyDrawnRadius": 1.5,
+    "metresPerUnit": 57537642576.923073,
+    "minVisualRadius": 0.085000000000000006,
+    "scaleReferenceBody": "",
+    "trailReferenceBody": "",
+    "trueScale": false
+  }
+}

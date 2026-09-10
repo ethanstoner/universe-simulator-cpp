@@ -89,6 +89,76 @@ TEST(scenes_astronomical_presets_have_no_net_momentum) {
     }
 }
 
+TEST(scenes_astronomical_orbits_are_prograde_about_plus_y) {
+    // Every scene lays its orbits out in the XZ plane and +Y is that plane's
+    // normal, so an orbit that turns the way the real solar system turns as
+    // seen from ecliptic north has its angular momentum along +Y. This is not
+    // cosmetic: computeOrbitalElements measures inclination against +Y, so a
+    // retrograde layout reports every coplanar orbit as inclined 180 degrees.
+    const char* keys[] = {"two-body", "earth-moon", "inner",   "solar-system",
+                          "binary",   "compact",    "belt",    "trojans",
+                          "precession"};
+
+    for (const char* key : keys) {
+        const Scene* scene = findScene(key);
+        CHECK(scene != nullptr);
+        if (!scene) continue;
+
+        const CelestialBody* primary = &scene->bodies.front();
+        for (const CelestialBody& body : scene->bodies) {
+            if (body.mass > primary->mass) primary = &body;
+        }
+
+        for (const CelestialBody& body : scene->bodies) {
+            if (&body == primary) continue;
+            const Vec3 angularMomentum =
+                glm::cross(body.position - primary->position,
+                           body.velocity - primary->velocity);
+            CHECK(angularMomentum.y > 0.0);
+        }
+    }
+}
+
+TEST(scenes_coplanar_presets_report_zero_inclination) {
+    // The reading the Bodies inspector shows. A coplanar preset must come out
+    // at 0 degrees, not 180.
+    GravitySystem system;
+    applyScene(*findScene("inner"), system);
+
+    const CelestialBody* sun = byName(system, "Sun");
+    CHECK(sun != nullptr);
+    for (const char* name : {"Mercury", "Venus", "Earth", "Mars"}) {
+        const CelestialBody* planet = byName(system, name);
+        CHECK(planet != nullptr);
+        if (!planet) continue;
+        const double mu = constants::kG * (sun->mass + planet->mass);
+        const OrbitalElements elements =
+            computeOrbitalElements(planet->position - sun->position,
+                                   planet->velocity - sun->velocity, mu);
+        CHECK(elements.valid);
+        CHECK_NEAR(elements.inclination, 0.0, 1e-12);
+    }
+}
+
+TEST(scenes_spawn_and_preset_orbits_turn_the_same_way) {
+    // The spawn panel's "auto orbit" runs through circularOrbitVelocity with
+    // +Y as the orbit normal; the presets run through placeInCircularOrbit.
+    // If the two disagree, a body spawned into a scene counter-orbits
+    // everything already in it.
+    CelestialBody primary = makeBody("primary", constants::kSolarMass, 6.96e8,
+                                     Vec3(0.0), Vec3(0.0), glm::vec3(1.0f));
+    CelestialBody body =
+        makeBody("body", 1.0, 1.0, Vec3(0.0), Vec3(0.0), glm::vec3(1.0f));
+
+    for (double phase : {0.0, 0.7, 2.9, -1.4}) {
+        placeInCircularOrbit(body, primary, constants::kAu, constants::kG, phase);
+        const Vec3 spawned =
+            circularOrbitVelocity(primary.position, primary.mass, body.position,
+                                  Vec3(0.0, 1.0, 0.0), constants::kG);
+        CHECK(glm::dot(safeNormalize(body.velocity), safeNormalize(spawned)) > 0.999);
+    }
+}
+
 TEST(scenes_earth_orbits_the_sun_at_the_right_speed) {
     GravitySystem system;
     applyScene(*findScene("two-body"), system);
@@ -505,11 +575,13 @@ TEST(trojans_stay_librating_around_l4_and_l5) {
             }
             const double separation =
                 wrap(angleTo(body.position - sun->position) - jupiterAngle);
-            const double target = body.name.rfind("L4-", 0) == 0
-                                      ? 3.14159265358979 / 3.0
-                                      : -3.14159265358979 / 3.0;
+            // Orbits travel towards decreasing phase angle, so L4 -- the
+            // leading point -- sits 60 degrees BELOW Jupiter's angle.
+            const bool leading = body.name.rfind("L4-", 0) == 0;
+            const double target = leading ? -3.14159265358979 / 3.0
+                                          : 3.14159265358979 / 3.0;
             const double excursion = std::abs(wrap(separation - target));
-            if (target > 0.0) worstLeading = std::max(worstLeading, excursion);
+            if (leading) worstLeading = std::max(worstLeading, excursion);
             else worstTrailing = std::max(worstTrailing, excursion);
         }
     }
@@ -539,14 +611,15 @@ TEST(trojans_would_not_stay_at_an_arbitrary_angle) {
     const double angularSpeed =
         std::sqrt(constants::kG * constants::kSolarMass / radius) / radius;
 
-    // One test particle at 120 degrees ahead, co-rotating exactly.
-    const double angle = 2.0 * 3.14159265358979 / 3.0;
+    // One test particle at 120 degrees ahead, co-rotating exactly. Ahead means
+    // negative phase, the same way L4 does.
+    const double angle = -2.0 * 3.14159265358979 / 3.0;
     CelestialBody probe = makeBody("Probe", 1.0e17, 3.0e5,
                                    Vec3(radius * std::cos(angle), 0.0,
                                         radius * std::sin(angle)),
                                    Vec3(0.0), glm::vec3(1.0f));
     const double speed = angularSpeed * radius;
-    probe.velocity = Vec3(-speed * std::sin(angle), 0.0, speed * std::cos(angle));
+    probe.velocity = progradeTangent(angle) * speed;
     const BodyId probeId = system.add(probe);
 
     auto angleTo = [](const Vec3& v) { return std::atan2(v.z, v.x); };

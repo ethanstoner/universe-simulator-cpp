@@ -18,9 +18,9 @@
       "radiusMetres": 696340000,
       "showTrail": true,
       "velocityMetresPerSecond": [
+        1.8239628062184824e-12,
         0,
-        0,
-        -29788.543860792161
+        29788.543860792161
       ]
     },
     {
@@ -41,9 +41,9 @@
       "radiusMetres": 626706000,
       "showTrail": true,
       "velocityMetresPerSecond": [
+        -1.8239573293668629e-12,
         0,
-        0,
-        29788.480612403691
+        -29788.480612403691
       ]
     },
     {
@@ -64,9 +64,9 @@
       "radiusMetres": 6371000,
       "showTrail": true,
       "velocityMetresPerSecond": [
+        -1.8239573293668629e-12,
         0,
-        0,
-        21063.627379762609
+        -21063.627379762609
       ]
     }
   ],

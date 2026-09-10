@@ -44,7 +44,8 @@ GravitySystem makeTwoBody(double semiMajorAxis, double eccentricity,
     planet.showTrail = false;
     planet.position = Vec3(perihelionDistance(semiMajorAxis, eccentricity), 0.0, 0.0);
     planet.velocity =
-        Vec3(0.0, 0.0, perihelionSpeed(constants::kSolarMass, semiMajorAxis, eccentricity));
+        progradeTangent(0.0) *
+        perihelionSpeed(constants::kSolarMass, semiMajorAxis, eccentricity);
     system.add(planet);
     return system;
 }
@@ -52,6 +53,12 @@ GravitySystem makeTwoBody(double semiMajorAxis, double eccentricity,
 // Integrates for `seconds` and returns the total rotation of the periapsis
 // direction, unwrapped so it accumulates past a full turn rather than folding
 // back into [-pi, pi].
+//
+// The result is signed IN THE DIRECTION OF MOTION -- positive means the
+// periapsis advances -- rather than in the direction of increasing phase angle.
+// Those differ by a sign for a prograde orbit, and tying the measurement to the
+// orbit's own sense means the answer does not change if the scene is laid out
+// the other way round.
 double measurePrecession(GravitySystem& system, double seconds, double dt) {
     const double mu = constants::kG * constants::kSolarMass;
 
@@ -61,6 +68,12 @@ double measurePrecession(GravitySystem& system, double seconds, double dt) {
         return periapsisAngle(planet.position - sun.position,
                               planet.velocity - sun.velocity, mu);
     };
+
+    const CelestialBody& sun = system.bodies()[0];
+    const CelestialBody& planet = system.bodies()[1];
+    // Phase angle runs the opposite way to a prograde orbit, hence the minus.
+    const double sense = -orbitSense(planet.position - sun.position,
+                                     planet.velocity - sun.velocity);
 
     double previous = currentAngle();
     double accumulated = 0.0;
@@ -77,7 +90,7 @@ double measurePrecession(GravitySystem& system, double seconds, double dt) {
         accumulated += delta;
         previous = angle;
     }
-    return accumulated;
+    return accumulated * sense;
 }
 
 }  // namespace
@@ -167,6 +180,43 @@ TEST(relativity_reproduces_mercurys_perihelion_precession) {
     CHECK(measured > 0.0);  // prograde, as observed
     CHECK_NEAR(measured, expected, 1.5);
     CHECK_NEAR(measured, 43.0, 2.0);
+}
+
+TEST(relativity_precession_measurement_does_not_depend_on_the_orbit_direction) {
+    // Reflecting the whole system through the XY plane turns a prograde orbit
+    // retrograde. That is a mirror image, not different physics, so the
+    // perihelion must still advance by the same amount. If the answer flipped
+    // sign, the 43 arcsec above would be an artefact of which way round the
+    // scene happened to be laid out.
+    auto advance = [](bool mirrored) {
+        auto build = [&](bool relativistic) {
+            GravitySystem system = makeTwoBody(kMercurySemiMajorAxis, kMercuryEccentricity,
+                                               kMercuryMass, relativistic);
+            if (mirrored) {
+                for (CelestialBody& body : system.bodies()) {
+                    body.position.z = -body.position.z;
+                    body.velocity.z = -body.velocity.z;
+                }
+            }
+            return system;
+        };
+        GravitySystem newtonian = build(false);
+        GravitySystem relativistic = build(true);
+        const double years = 4.0;
+        const double seconds = years * constants::kJulianYear;
+        const double difference = measurePrecession(relativistic, seconds, 600.0) -
+                                  measurePrecession(newtonian, seconds, 600.0);
+        return difference * kRadiansToArcsec * (100.0 / years);
+    };
+
+    const double prograde = advance(false);
+    const double retrograde = advance(true);
+    std::printf("         Advance measured prograde %+.2f, mirrored %+.2f "
+                "arcsec/century\n", prograde, retrograde);
+
+    CHECK(prograde > 0.0);
+    CHECK(retrograde > 0.0);
+    CHECK_REL(retrograde, prograde, 1e-9);
 }
 
 TEST(relativity_advance_scales_as_the_closed_form_predicts) {

@@ -328,12 +328,12 @@ Scene sceneBinaryStars() {
 
     CelestialBody a = makeBody("Star A", starMass, kSunRadius,
                                Vec3(-separation / 2.0, 0.0, 0.0),
-                               Vec3(0.0, 0.0, -relativeSpeed / 2.0),
+                               progradeTangent(kPi) * (relativeSpeed / 2.0),
                                {1.00f, 0.82f, 0.40f});
     a.emissive = true;
     CelestialBody b = makeBody("Star B", starMass, kSunRadius * 0.9,
                                Vec3(separation / 2.0, 0.0, 0.0),
-                               Vec3(0.0, 0.0, relativeSpeed / 2.0),
+                               progradeTangent(0.0) * (relativeSpeed / 2.0),
                                {0.70f, 0.82f, 1.00f});
     b.emissive = true;
     scene.bodies.push_back(a);
@@ -344,7 +344,7 @@ Scene sceneBinaryStars() {
                                     Vec3(0.0), {0.40f, 0.85f, 0.60f});
     const double planetRadius = 4.0 * kAu;
     planet.position = Vec3(planetRadius, 0.0, 0.0);
-    planet.velocity = Vec3(0.0, 0.0, std::sqrt(kG * totalMass / planetRadius));
+    planet.velocity = progradeTangent(0.0) * std::sqrt(kG * totalMass / planetRadius);
     scene.bodies.push_back(planet);
 
     scene.view.metresPerUnit = kAu / 6.0;
@@ -403,7 +403,7 @@ Scene sceneThreeBody() {
             std::string("Star ") + static_cast<char>('A' + i), mass, kSunRadius,
             Vec3(radius * std::cos(angle), 0.0, radius * std::sin(angle)),
             // Tangential, giving the triangle a net rotation.
-            Vec3(-speed * std::sin(angle), 0.0, speed * std::cos(angle)), colors[i]);
+            progradeTangent(angle) * speed, colors[i]);
         star.emissive = true;
         scene.bodies.push_back(star);
     }
@@ -601,7 +601,7 @@ Scene sceneAsteroidBelt() {
         // Circular about the Sun, with a small spread so the belt is not a
         // single infinitely thin ring.
         const double speed = std::sqrt(kG * kSolarMass / radius) * (0.98 + 0.04 * nextRandom());
-        rock.velocity = Vec3(-speed * std::sin(angle), 0.0, speed * std::cos(angle));
+        rock.velocity = progradeTangent(angle) * speed;
         rock.showTrail = false;
         scene.bodies.push_back(rock);
     }
@@ -706,8 +706,10 @@ Scene sceneTrojans() {
     const double radius = kJupiter.orbitRadius;
     const double angularSpeed = std::sqrt(kG * kSolarMass / radius) / radius;
 
-    // L4 leads Jupiter by 60 degrees, L5 trails by the same.
-    const double lagrangeAngles[2] = {kPi / 3.0, -kPi / 3.0};
+    // L4 leads Jupiter by 60 degrees, L5 trails by the same. Orbits run
+    // towards decreasing phase angle (see progradeTangent), so the leading
+    // point is the one at NEGATIVE 60 degrees.
+    const double lagrangeAngles[2] = {-kPi / 3.0, kPi / 3.0};
     const glm::vec3 swarmColors[2] = {{0.55f, 0.85f, 0.95f}, {0.95f, 0.70f, 0.50f}};
     const char* swarmNames[2] = {"L4", "L5"};
 
@@ -734,7 +736,7 @@ Scene sceneTrojans() {
             // swarm has to co-rotate with the primary for the Lagrange points
             // to mean anything.
             const double speed = angularSpeed * r;
-            rock.velocity = Vec3(-speed * std::sin(angle), 0.0, speed * std::cos(angle));
+            rock.velocity = progradeTangent(angle) * speed;
             rock.showTrail = false;
             scene.bodies.push_back(rock);
         }
@@ -804,8 +806,7 @@ void placeInCircularOrbit(CelestialBody& body, const CelestialBody& primary,
     // the difference is one part in 3e5, but for the Earth-Moon pair it is
     // over 1%.
     const double speed = std::sqrt(G * (primary.mass + body.mass) / radius);
-    const Vec3 tangent(-std::sin(phaseRadians), 0.0, std::cos(phaseRadians));
-    body.velocity = primary.velocity + tangent * speed;
+    body.velocity = primary.velocity + progradeTangent(phaseRadians) * speed;
 }
 
 void placeInEllipticalOrbit(CelestialBody& body, const CelestialBody& primary,
@@ -820,8 +821,7 @@ void placeInEllipticalOrbit(CelestialBody& body, const CelestialBody& primary,
     // difference is tiny, but the helper should be correct for any pair.
     const double speed =
         perihelionSpeed(primary.mass + body.mass, semiMajorAxis, eccentricity, G);
-    const Vec3 tangent(-std::sin(phaseRadians), 0.0, std::cos(phaseRadians));
-    body.velocity = primary.velocity + tangent * speed;
+    body.velocity = primary.velocity + progradeTangent(phaseRadians) * speed;
 }
 
 void zeroNetMomentum(std::vector<CelestialBody>& bodies) {

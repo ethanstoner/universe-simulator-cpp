@@ -8,6 +8,15 @@ namespace {
 constexpr double kPi = 3.14159265358979323846;
 }
 
+Vec3 progradeTangent(double phaseRadians) {
+    return Vec3(std::sin(phaseRadians), 0.0, -std::cos(phaseRadians));
+}
+
+double orbitSense(const Vec3& relativePosition, const Vec3& relativeVelocity) {
+    const double h = glm::cross(relativePosition, relativeVelocity).y;
+    return h < 0.0 ? -1.0 : 1.0;
+}
+
 double circularOrbitSpeed(double centralMass, double radius, double G) {
     if (radius <= 0.0 || centralMass <= 0.0) return 0.0;
     return std::sqrt(G * centralMass / radius);

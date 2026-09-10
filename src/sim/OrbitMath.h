@@ -4,6 +4,27 @@
 
 namespace sim {
 
+// The simulator lays its orbits out in the XZ plane, so +Y is the plane's
+// normal and stands in for ecliptic north. A PROGRADE orbit -- the sense every
+// planet in the real solar system travels in when viewed from the north -- has
+// its angular momentum along +Y.
+//
+// `progradeTangent` is the unit tangent at phase angle t = atan2(z, x) for such
+// an orbit. Everything that assigns an orbital velocity goes through it, so
+// that no two bodies in a scene end up counter-orbiting and so that
+// `computeOrbitalElements` reports a coplanar orbit as inclined 0 rather
+// than 180 degrees.
+//
+// It points towards DECREASING phase angle: a body laid out at angle t and sent
+// towards +t carries angular momentum along -Y, which is retrograde.
+Vec3 progradeTangent(double phaseRadians);
+
+// +1 if the orbit runs prograde (angular momentum along +Y), -1 if retrograde.
+// Multiply a phase-angle rate by this to express it in the direction the body
+// is actually travelling, which makes the measurement independent of which way
+// round the scene was laid out.
+double orbitSense(const Vec3& relativePosition, const Vec3& relativeVelocity);
+
 // Speed for a circular orbit of radius r around mass M: v = sqrt(GM/r).
 double circularOrbitSpeed(double centralMass, double radius,
                           double G = 6.67430e-11);
