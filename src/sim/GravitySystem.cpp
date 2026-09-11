@@ -140,42 +140,47 @@ void GravitySystem::accelerations(const std::vector<Vec3>& positions,
             out[i] += tree_.accelerationAt(positions[i], static_cast<int>(i), G,
                                            settings_.barnesHutTheta, treeSoftening);
         }
-        for (std::size_t i = 0; i < n && i < bodies_.size(); ++i) {
-            if (bodies_[i].fixed) out[i] = Vec3(0.0);
-        }
-        return;
-    }
+    } else {
+        // Each unordered pair is visited once and the equal-and-opposite pair of
+        // accelerations is applied together (Newton's third law), which halves the
+        // work and keeps total momentum exactly conserved up to rounding.
+        for (std::size_t i = 0; i < n; ++i) {
+            for (std::size_t j = i + 1; j < n; ++j) {
+                const Vec3 delta = positions[j] - positions[i];  // i -> j
+                double distanceSq = lengthSquared(delta);
 
-    // Each unordered pair is visited once and the equal-and-opposite pair of
-    // accelerations is applied together (Newton's third law), which halves the
-    // work and keeps total momentum exactly conserved up to rounding.
-    for (std::size_t i = 0; i < n; ++i) {
-        for (std::size_t j = i + 1; j < n; ++j) {
-            const Vec3 delta = positions[j] - positions[i];  // i -> j
-            double distanceSq = lengthSquared(delta);
+                switch (settings_.stabilization) {
+                    case Stabilization::None:
+                        break;
+                    case Stabilization::Softening:
+                        distanceSq += softeningSq;
+                        break;
+                    case Stabilization::MinDistance:
+                        distanceSq = std::max(distanceSq, minDistanceSq);
+                        break;
+                }
 
-            switch (settings_.stabilization) {
-                case Stabilization::None:
-                    break;
-                case Stabilization::Softening:
-                    distanceSq += softeningSq;
-                    break;
-                case Stabilization::MinDistance:
-                    distanceSq = std::max(distanceSq, minDistanceSq);
-                    break;
+                if (distanceSq <= 0.0) continue;  // exactly coincident and unsoftened
+
+                // a = G m delta / |delta|^3, written as delta * (G m / d^3) to avoid
+                // a normalize() plus a separate square.
+                const double inverseDistanceCubed = 1.0 / (distanceSq * std::sqrt(distanceSq));
+                const double scale = G * inverseDistanceCubed;
+                out[i] += delta * (scale * bodies_[j].mass);
+                out[j] -= delta * (scale * bodies_[i].mass);
             }
-
-            if (distanceSq <= 0.0) continue;  // exactly coincident and unsoftened
-
-            // a = G m delta / |delta|^3, written as delta * (G m / d^3) to avoid
-            // a normalize() plus a separate square.
-            const double inverseDistanceCubed = 1.0 / (distanceSq * std::sqrt(distanceSq));
-            const double scale = G * inverseDistanceCubed;
-            out[i] += delta * (scale * bodies_[j].mass);
-            out[j] -= delta * (scale * bodies_[i].mass);
         }
     }
 
+    // Deliberately outside the solver branch. The Barnes-Hut path used to return
+    // before this, so ticking "1PN correction" with the tree solver selected did
+    // nothing at all and said nothing about it -- two independent, persisted
+    // settings where one silently cancelled the other.
+    //
+    // The correction is O(n^2) and the tree is not, so enabling it costs the
+    // tree its advantage. That is the honest trade: the solver choice is about
+    // how the Newtonian term is approximated, not about which physics is in the
+    // model, and a faster answer to a different question is not faster.
     if (settings_.relativisticCorrection) {
         applyRelativisticCorrection(positions, out);
     }

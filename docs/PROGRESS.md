@@ -5,7 +5,7 @@ behaviour checked. For rendering work that means a frame was captured offscreen
 and looked at; for physics it means a test asserts the numbers.
 
 Current state: **all twelve success criteria met**, plus a visual polish pass
-and a UI hardening pass. 107 unit tests and a 5000-check application self-test,
+and a UI hardening pass. 160 unit tests and a 41000-check application self-test,
 all passing (`ctest --test-dir build`).
 
 ---
@@ -134,7 +134,7 @@ vertical movement, scroll speed control and focus-on-body; camera-relative
 (floating origin) rendering; lit bodies with emissive stars, rim light and a
 subtle specular.
 
-Observed: verified across all eleven presets; the inner system shows lit
+Observed: verified across all fourteen presets; the inner system shows lit
 spheres, elliptical trails and correct relative sizes.
 
 ![Full UI](images/m8_ui.png)
@@ -156,7 +156,7 @@ Problems found and fixed:
 Status: **COMPLETE**
 
 Implemented: `metresPerUnit` / drawn-radius exaggeration / physical radius kept
-strictly separate; eleven presets from real IAU/NASA values; JSON scene
+strictly separate; fourteen presets from real IAU/NASA values; JSON scene
 configuration in `configs/`; `timeScale` from 0.01x to 1e9x with substepping and
 a step budget; pause, single-step, reset.
 
@@ -334,7 +334,7 @@ Bugs found by reading and by the self-test, not by using the app:
 Self-test: 11 scenes x (load, step, four resets, spawn, focus, delete, delete
 the trail reference, all four integrators, all three stabilisation modes, delete
 every body, reset while empty, reload) plus picking and JSON round-trips.
-**5131 checks, 0 failures.**
+**41005 checks, 0 failures.**
 
 One finding kept rather than fixed: in the inner-system view the Moon sits
 inside the Earth's drawn sphere and cannot be clicked. That is a consequence of

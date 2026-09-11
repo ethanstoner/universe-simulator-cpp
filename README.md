@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)
 ![OpenGL 3.3](https://img.shields.io/badge/OpenGL-3.3%20core-5586A4?logo=opengl&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-107%20unit%20%2B%205131%20self--test%20checks-brightgreen)
+![Tests](https://img.shields.io/badge/tests-160%20unit%20%2B%2041005%20self--test%20checks-brightgreen)
 
 An interactive Newtonian N-body universe simulator in C++20 and OpenGL 3.3:
 real astronomical data, four selectable integrators, live conserved-quantity
@@ -31,7 +31,7 @@ only compiling.
 
 - Simulates gravitational attraction between arbitrary bodies with
   `F = G m1 m2 / r^2`, in double precision, in SI units.
-- Ships eleven scene presets built from real masses and semi-major axes, from a
+- Ships fourteen scene presets built from real masses and semi-major axes, from a
   bouncing-ball kinematics lab to a compact object tearing through the inner
   solar system.
 - Flies around in 3D, or locks the camera to any body and orbits it.
@@ -86,7 +86,7 @@ The parts that were genuinely hard, and what they cost:
   monotonically, which distinguishes unresolved-encounter truncation error from
   a masked singularity.
 - **Testability enforced by layering.** `sim/` has no OpenGL, GLFW or ImGui
-  dependency and is a separate static library, so all 107 unit tests run
+  dependency and is a separate static library, so all 160 unit tests run
   headless. The picking and scale maths were deliberately moved *into* `sim/`
   so they could be tested without a GL context.
 - **Barnes-Hut octree, measured rather than claimed.** `--benchmark` times it
@@ -195,11 +195,11 @@ build/bin/simcore-tests.exe          # or: ctest --test-dir build
 ```
 
 ```sh
-ctest --test-dir build            # 107 unit tests + the application self-test
+ctest --test-dir build            # 160 unit tests + the application self-test
 ctest --test-dir build -E selftest  # skip the test that needs a GPU
 ```
 
-107 unit tests with no third-party test framework, plus a self-test that drives
+160 unit tests with no third-party test framework, plus a self-test that drives
 every UI-reachable state transition against a real GL context (scene loading,
 spawning, deleting, focusing, the reset buttons, every integrator and
 stabilisation mode, and emptying the scene entirely) and checks 5000+ invariants
@@ -253,6 +253,7 @@ build/bin/universe-sim.exe --help
 | `compact-vs-sun` | A 30 solar-mass object crossing the solar system |
 | `belt` | Sun, Jupiter and 2000 mutually attracting asteroids (Barnes-Hut) |
 | `precession` | Relativistic perihelion advance, exaggerated into a rosette |
+| `trojans` | Jupiter's L4/L5 Trojan swarms librating about the Lagrange points |
 
 <p align="center">
   <img src="docs/images/scene_inner.png" width="49%" alt="Inner solar system">

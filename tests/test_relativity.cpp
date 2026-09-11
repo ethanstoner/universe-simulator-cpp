@@ -275,3 +275,46 @@ TEST(relativity_is_off_by_default) {
     CHECK(!system.settings().relativisticCorrection);
     CHECK(system.settings().relativisticStrength == 1.0);
 }
+
+TEST(relativity_correction_applies_under_the_barnes_hut_solver_too) {
+    // The solver setting chooses how the Newtonian term is approximated. It must
+    // not decide whether the 1PN term exists at all: both are independent,
+    // persisted UI controls, so a user can select the tree and tick 1PN and has
+    // every reason to expect the physics they asked for.
+    //
+    // The Barnes-Hut branch used to return before the correction was applied, so
+    // this combination silently produced a purely Newtonian result.
+    auto perihelionShift = [](GravitySolver solver) {
+        GravitySystem system = makeTwoBody(kMercurySemiMajorAxis, kMercuryEccentricity,
+                                           kMercuryMass, true);
+        system.settings().solver = solver;
+
+        // One orbit is enough: the question is whether the term is present, not
+        // how accurately it accumulates over a century.
+        const double period = orbitalPeriod(constants::kSolarMass, kMercurySemiMajorAxis);
+        const double dt = period / 20000.0;
+        for (long long i = 0; i < 20000; ++i) system.step(dt);
+        return system.bodies()[1].position;
+    };
+
+    const Vec3 direct = perihelionShift(GravitySolver::Direct);
+    const Vec3 tree = perihelionShift(GravitySolver::BarnesHut);
+
+    // Two bodies means the tree opens to an exact pairwise evaluation, so the
+    // Newtonian part agrees to rounding and any real difference here would be
+    // the missing correction.
+    const double separation = glm::length(direct - tree);
+    CHECK_LESS(separation / glm::length(direct), 1e-9);
+
+    // Guard against the test passing because neither path applies it: with the
+    // correction off, the same run must land somewhere measurably different.
+    GravitySystem newtonian = makeTwoBody(kMercurySemiMajorAxis, kMercuryEccentricity,
+                                          kMercuryMass, false);
+    newtonian.settings().solver = GravitySolver::BarnesHut;
+    const double period = orbitalPeriod(constants::kSolarMass, kMercurySemiMajorAxis);
+    const double dt = period / 20000.0;
+    for (long long i = 0; i < 20000; ++i) newtonian.step(dt);
+
+    const double newtonianGap = glm::length(newtonian.bodies()[1].position - tree);
+    CHECK(newtonianGap > 0.0);
+}
