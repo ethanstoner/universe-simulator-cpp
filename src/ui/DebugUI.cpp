@@ -393,7 +393,7 @@ void DebugUI::simulationPanel(engine::Application& app) {
         ImGui::SetItemTooltip(
             "A cell of width s at distance d is treated as one mass when "
             "s/d < theta. 0 is exact and as slow as direct summation, 0.5 is "
-            "about 1% force error, larger is faster and progressively wronger.");
+            "about 1%% force error, larger is faster and progressively wronger.");
         ImGui::TextColored(ImVec4(0.75f, 0.8f, 0.95f, 1.0f),
                            "Approximate: momentum is conserved only to the\n"
                            "opening-angle error. Use Direct for long runs.");
